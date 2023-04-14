@@ -116,9 +116,10 @@ function Descuentos() {
       </p>
       <p>Aplicar Descuentos en Seccion</p>
       <div className={style.aplicarDescSeccion}>
-        {context.secciones.map((item) => {
+        {context.secciones.map((item, i) => {
           return (
             <p
+              key={i}
               className={style.descuento__seccion}
               onClick={() => descuentoSeccion(item)}
             >
@@ -130,9 +131,10 @@ function Descuentos() {
 
       <p>Quitar Descuentos en Seccion</p>
       <div className={style.aplicarDescSeccion}>
-        {context.secciones.map((item) => {
+        {context.secciones.map((item, i) => {
           return (
             <p
+              key={i}
               className={style.descuento__seccion}
               onClick={() => quitarDescuentoSeccion(item)}
             >

@@ -88,8 +88,8 @@ function ProductoNuevo({ setShowNuevoProducto }) {
         <input type="number" name="" id="inputStock" />
         <p>Seccion:</p>
         <select name="" id="inputSeccion">
-          {context.secciones.map((item) => {
-            return <option>{item}</option>;
+          {context.secciones.map((item, i) => {
+            return <option key={i}>{item}</option>;
           })}
         </select>
         <p>

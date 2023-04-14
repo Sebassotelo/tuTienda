@@ -15,7 +15,7 @@ function Carrito({ showCarrito }) {
   // 3 = Pedido Copiado
 
   const eliminarProducto = (id) => {
-    const nuevoArray = context.carrito.filter((item) => item.id != id);
+    const nuevoArray = context.carrito.filter((item, key) => item.id != id);
     setCarrito(nuevoArray);
     actualizacionCarrito();
   };
@@ -96,7 +96,7 @@ function Carrito({ showCarrito }) {
           {context.carrito &&
             context.carrito.map((item) => {
               return (
-                <div className={style.carrito__item}>
+                <div className={style.carrito__item} key={item.id}>
                   <div className={style.img}>
                     <img src={item.img} alt="" />
                   </div>

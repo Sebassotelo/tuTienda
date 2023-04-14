@@ -4,7 +4,7 @@ import ContextGeneral from "@/servicios/contextPrincipal";
 import ItemMenuProductos from "@/componentes/ItemMenuProductos";
 import ProductosTienda from "@/componentes/productos/ProductosTienda";
 
-function index() {
+function Index() {
   const context = useContext(ContextGeneral);
   const {
     setProductos,
@@ -56,8 +56,14 @@ function index() {
             Ofertas {`(${contadorOfert})`}{" "}
           </li>
           {context.secciones &&
-            context.secciones.map((item) => {
-              return <ItemMenuProductos funcion={filtrarSeccion} item={item} />;
+            context.secciones.map((item, i) => {
+              return (
+                <ItemMenuProductos
+                  key={i}
+                  funcion={filtrarSeccion}
+                  item={item}
+                />
+              );
             })}
         </ul>
         <ProductosTienda />
@@ -66,4 +72,4 @@ function index() {
   );
 }
 
-export default index;
+export default Index;

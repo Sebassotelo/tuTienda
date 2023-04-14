@@ -130,8 +130,8 @@ function EditarProducto({
           id="inputSeccion"
           defaultValue={seccion2 ? seccion2 : ""}
         >
-          {context.secciones.map((item) => {
-            return <option>{item}</option>;
+          {context.secciones.map((item, i) => {
+            return <option key={i}>{item}</option>;
           })}
         </select>
         <p>

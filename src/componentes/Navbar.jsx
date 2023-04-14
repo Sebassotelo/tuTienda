@@ -4,7 +4,7 @@ import Link from "next/link";
 import ContextGeneral from "@/servicios/contextPrincipal";
 import { signOut } from "firebase/auth";
 
-function navbar({ showCarrito }) {
+function Navbar({ showCarrito }) {
   const context = useContext(ContextGeneral);
   const [contadorProductos, setContadorProductos] = useState(0);
 
@@ -40,4 +40,4 @@ function navbar({ showCarrito }) {
   );
 }
 
-export default navbar;
+export default Navbar;

@@ -13,7 +13,7 @@ function ProductosTienda() {
       <div className={style.container__items}>
         {context.productosPublicos &&
           context.productosPublicos.map((item) => {
-            return <ProductoItem item={item} />;
+            return <ProductoItem key={item.id} item={item} />;
           })}
       </div>
     </div>

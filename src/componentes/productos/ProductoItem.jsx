@@ -10,8 +10,8 @@ function ProductoItem({ item }) {
   const agregarCarrito = () => {
     const nuevoArray = context.carrito;
 
-    if (nuevoArray.find((e) => e.id === item.id)) {
-      nuevoArray.find((e) => e.id === item.id).cantidad += 1;
+    if (nuevoArray.find((e, i) => e.id === item.id)) {
+      nuevoArray.find((e, i) => e.id === item.id).cantidad += 1;
       setCarrito(nuevoArray);
       actualizacionCarrito();
     } else {

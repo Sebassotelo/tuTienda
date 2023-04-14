@@ -11,7 +11,7 @@ import BuscadorPanel from "@/componentes/BuscadorPanel";
 
 import { push } from "next/router";
 
-function index() {
+function Index() {
   const context = useContext(ContextGeneral);
   const { llamadaDB, inspectorSesion, verificarLogin } =
     useContext(ContextGeneral);
@@ -87,4 +87,4 @@ function index() {
   );
 }
 
-export default index;
+export default Index;
