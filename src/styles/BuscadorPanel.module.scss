@@ -1,0 +1,40 @@
+@import "./Variables.module.scss";
+
+.container {
+  margin: 15px 0 15px 0;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 15px;
+  input {
+    height: 30px;
+    width: 300px;
+    border-bottom-left-radius: 15px;
+    border-top-left-radius: 15px;
+    outline: none;
+    border: 1px solid black;
+    padding-left: 10px;
+    background-color: rgb(255, 255, 255);
+  }
+
+  button {
+    height: 34px;
+    border: none;
+    border-bottom-right-radius: 15px;
+    border-top-right-radius: 15px;
+    background-color: $black-color;
+    color: white;
+    cursor: pointer;
+  }
+
+  p {
+    width: 200px;
+    padding: 8px 12px 8px 12px;
+    border-radius: 15px;
+    text-align: center;
+    background-color: $black-color;
+    color: white;
+    font-weight: 900;
+    cursor: pointer;
+  }
+}

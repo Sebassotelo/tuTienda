@@ -1,0 +1,35 @@
+@import "./Variables.module.scss";
+.container {
+  width: 100%;
+  display: grid;
+  justify-items: center;
+  h3 {
+    text-align: center;
+    font-size: 25px;
+  }
+  p {
+    font-weight: 900;
+  }
+}
+.descuento__seccion {
+  background-color: $black-color;
+  color: $white-color;
+  padding: 5px 10px 5px 10px;
+  border-radius: 15px;
+  text-align: center;
+  cursor: pointer;
+  transition-duration: 0.3s;
+
+  &:hover {
+    background-color: $third-color;
+  }
+}
+
+.aplicarDescSeccion {
+  width: 60%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}

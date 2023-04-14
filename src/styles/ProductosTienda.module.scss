@@ -1,0 +1,14 @@
+@import "./Variables.module.scss";
+
+.container {
+  width: 100%;
+  padding: 20px;
+  .container__items {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+}

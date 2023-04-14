@@ -1,0 +1,68 @@
+@import "./Variables.module.scss";
+
+.container {
+  width: 100%;
+
+  form {
+    input {
+      height: 30px;
+      width: 300px;
+      border-bottom-left-radius: 15px;
+      border-top-left-radius: 15px;
+      outline: none;
+      border: 1px solid black;
+      padding-left: 10px;
+      background-color: rgb(255, 255, 255);
+    }
+
+    button {
+      height: 34px;
+      border: none;
+      border-bottom-right-radius: 15px;
+      border-top-right-radius: 15px;
+      background-color: $black-color;
+      color: white;
+      cursor: pointer;
+    }
+  }
+
+  .secciones {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+
+    .secciones__p {
+      cursor: pointer;
+      color: $white-color;
+      padding: 5px 12px 5px 12px;
+      background-color: $black-color;
+      border-radius: 15px;
+      transition-duration: 0.3s;
+      &:hover {
+        color: $primary-color;
+      }
+    }
+
+    .x {
+      cursor: pointer;
+      color: white;
+      text-align: center;
+      height: 26px;
+      width: 26px;
+      display: grid;
+      align-items: center;
+      justify-items: center;
+      background-color: red;
+
+      border-radius: 50%;
+
+      p {
+        height: 24px;
+        font-weight: 900;
+        margin: 0;
+      }
+    }
+  }
+}

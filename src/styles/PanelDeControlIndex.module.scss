@@ -1,0 +1,59 @@
+@import "./Variables.module.scss";
+
+.container {
+  width: 100%;
+  min-height: 90vh;
+  display: grid;
+  justify-items: center;
+  grid-template-columns: 200px 1fr;
+
+  .menu {
+    width: 100%;
+    justify-self: start !important;
+    padding: 15px;
+    background-color: $black-color;
+
+    li {
+      cursor: pointer;
+      color: $white-color;
+      list-style: none;
+      font-weight: 900;
+      font-size: 22px;
+
+      &:hover {
+        color: $secondary-color;
+      }
+    }
+  }
+
+  .secciones {
+    width: 80%;
+    .producto__nuevo__btn {
+      cursor: pointer;
+      color: $white-color;
+      justify-self: center;
+      text-align: center;
+      width: 150px;
+      padding: 5px 10px 5px 10px;
+      border-radius: 15px;
+      background-color: $black-color;
+      font-weight: 900;
+    }
+    .producto__cantidad {
+      color: $black-color;
+      justify-self: center;
+      text-align: center;
+      width: 150px;
+      padding: 5px 10px 5px 10px;
+      border-radius: 15px;
+      background-color: $secondary-color;
+      font-weight: 900;
+      user-select: none;
+    }
+  }
+
+  .listaProducto {
+    display: grid;
+    grid-gap: 15px;
+  }
+}

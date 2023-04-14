@@ -1,0 +1,71 @@
+@import "./Variables.module.scss";
+
+.container {
+  height: 300px;
+  width: 250px;
+  border-radius: 15px;
+  display: grid;
+  grid-template-rows: 200px 0.5fr;
+
+  .img {
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+
+    .descuentoIcon {
+      height: 60px;
+      width: 60px;
+      top: 0;
+      left: 0;
+      margin: 10px 0 0 10px;
+      display: grid;
+      justify-items: center;
+      align-items: center;
+      border-radius: 50%;
+      position: absolute;
+      background-color: red;
+      p {
+        margin: 0;
+        font-weight: 900;
+        font-size: 30px;
+        color: white;
+      }
+    }
+
+    img {
+      height: 200px;
+      width: 100%;
+      border-radius: 15px;
+      object-fit: cover;
+    }
+  }
+
+  .text {
+    text-align: center;
+
+    h4 {
+      margin: 0;
+    }
+
+    p {
+      margin: 0;
+    }
+    .agregar__carrito {
+      padding: 5px 10px 5px 10px;
+      margin: 0;
+      margin-top: 10px;
+      background-color: $black-color;
+      color: $white-color;
+      border-radius: 15px;
+      text-align: center;
+      font-weight: 900;
+      cursor: pointer;
+
+      &:hover {
+        color: $primary-color;
+      }
+    }
+  }
+}

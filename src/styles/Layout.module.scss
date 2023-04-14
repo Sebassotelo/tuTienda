@@ -1,0 +1,23 @@
+@import "./Variables.module.scss";
+
+.body {
+  margin-top: 60px;
+  min-height: 90vh;
+}
+
+.footer {
+  height: 60px;
+  width: 100%;
+  background-color: $black-color;
+  display: grid;
+  align-items: center;
+  justify-items: center;
+
+  p {
+    color: $white-color;
+
+    span {
+      font-weight: 700;
+    }
+  }
+}

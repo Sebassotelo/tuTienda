@@ -1,0 +1,24 @@
+.container {
+  width: 100%;
+  min-height: 100vh;
+  display: grid;
+  justify-items: center;
+
+  .container__productos {
+    width: 70vw;
+    min-width: 600px;
+    display: grid;
+
+    grid-template-columns: 250px 1fr;
+
+    .menu {
+      list-style: none;
+
+      li {
+        font-weight: 600;
+        margin-top: 15px;
+        cursor: pointer;
+      }
+    }
+  }
+}

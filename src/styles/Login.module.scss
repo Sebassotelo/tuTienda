@@ -1,0 +1,16 @@
+.login__container {
+  min-height: 90vh;
+  display: grid;
+  align-items: center;
+  justify-items: center;
+  p {
+    text-align: center;
+    padding: 10px 15px 10px 15px;
+    font-size: 16px;
+    font-weight: 900;
+    background-color: rgb(223, 194, 221);
+    color: white;
+    border-radius: 25px;
+    cursor: pointer;
+  }
+}

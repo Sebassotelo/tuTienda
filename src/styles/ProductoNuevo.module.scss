@@ -1,0 +1,59 @@
+@import "./Variables.module.scss";
+
+.container {
+  width: 100%;
+  min-width: 500px;
+  min-height: 300px;
+  background-color: $secondary-color;
+  border-radius: 15px;
+  padding: 15px;
+  margin: 15px 0 15px 0;
+
+  .form {
+    display: grid;
+    p {
+      font-weight: 600;
+      margin: 0;
+    }
+
+    input {
+      padding: 0 15px 0 15px;
+      width: 97%;
+      height: 30px;
+      border-radius: 5px;
+      border: none;
+      outline: none;
+    }
+
+    select {
+      padding: 5px;
+      border-radius: 5px;
+      outline: none;
+    }
+
+    button {
+      margin-top: 15px;
+      justify-self: center;
+      border: none;
+      padding: 8px 12px 8px 12px;
+      border-radius: 15px;
+      cursor: pointer;
+    }
+  }
+}
+.checkbox {
+  justify-self: start;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+
+  .descuentoActivo {
+    margin: 5px 5px 5px 5px !important;
+    color: $white-color;
+    padding: 8px 12px 8px 12px;
+    border-radius: 15px;
+    text-align: center;
+    cursor: pointer;
+  }
+}
