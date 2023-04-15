@@ -57,7 +57,7 @@
 @media (max-width: 900px) {
   .container {
     position: fixed;
-    height: 80px;
+    height: 60px;
     width: 100%;
     background-color: $black-color;
     display: grid;
@@ -80,7 +80,7 @@
         cursor: pointer;
         text-decoration: none;
         transition-duration: 0.3s;
-        font-size: 28px;
+        font-size: 16px;
         &:hover {
           color: $white-color;
         }
@@ -96,14 +96,14 @@
         justify-content: center;
         align-items: center;
         gap: 5px;
-        font-size: 26px;
+        font-size: 16px;
 
         &:hover {
           color: rgb(236, 68, 68);
         }
 
         .icon {
-          font-size: 35px;
+          font-size: 28px;
         }
       }
     }

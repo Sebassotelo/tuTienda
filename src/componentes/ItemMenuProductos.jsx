@@ -1,7 +1,7 @@
 import ContextGeneral from "@/servicios/contextPrincipal";
 import React, { useContext, useEffect, useState } from "react";
 
-function ItemMenuProductos({ funcion, item }) {
+function ItemMenuProductos({ funcion, item, click }) {
   const [contador, setContador] = useState(0);
   const context = useContext(ContextGeneral);
 
@@ -17,7 +17,12 @@ function ItemMenuProductos({ funcion, item }) {
   }, []);
 
   return (
-    <li onClick={() => funcion(item)}>
+    <li
+      onClick={() => {
+        funcion(item);
+        click();
+      }}
+    >
       {item} {`(${contador})`}
     </li>
   );

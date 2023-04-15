@@ -2,6 +2,8 @@ import React, { useContext } from "react";
 import style from "../../styles/ProductoItem.module.scss";
 import ContextGeneral from "@/servicios/contextPrincipal";
 import Link from "next/link";
+import { Toaster, toast } from "sonner";
+
 import { BsCartPlus } from "react-icons/bs";
 import { TbDiscount2 } from "react-icons/tb";
 
@@ -38,9 +40,8 @@ function ProductoItem({ item }) {
       };
       setCarrito((prev) => [...prev, itemCarrito]);
       actualizacionCarrito();
+      toast.success(`${item.title} agregado al carrito 🧦`);
     }
-
-    console.log(nuevoArray);
   };
   return (
     <div className={style.container}>
@@ -71,6 +72,7 @@ function ProductoItem({ item }) {
           <BsCartPlus />
         </div>
       </div>
+      <Toaster position="bottom-center" />
     </div>
   );
 }

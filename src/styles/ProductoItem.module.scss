@@ -92,11 +92,12 @@
 
 @media (max-width: 900px) {
   .container {
-    height: 300px;
-    width: 250px;
+    height: 100%;
+
+    width: 160px;
     border-radius: 15px;
     display: grid;
-    grid-template-rows: 200px 0.5fr;
+    grid-template-rows: 130px 1fr;
 
     .img {
       border-radius: 15px;
@@ -124,7 +125,7 @@
       }
 
       img {
-        height: 200px;
+        height: 120px;
         width: 100%;
         border-radius: 15px;
         object-fit: cover;
@@ -147,7 +148,7 @@
 
       h4 {
         margin: 0;
-        font-size: 22px;
+        font-size: 16px;
       }
 
       p {
@@ -156,14 +157,14 @@
         font-size: 18px;
       }
       .agregar__carrito {
-        width: 34px;
-        height: 42px;
+        width: 20px;
+        height: 28px;
         padding: 5px 10px 5px 10px;
         margin: 0;
         background-color: $black-color;
         color: $white-color;
         border-radius: 50%;
-        font-size: 32px;
+        font-size: 20px;
         cursor: pointer;
         display: grid;
         justify-items: center;

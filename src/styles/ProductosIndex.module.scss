@@ -26,3 +26,58 @@
     }
   }
 }
+
+.menu__movil {
+  display: none;
+}
+
+@media (max-width: 900px) {
+  .container {
+    width: 100%;
+    min-height: 100vh;
+    display: grid;
+    justify-items: center;
+
+    .container__productos {
+      width: 100vw;
+      min-width: 280px;
+      display: grid;
+
+      grid-template-columns: 1fr;
+
+      .menu {
+        display: none;
+      }
+      .menu__movil {
+        padding: 0 0 0 20px;
+        justify-self: start;
+
+        display: block;
+        list-style: none;
+
+        .movil__cat {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 10px;
+          justify-content: flex-start;
+          align-items: center;
+
+          h3 {
+            margin: 0;
+          }
+          .cat__icon {
+            font-size: 25px;
+          }
+        }
+        li {
+          font-weight: 600;
+          margin-top: 15px;
+          cursor: pointer;
+        }
+      }
+      .tienda {
+        grid-column: 1/2;
+      }
+    }
+  }
+}

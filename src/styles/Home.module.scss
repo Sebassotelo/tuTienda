@@ -88,7 +88,7 @@
 @media (max-width: 900px) {
   .header {
     width: 100%;
-    min-height: 140vh;
+    min-height: 100vh;
     display: grid;
     justify-items: center;
     align-items: center;
@@ -99,11 +99,11 @@
       justify-items: center;
 
       img {
-        height: 250px;
+        height: 150px;
       }
 
       p {
-        font-size: 25px;
+        font-size: 16px;
         font-weight: 900;
         text-align: center;
         margin: 0;
@@ -117,7 +117,7 @@
         border: none;
         color: $white-color;
         font-weight: 700;
-        font-size: 32px;
+        font-size: 16px;
         font-family: $fuente1;
         margin-top: 25px;
         cursor: pointer;
@@ -135,7 +135,8 @@
     width: 100%;
     display: grid;
     justify-items: center;
-    grid-template-rows: 100px 1fr;
+    align-items: center;
+    grid-template-rows: 100px 1fr 80px;
 
     h3 {
       text-align: center;
@@ -145,8 +146,9 @@
     }
 
     .items {
-      width: 90%;
-      min-width: 600px;
+      min-height: 500px;
+      width: 100%;
+      min-width: 300px;
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
@@ -159,9 +161,9 @@
       padding: 8px 12px 8px 12px;
       border-radius: 10px;
       border: none;
-      font-size: 22px;
+      font-size: 16px;
       font-family: $fuente2;
-      margin-bottom: 15px;
+      margin: 15px 0 15px 0;
       cursor: pointer;
       text-decoration: none;
 

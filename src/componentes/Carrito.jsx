@@ -3,7 +3,7 @@ import style from "../styles/Carrito.module.scss";
 import ContextGeneral from "@/servicios/contextPrincipal";
 import { MdOutlineDeleteOutline } from "react-icons/md";
 
-function Carrito({ showCarrito }) {
+function Carrito({ showCarrito, show }) {
   const context = useContext(ContextGeneral);
   const { setCarrito, actualizacionCarrito } = useContext(ContextGeneral);
   const [precioFinal, setPrecioFinal] = useState(0);
@@ -54,10 +54,11 @@ function Carrito({ showCarrito }) {
         if (
           nuevoArray.find((e) => e.id === id).cantidad <
           nuevoArray.find((e) => e.id === id).stock
-        )
+        ) {
           nuevoArray.find((e) => e.id === id).cantidad += 1;
-        setCarrito(nuevoArray);
-        actualizacionCarrito();
+          setCarrito(nuevoArray);
+          actualizacionCarrito();
+        }
       }
     }
   };
@@ -82,13 +83,15 @@ function Carrito({ showCarrito }) {
       cantidadTotal = cantidadTotal + e.cantidad;
     });
 
+    console.log(precioTotal, cantidadTotal);
+
     setPrecioFinal(precioTotal);
     setCantidadFinal(cantidadTotal);
     setEstadoPedido(0);
   }, [context.actuCarrito]);
 
   return (
-    <div className={style.container}>
+    <div className={style.container} style={{ right: show ? "0px" : "-110vw" }}>
       <p onClick={() => showCarrito(false)} className={style.cerrar}>
         X
       </p>{" "}

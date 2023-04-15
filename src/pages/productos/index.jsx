@@ -4,6 +4,7 @@ import ContextGeneral from "@/servicios/contextPrincipal";
 import ItemMenuProductos from "@/componentes/ItemMenuProductos";
 import ProductosTienda from "@/componentes/productos/ProductosTienda";
 import Head from "next/head";
+import { BiMenu } from "react-icons/bi";
 
 function Index() {
   const context = useContext(ContextGeneral);
@@ -16,6 +17,7 @@ function Index() {
   } = useContext(ContextGeneral);
 
   const [contadorOfert, setContadorOfert] = useState(0);
+  const [showCategoria, setShowCategoria] = useState(false);
 
   const filtrarSeccion = (id) => {
     const nuevoArray = context.productosPublicosCopia.filter(
@@ -35,6 +37,10 @@ function Index() {
     setContadorOfert(nuevoArray.length);
   };
 
+  const mostrarMenu = () => {
+    setShowCategoria(!showCategoria);
+  };
+
   useEffect(() => {
     if (context.productosPublicos.length == 0) {
       llamadaDB();
@@ -51,6 +57,7 @@ function Index() {
 
       <div className={style.container}>
         <div className={style.container__productos}>
+          {/* menu PC */}
           <ul className={style.menu}>
             <h3>Categorias</h3>
             <li
@@ -73,6 +80,40 @@ function Index() {
                   />
                 );
               })}
+          </ul>
+
+          {/* menu mobile */}
+          <ul className={style.menu__movil}>
+            <div className={style.movil__cat}>
+              <BiMenu className={style.cat__icon} />{" "}
+              <h3 onClick={mostrarMenu}>Categorias</h3>
+            </div>
+
+            {showCategoria && (
+              <>
+                <li
+                  onClick={() =>
+                    setProductosPublicos(context.productosPublicosCopia)
+                  }
+                >
+                  Todo {`(${context.productosPublicosCopia.length})`}
+                </li>
+                <li onClick={filtrarSeccionOfertas}>
+                  Ofertas {`(${contadorOfert})`}{" "}
+                </li>
+                {context.secciones &&
+                  context.secciones.map((item, i) => {
+                    return (
+                      <ItemMenuProductos
+                        key={i}
+                        funcion={filtrarSeccion}
+                        item={item}
+                        click={mostrarMenu}
+                      />
+                    );
+                  })}
+              </>
+            )}
           </ul>
           <div className={style.tienda}>
             <ProductosTienda />

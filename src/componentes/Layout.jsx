@@ -9,6 +9,14 @@ function Layout({ children, title }) {
 
   const mostrarCarrito = () => {
     setShowCarrito(!showCarrito);
+    if (showCarrito === true) {
+      document.body.style.overflow = "";
+    } else {
+      if (window.innerWidth < 900) {
+        document.body.style.overflow = "hidden";
+      }
+    }
+    console.log(showCarrito);
   };
 
   return (
@@ -32,7 +40,9 @@ function Layout({ children, title }) {
       <Navbar showCarrito={mostrarCarrito} />
 
       <div className={style.body}>{children}</div>
-      {showCarrito && <Carrito showCarrito={mostrarCarrito} />}
+
+      <Carrito showCarrito={mostrarCarrito} show={showCarrito} />
+
       <footer className={style.footer}>
         <p>
           Hecho por <span>Sebas Sotelo</span>
