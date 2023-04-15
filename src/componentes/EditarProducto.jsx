@@ -57,7 +57,7 @@ function EditarProducto({
       precioDescuento: precioDescuento,
     };
 
-    const productosCopia = [...context.productos];
+    const productosCopia = [...context.productosCopia];
     const index = productosCopia.findIndex((item) => item.id === id2);
 
     // Actualizar la noticia en el array copiado

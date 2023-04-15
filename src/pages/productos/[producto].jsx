@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import ContextGeneral from "@/servicios/contextPrincipal";
 import style from "../../styles/ProductoView.module.scss";
 import Link from "next/link";
+import { BsCartPlus } from "react-icons/bs";
 
 function ProductoRuta() {
   const router = useRouter();
@@ -36,9 +37,14 @@ function ProductoRuta() {
     const nuevoArray = context.carrito;
 
     if (nuevoArray.find((e) => e.id === producto.id)) {
-      nuevoArray.find((e) => e.id === producto.id).cantidad += 1;
-      setCarrito(nuevoArray);
-      actualizacionCarrito();
+      if (
+        nuevoArray.find((e) => e.id === producto.id).cantidad <
+        nuevoArray.find((e) => e.id === producto.id).stock
+      ) {
+        nuevoArray.find((e) => e.id === producto.id).cantidad += 1;
+        setCarrito(nuevoArray);
+        actualizacionCarrito();
+      }
     } else {
       let prec;
       if (producto.descuento) {
@@ -49,6 +55,8 @@ function ProductoRuta() {
       const itemCarrito = {
         title: producto.title,
         precio: prec,
+        img: producto.img,
+        stock: producto.stock,
         id: producto.id,
         cantidad: 1,
       };
@@ -80,15 +88,35 @@ function ProductoRuta() {
             / {producto.title}
           </p>
           <h3>{producto.title}</h3>
-          <p className={style.precio}>${producto.precio}</p>
+          {producto.descuento ? (
+            <div className={style.precio__container}>
+              <p
+                className={style.precio}
+                style={{ textDecoration: "line-through", color: "grey" }}
+              >
+                ${producto.precio}
+              </p>
+              <p className={style.precio}>${producto.precioDescuento}</p>
+            </div>
+          ) : (
+            <p className={style.precio}>${producto.precio}</p>
+          )}
           <p>Stock: {producto.stock}</p>
           <p>{producto.desc}</p>
 
           {producto.stock > 0 && (
-            <p className={style.agregarCarrito} onClick={agregarCarrito}>
-              Agregar al Carrito
-            </p>
+            <div className={style.agregarCarrito} onClick={agregarCarrito}>
+              <p>Agregar al Carrito</p>
+              <BsCartPlus className={style.icon} />
+            </div>
           )}
+          <div className={style.info}>
+            <h4>ENVIOS</h4>
+            <p>⚡P I C K U P ⚡ </p>
+            <p>Envios por motomandados </p>
+            <h4>METODOS DE PAGO</h4>
+            <p>MercadoPago, Efectivo</p>
+          </div>
         </div>
       </div>
     </div>

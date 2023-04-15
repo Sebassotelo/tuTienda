@@ -1,6 +1,8 @@
 import React, { useContext, useEffect, useState } from "react";
 import style from "../styles/Carrito.module.scss";
 import ContextGeneral from "@/servicios/contextPrincipal";
+import { MdOutlineDeleteOutline } from "react-icons/md";
+
 function Carrito({ showCarrito }) {
   const context = useContext(ContextGeneral);
   const { setCarrito, actualizacionCarrito } = useContext(ContextGeneral);
@@ -50,7 +52,7 @@ function Carrito({ showCarrito }) {
     if (nuevoArray.find((e) => e.id === id)) {
       if (nuevoArray.find((e) => e.id === id).cantidad >= 0) {
         if (
-          nuevoArray.find((e) => e.id === id).cantidad <=
+          nuevoArray.find((e) => e.id === id).cantidad <
           nuevoArray.find((e) => e.id === id).stock
         )
           nuevoArray.find((e) => e.id === id).cantidad += 1;
@@ -120,7 +122,10 @@ function Carrito({ showCarrito }) {
                   </div>
                   <div className={style.carrito__precio}>
                     <p>${item.cantidad * item.precio}</p>
-                    <span onClick={() => eliminarProducto(item.id)}>X</span>
+                    <MdOutlineDeleteOutline
+                      onClick={() => eliminarProducto(item.id)}
+                      className={style.carrito__icon}
+                    />
                   </div>
                 </div>
               );
@@ -150,7 +155,7 @@ function Carrito({ showCarrito }) {
           {estadoPedido == 2 && (
             <div
               className={style.confirmacion}
-              style={{ backgroundColor: "green" }}
+              style={{ backgroundColor: "rgb(2, 190, 18)" }}
             >
               <a
                 href={`https://api.whatsapp.com/send?phone=543794258393&text=${pedido}`}

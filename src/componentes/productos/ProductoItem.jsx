@@ -2,6 +2,8 @@ import React, { useContext } from "react";
 import style from "../../styles/ProductoItem.module.scss";
 import ContextGeneral from "@/servicios/contextPrincipal";
 import Link from "next/link";
+import { BsCartPlus } from "react-icons/bs";
+import { TbDiscount2 } from "react-icons/tb";
 
 function ProductoItem({ item }) {
   const context = useContext(ContextGeneral);
@@ -11,9 +13,14 @@ function ProductoItem({ item }) {
     const nuevoArray = context.carrito;
 
     if (nuevoArray.find((e, i) => e.id === item.id)) {
-      nuevoArray.find((e, i) => e.id === item.id).cantidad += 1;
-      setCarrito(nuevoArray);
-      actualizacionCarrito();
+      if (
+        nuevoArray.find((e) => e.id === item.id).cantidad <
+        nuevoArray.find((e) => e.id === item.id).stock
+      ) {
+        nuevoArray.find((e, i) => e.id === item.id).cantidad += 1;
+        setCarrito(nuevoArray);
+        actualizacionCarrito();
+      }
     } else {
       let prec;
       if (item.descuento) {
@@ -42,7 +49,7 @@ function ProductoItem({ item }) {
           <img src={item.img} alt="" />
           {item.descuento && (
             <div className={style.descuentoIcon}>
-              <p>%</p>
+              <TbDiscount2 />
             </div>
           )}
         </div>
@@ -50,17 +57,19 @@ function ProductoItem({ item }) {
       <div className={style.text}>
         <h4>{item.title}</h4>
         {item.descuento ? (
-          <>
-            <p style={{ textDecoration: "line-through" }}>${item.precio}</p>{" "}
-            <span>${item.precioDescuento}</span>
-          </>
+          <div className={style.text__precio}>
+            <p style={{ textDecoration: "line-through", color: "grey" }}>
+              ${item.precio}
+            </p>{" "}
+            <p>${item.precioDescuento}</p>
+          </div>
         ) : (
           <p>${item.precio}</p>
         )}
 
-        <p className={style.agregar__carrito} onClick={agregarCarrito}>
-          Agregar al Carrito
-        </p>
+        <div className={style.agregar__carrito} onClick={agregarCarrito}>
+          <BsCartPlus />
+        </div>
       </div>
     </div>
   );

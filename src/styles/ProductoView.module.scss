@@ -55,6 +55,12 @@
     .text {
       padding: 15px;
 
+      .precio__container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 15px;
+      }
+
       h3 {
         font-weight: 900;
         font-size: 32px;
@@ -78,15 +84,38 @@
       }
 
       .agregarCarrito {
-        width: 150px;
-        margin: 0;
+        margin: 15px 0 0 0;
         font-weight: 900;
         padding: 5px 8px 5px 8px;
         border-radius: 15px;
         text-align: center;
         cursor: pointer;
-        background-color: $third-color;
-        color: white;
+        background-color: $black-color;
+        color: $white-color;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: center;
+        gap: 15px;
+      }
+      p {
+        margin: 0;
+      }
+
+      .icon {
+        font-size: 26px;
+      }
+
+      .info {
+        border-top: 2px solid black;
+        margin-top: 20px;
+
+        p {
+          margin: 0;
+        }
+        h4 {
+          margin: 10px 0 10px 0;
+        }
       }
     }
   }

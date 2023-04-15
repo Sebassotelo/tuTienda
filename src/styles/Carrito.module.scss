@@ -104,7 +104,7 @@
     p {
       font-weight: 900;
     }
-    span {
+    .carrito__icon {
       font-size: 20px;
       cursor: pointer;
     }
@@ -145,7 +145,7 @@
     color: $white-color;
     margin: 0;
     font-weight: 900;
-    color: white;
+    color: $white-color;
   }
 
   a {
