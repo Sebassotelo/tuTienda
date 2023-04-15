@@ -80,9 +80,8 @@ function Index() {
 
               {/* menu mobile */}
               <ul className={style.menu__movil}>
-                <div className={style.movil__cat}>
-                  <BiMenu className={style.cat__icon} />{" "}
-                  <h3 onClick={mostrarMenu}>Categorias</h3>
+                <div className={style.movil__cat} onClick={mostrarMenu}>
+                  <BiMenu className={style.cat__icon} /> <h3>Categorias</h3>
                 </div>
 
                 {showCategoria && (

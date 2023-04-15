@@ -10,6 +10,7 @@ function ProductosTienda() {
   return (
     <div className={style.container}>
       <BuscadorTienda />
+
       <div className={style.container__items}>
         {context.productosPublicos &&
           context.productosPublicos.map((item) => {

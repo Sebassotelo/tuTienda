@@ -40,7 +40,7 @@ function Layout({ children, title }) {
           rel="stylesheet"
         ></link>
       </Head>
-      <Navbar showCarrito={mostrarCarrito} />
+      <Navbar showCarrito={mostrarCarrito} show={showCarrito} />
 
       <div className={style.body}>{children}</div>
 

@@ -45,7 +45,7 @@ function ProductoItem({ item }) {
     <div className={style.container}>
       <Link href={`/productos/${item.id}`}>
         <div className={style.img}>
-          <img src={item.img} alt="" />
+          <img className={style.imgg} src={item.img} alt="" />
           {item.descuento && (
             <div className={style.descuentoIcon}>
               <TbDiscount2 />

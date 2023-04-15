@@ -6,8 +6,11 @@ import Layout from "@/componentes/Layout";
 import { useContext, useEffect } from "react";
 import ContextGeneral from "@/servicios/contextPrincipal";
 import ProductoItem from "@/componentes/productos/ProductoItem";
-import Link from "next/link";
+import LinkNext from "next/link";
+import { Link } from "react-scroll";
 import Loader from "@/componentes/Loader";
+
+import { motion } from "framer-motion";
 
 import { MdKeyboardArrowDown } from "react-icons/md";
 
@@ -34,18 +37,34 @@ export default function Home() {
     <>
       {context.loader ? (
         <main className={style.main}>
-          <header className={style.header}>
-            <div className={style.logo}>
-              <img src="https://i.imgur.com/Us77N0f.png" alt="" />{" "}
-              <p> 🛸 E S T A M O S EN EL F U T U R O</p>
-              <p> ⚡P I C K U P ⚡</p>
-              <Link href="/productos">IR AL CATALOGO</Link>
-            </div>
-            <Link href="#ofertas" className={style.flecha}>
-              <p>VER OFERTAS</p>
-              <MdKeyboardArrowDown className={style.icon} />
-            </Link>
-          </header>
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5 }}
+            style={{ width: "100%" }}
+          >
+            <header className={style.header}>
+              <div className={style.logo}>
+                <img src="https://i.imgur.com/Us77N0f.png" alt="" />{" "}
+                <p> 🛸 E S T A M O S EN EL F U T U R O</p>
+                <p> ⚡P I C K U P ⚡</p>
+                <LinkNext href="/productos">IR AL CATALOGO</LinkNext>
+              </div>
+
+              <Link
+                activeClass="active"
+                to="ofertas"
+                spy={true}
+                smooth={true}
+                offset={50}
+                duration={500}
+                className={style.flecha}
+              >
+                <p>VER OFERTAS</p>
+                <MdKeyboardArrowDown className={style.icon} />
+              </Link>
+            </header>
+          </motion.div>
 
           <section className={style.ofertas} id="ofertas">
             <h3>OFERTAS</h3>
@@ -60,13 +79,13 @@ export default function Home() {
                   })}
             </div>
 
-            <Link
+            <LinkNext
               className={style.a}
               href="/productos"
               onClick={filtrarOfertas}
             >
               Ver Ofertas
-            </Link>
+            </LinkNext>
           </section>
         </main>
       ) : (

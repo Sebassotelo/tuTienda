@@ -45,7 +45,7 @@
     padding: 15px 0 15px 0;
   }
   .carrito__item {
-    margin-bottom: 20px;
+    margin: 15px 0 15px 0;
     display: grid;
     grid-template-columns: 70px 1fr 80px;
 
@@ -114,7 +114,7 @@
   .carrito__precio {
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
     gap: 10px;
 
@@ -124,6 +124,7 @@
     .carrito__icon {
       font-size: 20px;
       cursor: pointer;
+      margin-right: 5px;
     }
   }
 }

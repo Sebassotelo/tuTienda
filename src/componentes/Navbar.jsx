@@ -5,7 +5,7 @@ import ContextGeneral from "@/servicios/contextPrincipal";
 import { signOut } from "firebase/auth";
 import { AiOutlineShoppingCart } from "react-icons/ai";
 
-function Navbar({ showCarrito }) {
+function Navbar({ showCarrito, show }) {
   const context = useContext(ContextGeneral);
   const [contadorProductos, setContadorProductos] = useState(0);
 
@@ -26,7 +26,7 @@ function Navbar({ showCarrito }) {
       <ul className={style.navbar}>
         <Link href="/">Home</Link>
         <Link href="/productos">Productos</Link>
-        <p onClick={showCarrito}>
+        <p onClick={showCarrito} style={{ color: show && "red" }}>
           <AiOutlineShoppingCart className={style.icon} />{" "}
           {contadorProductos > 0 && `(${contadorProductos})`}
         </p>

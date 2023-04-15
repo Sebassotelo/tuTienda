@@ -13,6 +13,7 @@
     align-items: center;
     justify-content: center;
     position: relative;
+    overflow: hidden;
 
     .descuentoIcon {
       font-size: 50px;
@@ -32,11 +33,16 @@
       }
     }
 
-    img {
+    .imgg {
       height: 200px;
       width: 100%;
       border-radius: 15px;
       object-fit: cover;
+      transition-duration: 0.3s;
+
+      &:hover {
+        transform: scale(1.09);
+      }
     }
   }
 
@@ -124,7 +130,7 @@
         }
       }
 
-      img {
+      .imgg {
         height: 120px;
         width: 100%;
         border-radius: 15px;

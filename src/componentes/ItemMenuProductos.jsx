@@ -1,5 +1,6 @@
 import ContextGeneral from "@/servicios/contextPrincipal";
 import React, { useContext, useEffect, useState } from "react";
+import style from "../styles/ItemMenu.module.scss";
 
 function ItemMenuProductos({ funcion, item, click }) {
   const [contador, setContador] = useState(0);
@@ -17,14 +18,25 @@ function ItemMenuProductos({ funcion, item, click }) {
   }, []);
 
   return (
-    <li
-      onClick={() => {
-        funcion(item);
-        click();
-      }}
-    >
-      {item} {`(${contador})`}
-    </li>
+    <>
+      <li
+        className={style.li}
+        onClick={() => {
+          funcion(item);
+        }}
+      >
+        {item} {`(${contador})`}
+      </li>
+      <li
+        className={style.li__movil}
+        onClick={() => {
+          funcion(item);
+          click();
+        }}
+      >
+        {item} {`(${contador})`}
+      </li>
+    </>
   );
 }
 

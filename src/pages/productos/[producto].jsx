@@ -7,6 +7,8 @@ import { BsCartPlus } from "react-icons/bs";
 import Head from "next/head";
 import Loader from "@/componentes/Loader";
 
+import { motion } from "framer-motion";
+
 function ProductoRuta() {
   const router = useRouter();
   const context = useContext(ContextGeneral);
@@ -85,7 +87,14 @@ function ProductoRuta() {
             <div className={style.container__item}>
               <div className={style.img}>
                 {" "}
-                <img src={producto.img} alt="" />
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ duration: 0.5 }}
+                  style={{ width: "100%" }}
+                >
+                  <img src={producto.img} alt="" />
+                </motion.div>
               </div>
               <div className={style.text}>
                 <p>
@@ -100,7 +109,10 @@ function ProductoRuta() {
                   <div className={style.precio__container}>
                     <p
                       className={style.precio}
-                      style={{ textDecoration: "line-through", color: "grey" }}
+                      style={{
+                        textDecoration: "line-through",
+                        color: "grey",
+                      }}
                     >
                       ${producto.precio}
                     </p>
