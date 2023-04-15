@@ -1,6 +1,9 @@
 @import "./Variables.module.scss";
 
+.main {
+}
 .header {
+  top: 0;
   width: 100%;
   min-height: 95vh;
   display: grid;
@@ -41,6 +44,26 @@
         color: $primary-color;
         text-decoration: underline;
       }
+    }
+  }
+  .flecha {
+    align-self: end;
+    display: grid;
+    justify-items: center;
+    align-items: center;
+    margin-bottom: 15px;
+    cursor: pointer;
+    color: $black-color;
+    text-decoration: none;
+    p {
+      font-weight: 900;
+      font-size: 22px;
+      text-align: center;
+      margin: 0;
+    }
+
+    .icon {
+      font-size: 55px;
     }
   }
 }

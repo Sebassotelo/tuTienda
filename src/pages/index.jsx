@@ -9,6 +9,8 @@ import ProductoItem from "@/componentes/productos/ProductoItem";
 import Link from "next/link";
 import Loader from "@/componentes/Loader";
 
+import { MdKeyboardArrowDown } from "react-icons/md";
+
 const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
@@ -39,9 +41,13 @@ export default function Home() {
               <p> ⚡P I C K U P ⚡</p>
               <Link href="/productos">IR AL CATALOGO</Link>
             </div>
+            <Link href="#ofertas" className={style.flecha}>
+              <p>VER OFERTAS</p>
+              <MdKeyboardArrowDown className={style.icon} />
+            </Link>
           </header>
 
-          <section className={style.ofertas}>
+          <section className={style.ofertas} id="ofertas">
             <h3>OFERTAS</h3>
 
             <div className={style.items}>
