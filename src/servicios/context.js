@@ -10,6 +10,7 @@ function Context(props) {
   const [productosCopia, setProductosCopia] = useState([]);
   const [productosPublicos, setProductosPublicos] = useState([]);
   const [productosPublicosCopia, setProductosPublicosCopia] = useState([]);
+  const [contadorOfert, setContadorOfert] = useState(0);
 
   const [secciones, setSecciones] = useState([]);
   const [estadoUsuario, setEstadoUsuario] = useState(0);
@@ -57,6 +58,10 @@ function Context(props) {
     setProductosPublicos(array);
     setProductosPublicosCopia(array);
     setSecciones(infoDocu.secciones);
+
+    const nuevoArray = array.filter((e) => e.descuento);
+    setContadorOfert(nuevoArray.length);
+
     // setProductos(infoDocu.noticias);
     setLoader(true);
   };
@@ -74,6 +79,7 @@ function Context(props) {
         productosCopia: productosCopia,
         productosPublicos: productosPublicos,
         productosPublicosCopia: productosPublicosCopia,
+        contadorOfert: contadorOfert,
         estadoUsuario: estadoUsuario,
         loader: loader,
         auth: auth,

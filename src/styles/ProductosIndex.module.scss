@@ -1,3 +1,5 @@
+@import "./Variables.module.scss";
+
 .container {
   width: 100%;
   min-height: 100vh;
@@ -19,6 +21,10 @@
         font-weight: 600;
         margin-top: 15px;
         cursor: pointer;
+        transition-duration: 0.3s;
+        &:hover {
+          color: $white-color;
+        }
       }
     }
     .tienda {

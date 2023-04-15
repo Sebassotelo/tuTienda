@@ -7,6 +7,7 @@ import { useContext, useEffect } from "react";
 import ContextGeneral from "@/servicios/contextPrincipal";
 import ProductoItem from "@/componentes/productos/ProductoItem";
 import Link from "next/link";
+import Loader from "@/componentes/Loader";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -29,34 +30,42 @@ export default function Home() {
 
   return (
     <>
-      <main className={style.main}>
-        <header className={style.header}>
-          <div className={style.logo}>
-            <img src="https://i.imgur.com/Us77N0f.png" alt="" />{" "}
-            <p> 🛸 E S T A M O S EN EL F U T U R O</p>
-            <p> ⚡P I C K U P ⚡</p>
-            <Link href="/productos">IR AL CATALOGO</Link>
-          </div>
-        </header>
+      {context.loader ? (
+        <main className={style.main}>
+          <header className={style.header}>
+            <div className={style.logo}>
+              <img src="https://i.imgur.com/Us77N0f.png" alt="" />{" "}
+              <p> 🛸 E S T A M O S EN EL F U T U R O</p>
+              <p> ⚡P I C K U P ⚡</p>
+              <Link href="/productos">IR AL CATALOGO</Link>
+            </div>
+          </header>
 
-        <section className={style.ofertas}>
-          <h3>OFERTAS</h3>
+          <section className={style.ofertas}>
+            <h3>OFERTAS</h3>
 
-          <div className={style.items}>
-            {context.productosPublicos &&
-              context.productosPublicos
-                .filter((item, i) => item.descuento)
-                .slice(0, 4)
-                .map((item, i) => {
-                  return <ProductoItem key={i} item={item} />;
-                })}
-          </div>
+            <div className={style.items}>
+              {context.productosPublicos &&
+                context.productosPublicos
+                  .filter((item, i) => item.descuento)
+                  .slice(0, 4)
+                  .map((item, i) => {
+                    return <ProductoItem key={i} item={item} />;
+                  })}
+            </div>
 
-          <Link className={style.a} href="/productos" onClick={filtrarOfertas}>
-            Ver Ofertas
-          </Link>
-        </section>
-      </main>
+            <Link
+              className={style.a}
+              href="/productos"
+              onClick={filtrarOfertas}
+            >
+              Ver Ofertas
+            </Link>
+          </section>
+        </main>
+      ) : (
+        <Loader />
+      )}
     </>
   );
 }

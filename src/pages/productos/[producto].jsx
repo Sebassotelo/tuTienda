@@ -5,6 +5,7 @@ import style from "../../styles/ProductoView.module.scss";
 import Link from "next/link";
 import { BsCartPlus } from "react-icons/bs";
 import Head from "next/head";
+import Loader from "@/componentes/Loader";
 
 function ProductoRuta() {
   const router = useRouter();
@@ -74,7 +75,7 @@ function ProductoRuta() {
 
   return (
     <>
-      {producto && (
+      {context.loader && producto ? (
         <>
           {" "}
           <Head>
@@ -131,6 +132,8 @@ function ProductoRuta() {
             </div>
           </div>
         </>
+      ) : (
+        <Loader />
       )}
     </>
   );

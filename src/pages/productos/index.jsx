@@ -5,6 +5,7 @@ import ItemMenuProductos from "@/componentes/ItemMenuProductos";
 import ProductosTienda from "@/componentes/productos/ProductosTienda";
 import Head from "next/head";
 import { BiMenu } from "react-icons/bi";
+import Loader from "@/componentes/Loader";
 
 function Index() {
   const context = useContext(ContextGeneral);
@@ -16,7 +17,6 @@ function Index() {
     verificarLogin,
   } = useContext(ContextGeneral);
 
-  const [contadorOfert, setContadorOfert] = useState(0);
   const [showCategoria, setShowCategoria] = useState(false);
 
   const filtrarSeccion = (id) => {
@@ -32,11 +32,6 @@ function Index() {
     setProductosPublicos(nuevoArray);
   };
 
-  const contadorOfertas = () => {
-    const nuevoArray = context.productosPublicos.filter((e) => e.descuento);
-    setContadorOfert(nuevoArray.length);
-  };
-
   const mostrarMenu = () => {
     setShowCategoria(!showCategoria);
   };
@@ -46,51 +41,21 @@ function Index() {
       llamadaDB();
     }
     verificarLogin();
-    contadorOfertas();
   }, []);
 
   return (
     <>
-      <Head>
-        <title>SrasMedias 🧦 | Productos</title>
-      </Head>
+      {context.loader ? (
+        <>
+          <Head>
+            <title>SrasMedias 🧦 | Productos</title>
+          </Head>
 
-      <div className={style.container}>
-        <div className={style.container__productos}>
-          {/* menu PC */}
-          <ul className={style.menu}>
-            <h3>Categorias</h3>
-            <li
-              onClick={() =>
-                setProductosPublicos(context.productosPublicosCopia)
-              }
-            >
-              Todo {`(${context.productosPublicosCopia.length})`}
-            </li>
-            <li onClick={filtrarSeccionOfertas}>
-              Ofertas {`(${contadorOfert})`}{" "}
-            </li>
-            {context.secciones &&
-              context.secciones.map((item, i) => {
-                return (
-                  <ItemMenuProductos
-                    key={i}
-                    funcion={filtrarSeccion}
-                    item={item}
-                  />
-                );
-              })}
-          </ul>
-
-          {/* menu mobile */}
-          <ul className={style.menu__movil}>
-            <div className={style.movil__cat}>
-              <BiMenu className={style.cat__icon} />{" "}
-              <h3 onClick={mostrarMenu}>Categorias</h3>
-            </div>
-
-            {showCategoria && (
-              <>
+          <div className={style.container}>
+            <div className={style.container__productos}>
+              {/* menu PC */}
+              <ul className={style.menu}>
+                <h3>Categorias</h3>
                 <li
                   onClick={() =>
                     setProductosPublicos(context.productosPublicosCopia)
@@ -99,7 +64,7 @@ function Index() {
                   Todo {`(${context.productosPublicosCopia.length})`}
                 </li>
                 <li onClick={filtrarSeccionOfertas}>
-                  Ofertas {`(${contadorOfert})`}{" "}
+                  Ofertas {`(${context.contadorOfert})`}{" "}
                 </li>
                 {context.secciones &&
                   context.secciones.map((item, i) => {
@@ -108,18 +73,53 @@ function Index() {
                         key={i}
                         funcion={filtrarSeccion}
                         item={item}
-                        click={mostrarMenu}
                       />
                     );
                   })}
-              </>
-            )}
-          </ul>
-          <div className={style.tienda}>
-            <ProductosTienda />
+              </ul>
+
+              {/* menu mobile */}
+              <ul className={style.menu__movil}>
+                <div className={style.movil__cat}>
+                  <BiMenu className={style.cat__icon} />{" "}
+                  <h3 onClick={mostrarMenu}>Categorias</h3>
+                </div>
+
+                {showCategoria && (
+                  <>
+                    <li
+                      onClick={() =>
+                        setProductosPublicos(context.productosPublicosCopia)
+                      }
+                    >
+                      Todo {`(${context.productosPublicosCopia.length})`}
+                    </li>
+                    <li onClick={filtrarSeccionOfertas}>
+                      Ofertas {`(${contadorOfert})`}{" "}
+                    </li>
+                    {context.secciones &&
+                      context.secciones.map((item, i) => {
+                        return (
+                          <ItemMenuProductos
+                            key={i}
+                            funcion={filtrarSeccion}
+                            item={item}
+                            click={mostrarMenu}
+                          />
+                        );
+                      })}
+                  </>
+                )}
+              </ul>
+              <div className={style.tienda}>
+                <ProductosTienda />
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
+        </>
+      ) : (
+        <Loader />
+      )}
     </>
   );
 }
