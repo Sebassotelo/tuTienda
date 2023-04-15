@@ -12,7 +12,23 @@
   justify-items: center;
   font-size: 23px;
 
-  span {
-    color: $black-color !important;
+  .img {
+    display: grid;
+    align-items: center;
+    justify-items: center;
+    span {
+      color: black !important;
+    }
+  }
+}
+
+@media (max-width: 900px) {
+  .img {
+    display: grid;
+    align-items: center;
+    justify-items: center;
+    img {
+      height: 150px;
+    }
   }
 }

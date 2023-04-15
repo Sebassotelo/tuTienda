@@ -4,7 +4,10 @@ import style from "../styles/Loader.module.scss";
 function Loader() {
   return (
     <div className={style.container}>
-      <span>Cargando...</span>
+      <div className={style.img}>
+        <img src="https://i.imgur.com/qYhFpiY.png" alt="" />
+        <span>Cargando...</span>
+      </div>
     </div>
   );
 }
