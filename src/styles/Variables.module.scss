@@ -3,9 +3,13 @@ $secondary-color: #9cd9ce;
 $third-color: #e4b43b;
 $white-color: #f2ced1;
 $black-color: #413f46;
+$fuente1: "Quicksand", sans-serif;
+$fuente2: "Kanit", sans-serif;
 
 @export "primary-color";
 @export "secondary-color";
 @export "third-color";
 @export "white-color";
 @export "black-color";
+@export "fuente1";
+@export "fuente2";

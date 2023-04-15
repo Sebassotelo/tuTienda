@@ -37,9 +37,18 @@
       cursor: pointer;
       text-decoration: none;
       margin: 0;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      gap: 5px;
 
       &:hover {
         color: rgb(236, 68, 68);
+      }
+
+      .icon {
+        font-size: 22px;
       }
     }
   }

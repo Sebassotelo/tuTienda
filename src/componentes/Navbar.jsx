@@ -3,6 +3,7 @@ import style from "../styles/Navbar.module.scss";
 import Link from "next/link";
 import ContextGeneral from "@/servicios/contextPrincipal";
 import { signOut } from "firebase/auth";
+import { AiOutlineShoppingCart } from "react-icons/ai";
 
 function Navbar({ showCarrito }) {
   const context = useContext(ContextGeneral);
@@ -25,7 +26,10 @@ function Navbar({ showCarrito }) {
       <ul className={style.navbar}>
         <Link href="/">Home</Link>
         <Link href="/productos">Productos</Link>
-        <p onClick={showCarrito}>Carrito {`(${contadorProductos})`} </p>
+        <p onClick={showCarrito}>
+          <AiOutlineShoppingCart className={style.icon} />{" "}
+          {contadorProductos > 0 && `(${contadorProductos})`}
+        </p>
         {context.estadoUsuario == 1 && (
           <>
             {" "}
