@@ -4,6 +4,7 @@ import ContextGeneral from "@/servicios/contextPrincipal";
 import style from "../../styles/ProductoView.module.scss";
 import Link from "next/link";
 import { BsCartPlus } from "react-icons/bs";
+import Head from "next/head";
 
 function ProductoRuta() {
   const router = useRouter();
@@ -23,7 +24,6 @@ function ProductoRuta() {
       (item) => item.id == router.query.producto
     );
     setProducto(prod[0]);
-    console.log("id ruta", prod[0]);
   };
 
   const filtrarSeccion = () => {
@@ -73,53 +73,58 @@ function ProductoRuta() {
   }, [context.loader]);
 
   return (
-    <div className={style.container}>
-      <div className={style.container__item}>
-        <div className={style.img}>
-          {" "}
-          <img src={producto.img} alt="" />
-        </div>
-        <div className={style.text}>
-          <p>
-            <Link href={"/productos"}>Inicio</Link> /{" "}
-            <Link href={"/productos"} onClick={filtrarSeccion}>
-              {producto.seccion}
-            </Link>{" "}
-            / {producto.title}
-          </p>
-          <h3>{producto.title}</h3>
-          {producto.descuento ? (
-            <div className={style.precio__container}>
-              <p
-                className={style.precio}
-                style={{ textDecoration: "line-through", color: "grey" }}
-              >
-                ${producto.precio}
-              </p>
-              <p className={style.precio}>${producto.precioDescuento}</p>
-            </div>
-          ) : (
-            <p className={style.precio}>${producto.precio}</p>
-          )}
-          <p>Stock: {producto.stock}</p>
-          <p>{producto.desc}</p>
+    <>
+      <Head>
+        <title>SrasMedias 🧦 | {producto.title}</title>
+      </Head>
+      <div className={style.container}>
+        <div className={style.container__item}>
+          <div className={style.img}>
+            {" "}
+            <img src={producto.img} alt="" />
+          </div>
+          <div className={style.text}>
+            <p>
+              <Link href={"/productos"}>Inicio</Link> /{" "}
+              <Link href={"/productos"} onClick={filtrarSeccion}>
+                {producto.seccion}
+              </Link>{" "}
+              / {producto.title}
+            </p>
+            <h3>{producto.title}</h3>
+            {producto.descuento ? (
+              <div className={style.precio__container}>
+                <p
+                  className={style.precio}
+                  style={{ textDecoration: "line-through", color: "grey" }}
+                >
+                  ${producto.precio}
+                </p>
+                <p className={style.precio}>${producto.precioDescuento}</p>
+              </div>
+            ) : (
+              <p className={style.precio}>${producto.precio}</p>
+            )}
+            <p>Stock: {producto.stock}</p>
+            <p>{producto.desc}</p>
 
-          {producto.stock > 0 && (
-            <div className={style.agregarCarrito} onClick={agregarCarrito}>
-              <p>Agregar al Carrito</p>
-              <BsCartPlus className={style.icon} />
+            {producto.stock > 0 && (
+              <div className={style.agregarCarrito} onClick={agregarCarrito}>
+                <p>Agregar al Carrito</p>
+                <BsCartPlus className={style.icon} />
+              </div>
+            )}
+            <div className={style.info}>
+              <h4>ENVIOS</h4>
+              <p>⚡P I C K U P ⚡ </p>
+              <p>Envios por motomandados </p>
+              <h4>METODOS DE PAGO</h4>
+              <p>MercadoPago, Efectivo</p>
             </div>
-          )}
-          <div className={style.info}>
-            <h4>ENVIOS</h4>
-            <p>⚡P I C K U P ⚡ </p>
-            <p>Envios por motomandados </p>
-            <h4>METODOS DE PAGO</h4>
-            <p>MercadoPago, Efectivo</p>
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }
 

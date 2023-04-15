@@ -3,6 +3,7 @@ import style from "../../styles/ProductosIndex.module.scss";
 import ContextGeneral from "@/servicios/contextPrincipal";
 import ItemMenuProductos from "@/componentes/ItemMenuProductos";
 import ProductosTienda from "@/componentes/productos/ProductosTienda";
+import Head from "next/head";
 
 function Index() {
   const context = useContext(ContextGeneral);
@@ -43,32 +44,42 @@ function Index() {
   }, []);
 
   return (
-    <div className={style.container}>
-      <div className={style.container__productos}>
-        <ul className={style.menu}>
-          <h3>Categorias</h3>
-          <li
-            onClick={() => setProductosPublicos(context.productosPublicosCopia)}
-          >
-            Todo {`(${context.productosPublicosCopia.length})`}
-          </li>
-          <li onClick={filtrarSeccionOfertas}>
-            Ofertas {`(${contadorOfert})`}{" "}
-          </li>
-          {context.secciones &&
-            context.secciones.map((item, i) => {
-              return (
-                <ItemMenuProductos
-                  key={i}
-                  funcion={filtrarSeccion}
-                  item={item}
-                />
-              );
-            })}
-        </ul>
-        <ProductosTienda />
+    <>
+      <Head>
+        <title>SrasMedias 🧦 | Productos</title>
+      </Head>
+
+      <div className={style.container}>
+        <div className={style.container__productos}>
+          <ul className={style.menu}>
+            <h3>Categorias</h3>
+            <li
+              onClick={() =>
+                setProductosPublicos(context.productosPublicosCopia)
+              }
+            >
+              Todo {`(${context.productosPublicosCopia.length})`}
+            </li>
+            <li onClick={filtrarSeccionOfertas}>
+              Ofertas {`(${contadorOfert})`}{" "}
+            </li>
+            {context.secciones &&
+              context.secciones.map((item, i) => {
+                return (
+                  <ItemMenuProductos
+                    key={i}
+                    funcion={filtrarSeccion}
+                    item={item}
+                  />
+                );
+              })}
+          </ul>
+          <div className={style.tienda}>
+            <ProductosTienda />
+          </div>
+        </div>
       </div>
-    </div>
+    </>
   );
 }
 

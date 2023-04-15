@@ -13,12 +13,16 @@
 
     .menu {
       list-style: none;
+      position: fixed;
 
       li {
         font-weight: 600;
         margin-top: 15px;
         cursor: pointer;
       }
+    }
+    .tienda {
+      grid-column: 2/3;
     }
   }
 }
