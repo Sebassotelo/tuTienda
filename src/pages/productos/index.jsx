@@ -95,7 +95,7 @@ function Index() {
                       Todo {`(${context.productosPublicosCopia.length})`}
                     </li>
                     <li onClick={filtrarSeccionOfertas}>
-                      Ofertas {`(${contadorOfert})`}{" "}
+                      Ofertas {`(${context.contadorOfert})`}{" "}
                     </li>
                     {context.secciones &&
                       context.secciones.map((item, i) => {
