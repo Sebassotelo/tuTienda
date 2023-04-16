@@ -8,6 +8,7 @@ import {
   setDoc,
   updateDoc,
 } from "firebase/firestore";
+import { MdOutlineDeleteOutline } from "react-icons/md";
 function SeccionNueva() {
   const context = useContext(ContextGeneral);
   const { setProductos, setProductosCopia, setSecciones } =
@@ -65,7 +66,7 @@ function SeccionNueva() {
         <p>Secciones Existentes:</p>
         {context.secciones.map((item) => {
           return (
-            <>
+            <div className={style.secciones__item}>
               <p
                 className={style.secciones__p}
                 onClick={() => filtrarSeccion(item)}
@@ -73,9 +74,9 @@ function SeccionNueva() {
                 {item}
               </p>
               <div className={style.x} onClick={() => eliminarSeccion(item)}>
-                <p> x</p>
+                <MdOutlineDeleteOutline />
               </div>
-            </>
+            </div>
           );
         })}
       </div>

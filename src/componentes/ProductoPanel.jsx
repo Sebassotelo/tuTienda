@@ -2,6 +2,8 @@ import React, { useContext, useState } from "react";
 import style from "../styles/ProductoPanel.module.scss";
 import EditarProducto from "./EditarProducto";
 import ContextGeneral from "@/servicios/contextPrincipal";
+import { GrEdit } from "react-icons/gr";
+import { MdOutlineDeleteOutline } from "react-icons/md";
 
 import {
   getFirestore,
@@ -38,6 +40,16 @@ function ProductoPanel({
       setProductos(nuevoItems);
     }
   };
+
+  const mostrarEditar = () => {
+    setEditarProducto(!editarProducto);
+    if (editarProducto === true) {
+      document.body.style.overflow = "";
+    } else {
+      document.body.style.overflow = "hidden";
+    }
+  };
+
   return (
     <>
       <div className={style.container}>
@@ -78,8 +90,11 @@ function ProductoPanel({
             </div>
           </div>
           <div className={style.btn}>
-            <p onClick={() => setEditarProducto(true)}>Editar</p>
-            <p onClick={eliminarProducto}>Eliminar</p>
+            <GrEdit onClick={mostrarEditar} className={style.btn__icon} />
+            <MdOutlineDeleteOutline
+              onClick={eliminarProducto}
+              className={style.btn__icon}
+            />
           </div>
         </div>
       </div>
@@ -96,7 +111,7 @@ function ProductoPanel({
           id2={id}
           descuento2={descuento}
           precioDescuento2={precioDescuento}
-          setEditarProducto={setEditarProducto}
+          setEditarProducto={mostrarEditar}
         />
       )}
     </>

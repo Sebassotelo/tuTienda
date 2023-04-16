@@ -2,15 +2,26 @@
 
 .container {
   justify-self: center;
-  width: 70%;
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+
+  z-index: 1200;
+  top: 0;
+  left: 0;
   min-width: 500px;
   min-height: 300px;
-  background-color: $white-color;
-  border-radius: 15px;
-  padding: 15px;
-  margin: 15px 0 15px 0;
+  background-color: rgba(0, 0, 0, 0.295);
+  display: grid;
+  justify-items: center;
+  align-items: center;
+  backdrop-filter: blur(3px);
 
   .form {
+    width: 50vw;
+    background-color: $white-color;
+    padding: 15px;
+    border-radius: 15px;
     display: grid;
     p {
       font-weight: 600;

@@ -27,7 +27,8 @@
   }
 
   .secciones {
-    width: 80%;
+    width: 90%;
+    padding: 15px 0 15px 0;
     .producto__nuevo__btn {
       cursor: pointer;
       color: $white-color;
@@ -53,7 +54,10 @@
   }
 
   .listaProducto {
-    display: grid;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    width: 100%;
     grid-gap: 15px;
   }
 }

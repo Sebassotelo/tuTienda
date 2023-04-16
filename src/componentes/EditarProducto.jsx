@@ -173,7 +173,7 @@ function EditarProducto({
           defaultValue={precioDescuento2 ? precioDescuento2 : ""}
         />
         <button type="submit">Guardar</button>
-        <button onClick={() => setEditarProducto(false)}>Cerrar</button>
+        <button onClick={setEditarProducto}>Cerrar</button>
       </form>
     </div>
   );

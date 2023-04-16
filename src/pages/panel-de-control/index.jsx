@@ -4,12 +4,14 @@ import style from "../../styles/PanelDeControlIndex.module.scss";
 import ContextGeneral from "@/servicios/contextPrincipal";
 import ProductoPanel from "@/componentes/ProductoPanel";
 import SeccionNueva from "@/componentes/SeccionNueva";
+import Head from "next/head";
 
 import { onAuthStateChanged } from "firebase/auth";
 import Descuentos from "@/componentes/Descuentos";
 import BuscadorPanel from "@/componentes/BuscadorPanel";
 
 import { push } from "next/router";
+import Loader from "@/componentes/Loader";
 
 function Index() {
   const context = useContext(ContextGeneral);
@@ -24,6 +26,15 @@ function Index() {
 
   const [showNuevoProducto, setShowNuevoProducto] = useState(false);
 
+  const mostrarVentana = () => {
+    setShowNuevoProducto(!showNuevoProducto);
+    if (showNuevoProducto === true) {
+      document.body.style.overflow = "";
+    } else {
+      document.body.style.overflow = "hidden";
+    }
+  };
+
   useEffect(() => {
     verificarLogin();
     llamadaDB();
@@ -33,57 +44,68 @@ function Index() {
     }
   }, []);
   return (
-    <div className={style.container}>
-      <div className={style.menu}>
-        <li onClick={() => setShowSeccion(1)}>Productos</li>
-        <li onClick={() => setShowSeccion(2)}>Descuentos</li>
-      </div>
-      <div className={style.secciones}>
-        {showSeccion == 1 && (
+    <>
+      <Head>
+        <title>SrasMedias 🧦 | Panel de Control</title>
+      </Head>
+      <div className={style.container}>
+        {context.loader ? (
           <>
-            <SeccionNueva />
+            <div className={style.menu}>
+              <li onClick={() => setShowSeccion(1)}>Productos</li>
+              <li onClick={() => setShowSeccion(2)}>Descuentos</li>
+            </div>
+            <div className={style.secciones}>
+              {showSeccion == 1 && (
+                <>
+                  <SeccionNueva />
 
-            <BuscadorPanel />
+                  <BuscadorPanel />
 
-            {showNuevoProducto ? (
-              <ProductoNuevo setShowNuevoProducto={setShowNuevoProducto} />
-            ) : (
-              <>
-                <p
-                  className={style.producto__nuevo__btn}
-                  onClick={() => setShowNuevoProducto(true)}
-                >
-                  Nuevo Producto
-                </p>
-              </>
-            )}
-            <div className={style.listaProducto}>
-              {context.productos &&
-                context.productos.map((item) => {
-                  return (
+                  {showNuevoProducto ? (
+                    <ProductoNuevo setShowNuevoProducto={mostrarVentana} />
+                  ) : (
                     <>
-                      {" "}
-                      <ProductoPanel
-                        title={item.title}
-                        precio={item.precio}
-                        desc={item.desc}
-                        img={item.img}
-                        stock={item.stock}
-                        caracteristicas={item.caracteristicas}
-                        id={item.id}
-                        seccion={item.seccion}
-                        descuento={item.descuento}
-                        precioDescuento={item.precioDescuento}
-                      />
+                      <p
+                        className={style.producto__nuevo__btn}
+                        onClick={mostrarVentana}
+                      >
+                        Nuevo Producto
+                      </p>
                     </>
-                  );
-                })}
+                  )}
+                  <div className={style.listaProducto}>
+                    {context.productos &&
+                      context.productos.map((item) => {
+                        return (
+                          <>
+                            {" "}
+                            <ProductoPanel
+                              title={item.title}
+                              precio={item.precio}
+                              desc={item.desc}
+                              img={item.img}
+                              stock={item.stock}
+                              caracteristicas={item.caracteristicas}
+                              id={item.id}
+                              seccion={item.seccion}
+                              descuento={item.descuento}
+                              precioDescuento={item.precioDescuento}
+                            />
+                          </>
+                        );
+                      })}
+                  </div>
+                </>
+              )}
+              {showSeccion == 2 && <Descuentos />}
             </div>
           </>
+        ) : (
+          <Loader />
         )}
-        {showSeccion == 2 && <Descuentos />}
       </div>
-    </div>
+    </>
   );
 }
 

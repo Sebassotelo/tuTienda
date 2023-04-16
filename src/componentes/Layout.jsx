@@ -16,7 +16,6 @@ function Layout({ children, title }) {
         document.body.style.overflow = "hidden";
       }
     }
-    console.log(showCarrito);
   };
 
   return (

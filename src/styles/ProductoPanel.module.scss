@@ -4,7 +4,7 @@
   justify-self: center;
   padding: 15px;
   height: 150px;
-  width: 70%;
+  width: 600px;
   border-radius: 15px;
   background-color: $white-color;
   display: grid;
@@ -26,7 +26,7 @@
 
   .desc {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr 0.5fr;
 
     .text {
       padding: 15px;
@@ -47,6 +47,15 @@
       align-items: center;
       flex-wrap: wrap;
       gap: 8px;
+
+      .btn__icon {
+        font-size: 22px;
+        cursor: pointer;
+
+        border: 1px solid $black-color;
+        padding: 4px;
+        border-radius: 50%;
+      }
 
       p {
         margin: 0;

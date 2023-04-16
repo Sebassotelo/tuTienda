@@ -5,22 +5,27 @@ import { doc, getDoc, updateDoc } from "firebase/firestore";
 
 function Descuentos() {
   const context = useContext(ContextGeneral);
-  const { setProductos, setProductosCopia } = useContext(ContextGeneral);
+  const { setProductos, setProductosCopia, setLoader } =
+    useContext(ContextGeneral);
 
   const [contadorProductos, setContadorProductos] = useState(0);
 
-  const descuentoSeccion = async (secc) => {
+  const descuentoSeccion = async (e) => {
+    e.preventDefault();
+    const seccion = e.target.inputSeccion.value;
     if (
-      confirm(`Seguro que desea activar el descuento a la seccion ${secc}?`) ===
-      true
+      confirm(
+        `Seguro que desea activar el descuento a la seccion ${seccion}?`
+      ) === true
     ) {
+      setLoader(false);
       //traemos los datos de base de datos
       const docRef = doc(context.firestore, `users/sebassotelo97@gmail.com`);
 
       let nuevoArray = context.productosCopia;
 
       for (let i = 0; i < nuevoArray.length; i++) {
-        if (nuevoArray[i].seccion == secc) {
+        if (nuevoArray[i].seccion == seccion) {
           nuevoArray[i].descuento = true;
         }
       }
@@ -30,21 +35,26 @@ function Descuentos() {
       setProductos(nuevoArray);
       setProductosCopia(nuevoArray);
       contadorProductosDescuento();
+      setLoader(true);
     }
   };
 
-  const quitarDescuentoSeccion = async (secc) => {
+  const quitarDescuentoSeccion = async (e) => {
+    e.preventDefault();
+
+    const seccion = e.target.inputSeccion.value;
     if (
       confirm(
-        `Seguro que desea desactivar el descuento a la seccion ${secc}?`
+        `Seguro que desea desactivar el descuento a la seccion ${seccion}?`
       ) === true
     ) {
+      setLoader(false);
       //traemos los datos de base de datos
       const docRef = doc(context.firestore, `users/sebassotelo97@gmail.com`);
 
       let nuevoArray = context.productosCopia;
       for (let i = 0; i < nuevoArray.length; i++) {
-        if (nuevoArray[i].seccion == secc) {
+        if (nuevoArray[i].seccion == seccion) {
           nuevoArray[i].descuento = false;
         }
       }
@@ -53,6 +63,7 @@ function Descuentos() {
       setProductos(nuevoArray);
       setProductosCopia(nuevoArray);
       contadorProductosDescuento();
+      setLoader(true);
     }
   };
 
@@ -62,6 +73,7 @@ function Descuentos() {
         `Seguro que desea activar el descuento de todos los productos?`
       ) === true
     ) {
+      setLoader(false);
       //traemos los datos de base de datos
       const docRef = doc(context.firestore, `users/sebassotelo97@gmail.com`);
 
@@ -75,6 +87,7 @@ function Descuentos() {
       setProductos(nuevoArray);
       setProductosCopia(nuevoArray);
       contadorProductosDescuento();
+      setLoader(true);
     }
   };
   const quitarDescuentoTotal = async () => {
@@ -83,6 +96,7 @@ function Descuentos() {
         `Seguro que desea desactivar el descuento de todos los productos?`
       ) === true
     ) {
+      setLoader(false);
       //traemos los datos de base de datos
       const docRef = doc(context.firestore, `users/sebassotelo97@gmail.com`);
 
@@ -96,6 +110,7 @@ function Descuentos() {
       setProductos(nuevoArray);
       setProductosCopia(nuevoArray);
       contadorProductosDescuento();
+      setLoader(true);
     }
   };
 
@@ -114,49 +129,43 @@ function Descuentos() {
       <p>
         Hay en descuento <span>{contadorProductos}</span> productos{" "}
       </p>
-      <p>Aplicar Descuentos en Seccion</p>
-      <div className={style.aplicarDescSeccion}>
-        {context.secciones.map((item, i) => {
-          return (
-            <p
-              key={i}
-              className={style.descuento__seccion}
-              onClick={() => descuentoSeccion(item)}
-            >
-              {item}
-            </p>
-          );
-        })}
-      </div>
+      <p className={style.title}>Aplicar Descuentos:</p>
+      <p>Elige la seccion:</p>
+      <form action="" onSubmit={descuentoSeccion}>
+        <select name="" id="inputSeccion">
+          {context.secciones.map((item, i) => {
+            return <option key={i}>{item}</option>;
+          })}
+        </select>
 
-      <p>Quitar Descuentos en Seccion</p>
-      <div className={style.aplicarDescSeccion}>
-        {context.secciones.map((item, i) => {
-          return (
-            <p
-              key={i}
-              className={style.descuento__seccion}
-              onClick={() => quitarDescuentoSeccion(item)}
-            >
-              {item}
-            </p>
-          );
-        })}
-      </div>
-
+        <button type="submit">Aplicar Descuento</button>
+      </form>
       <p
         className={style.descuento__seccion}
         onClick={descuentoTotal}
         style={{ backgroundColor: "green", width: "200px" }}
       >
-        Aplicar Descuento Total
+        Aplicar Descuento a Todos los Productos
       </p>
+
+      <p className={style.title}>Quitar Descuentos:</p>
+      <p>Elige la seccion:</p>
+      <form action="" onSubmit={quitarDescuentoSeccion}>
+        <select name="" id="inputSeccion">
+          {context.secciones.map((item, i) => {
+            return <option key={i}>{item}</option>;
+          })}
+        </select>
+
+        <button type="submit">Quitar Descuento</button>
+      </form>
+
       <p
         className={style.descuento__seccion}
         onClick={quitarDescuentoTotal}
         style={{ backgroundColor: "red", width: "200px" }}
       >
-        Quitar Descuento Total
+        Quitar Descuento a Todos los Productos
       </p>
     </div>
   );
