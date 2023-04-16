@@ -1,7 +1,11 @@
 import React, { useContext, useEffect, useState } from "react";
 import style from "../styles/Carrito.module.scss";
 import ContextGeneral from "@/servicios/contextPrincipal";
-import { MdOutlineDeleteOutline } from "react-icons/md";
+import {
+  MdOutlineDeleteOutline,
+  MdKeyboardArrowDown,
+  MdOutlineKeyboardArrowUp,
+} from "react-icons/md";
 
 function Carrito({ showCarrito, show }) {
   const context = useContext(ContextGeneral);
@@ -9,6 +13,9 @@ function Carrito({ showCarrito, show }) {
   const [precioFinal, setPrecioFinal] = useState(0);
   const [cantidadFinal, setCantidadFinal] = useState(0);
   const [pedido, setPedido] = useState();
+  const [cuponActivo, setCuponActivo] = useState({});
+
+  const [showCupon, setShowCupon] = useState(false);
 
   const [estadoPedido, setEstadoPedido] = useState(0);
   // 0 = nada
@@ -34,8 +41,15 @@ function Carrito({ showCarrito, show }) {
               e.precio * e.cantidad
             }%20%0A`)
       );
+      let cuponDesc = "";
+
+      if (cuponActivo && cuponActivo.activo) {
+        cuponDesc = `%0ACupon%20${cuponActivo.cupon}%20activo.%20Descuento%20de%20$${cuponActivo.monto}`;
+      }
       setPedido(
-        `Hola,%20te%20pido%20esto:%0A%0A${pedidoCopy}%0ATotal:%20$${precioFinal}`
+        `Hola,%20te%20pido%20esto:%0A%0A${pedidoCopy}%0ATotal:%20$${precioFinal}${
+          cuponActivo && cuponDesc
+        }`
       );
 
       navigator.clipboard.writeText(pedidoCopy);
@@ -74,6 +88,30 @@ function Carrito({ showCarrito, show }) {
     }
   };
 
+  const aplicarCupon = (e) => {
+    e.preventDefault();
+
+    const cup = e.target.inputCupon.value;
+
+    let descuento = [];
+
+    descuento = context.cupones.filter(
+      (item) => item.cupon.toLowerCase() == cup.toLowerCase()
+    );
+
+    if (descuento[0] && descuento[0].activo) {
+      setPrecioFinal(precioFinal - descuento[0].monto);
+      setCuponActivo(descuento[0]);
+      actualizacionCarrito();
+    } else {
+      alert("El cupón ingresado ha expirado o es incorrecto");
+      setCuponActivo(0);
+      descuento = [];
+    }
+
+    e.target.inputCupon.value = "";
+  };
+
   let precioTotal = 0;
   let cantidadTotal = 0;
 
@@ -85,7 +123,12 @@ function Carrito({ showCarrito, show }) {
 
     console.log(precioTotal, cantidadTotal);
 
-    setPrecioFinal(precioTotal);
+    if (cuponActivo && cuponActivo.activo) {
+      setPrecioFinal(precioTotal - cuponActivo.monto);
+    } else {
+      setPrecioFinal(precioTotal);
+    }
+
     setCantidadFinal(cantidadTotal);
     setEstadoPedido(0);
   }, [context.actuCarrito]);
@@ -134,6 +177,37 @@ function Carrito({ showCarrito, show }) {
               );
             })}
         </div>
+        <div className={style.cupon} onClick={() => setShowCupon(!showCupon)}>
+          <p>¿Tenes un Cupon?</p>
+          {showCupon ? (
+            <MdOutlineKeyboardArrowUp className={style.icon} />
+          ) : (
+            <MdKeyboardArrowDown className={style.icon} />
+          )}
+        </div>
+        {showCupon && (
+          <>
+            {cuponActivo && cuponActivo.activo ? (
+              <p className={style.cupon__aplicado}>
+                Cupon aplicado de ${cuponActivo.monto}
+              </p>
+            ) : (
+              <form
+                action=""
+                onSubmit={aplicarCupon}
+                className={style.form__cupon}
+              >
+                <input
+                  type="text"
+                  id="inputCupon"
+                  placeholder="Ingrese el cupon"
+                  required
+                />
+                <button type="submit">Aplicar Cupon</button>
+              </form>
+            )}
+          </>
+        )}
         <div className={style.precio__final}>
           <p>Total:</p>
           <p>${precioFinal}</p>
