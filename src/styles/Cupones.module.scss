@@ -1,0 +1,46 @@
+@import "./Variables.module.scss";
+
+.container {
+  .crear__cupon {
+    margin: 0;
+    padding: 8px;
+    border-radius: 15px;
+    color: $black-color;
+    background-color: $white-color;
+    text-align: center;
+    margin: 10px 0 10px 0;
+    cursor: pointer;
+    width: 250px;
+  }
+  .form {
+    width: 250px;
+    margin: 10px 0 10px 0;
+    background-color: $white-color;
+    padding: 10px;
+    border-radius: 15px;
+    display: grid;
+    justify-items: center;
+    border: none;
+    input {
+      border-radius: 5px;
+      outline: none;
+      border: 1px solid black;
+      height: 20px;
+    }
+    div {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    button {
+      margin-top: 10px;
+    }
+  }
+  .cupon {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    justify-content: flex-start;
+  }
+}

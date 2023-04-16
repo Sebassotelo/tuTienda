@@ -33,7 +33,7 @@ function ProductoPanel({
     if (confirm("Seguro que desea eliminar este producto?") === true) {
       e.preventDefault(e);
 
-      const nuevoItems = context.productos.filter((item) => item.id != id);
+      const nuevoItems = context.productosCopia.filter((item) => item.id != id);
 
       const docRef = doc(context.firestore, `users/sebassotelo97@gmail.com`);
       await updateDoc(docRef, { items: [...nuevoItems] });

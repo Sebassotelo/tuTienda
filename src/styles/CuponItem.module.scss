@@ -1,0 +1,53 @@
+@import "./Variables.module.scss";
+.container {
+  display: grid;
+  justify-items: center;
+}
+
+.cupon__item {
+  background-color: $white-color;
+  padding: 10px;
+  border-radius: 15px;
+  display: grid;
+  justify-items: center;
+  height: 100px;
+
+  .desc {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    p {
+      margin: 0;
+    }
+    .icons__on {
+      margin: 0;
+      background-color: rgb(12, 194, 12);
+      padding: 5px;
+      text-align: center;
+      border-radius: 15px;
+    }
+    .icons__off {
+      margin: 0;
+      background-color: rgb(218, 14, 14);
+      padding: 5px;
+      text-align: center;
+      border-radius: 15px;
+    }
+  }
+
+  .icons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+
+    .icons__item {
+      font-size: 22px;
+      border: 1px solid $black-color;
+      border-radius: 50%;
+      padding: 5px;
+      cursor: pointer;
+    }
+  }
+}

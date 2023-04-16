@@ -63,7 +63,15 @@ function Index() {
                   <BuscadorPanel />
 
                   {showNuevoProducto ? (
-                    <ProductoNuevo setShowNuevoProducto={mostrarVentana} />
+                    <>
+                      <p
+                        className={style.producto__nuevo__btn}
+                        onClick={mostrarVentana}
+                      >
+                        Nuevo Producto
+                      </p>
+                      <ProductoNuevo setShowNuevoProducto={mostrarVentana} />
+                    </>
                   ) : (
                     <>
                       <p

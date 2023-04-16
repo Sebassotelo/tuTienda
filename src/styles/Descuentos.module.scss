@@ -3,7 +3,31 @@
   width: 100%;
   display: grid;
   justify-items: start;
-  h3 {
+
+  .p__productos {
+    margin: 15px 0 15px 0;
+    font-weight: 400;
+    font-size: 18px;
+    padding: 5px;
+    background-color: rgba(0, 0, 0, 0.103);
+    border-radius: 15px;
+  }
+
+  .container__descuentos {
+    display: flex;
+    justify-content: flex-start;
+    gap: 20px;
+
+    .container__descuentos__item {
+      margin: 10px 0 10px 0;
+      padding: 10px;
+      background-color: rgba(0, 0, 0, 0.103);
+      border-radius: 15px;
+      display: grid;
+      justify-items: center;
+    }
+  }
+  .h3 {
     text-align: center;
     font-size: 35px;
     margin: 0;
@@ -20,7 +44,8 @@
   }
 
   form {
-    padding: 4px 0 4px 0;
+    padding: 8px 0 8px 0;
+    border-bottom: 2px solid rgba(0, 0, 0, 0.37);
     select {
       padding: 5px;
       border-radius: 15px;
@@ -48,7 +73,7 @@
   text-align: center;
   cursor: pointer;
   transition-duration: 0.3s;
-
+  margin: 10px 0 5px 0 !important;
   &:hover {
     background-color: $third-color;
   }
@@ -61,4 +86,13 @@
   align-items: center;
   flex-wrap: wrap;
   gap: 10px;
+}
+
+.listaProducto {
+  padding: 10px 0 10px 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  width: 100%;
+  grid-gap: 15px;
 }

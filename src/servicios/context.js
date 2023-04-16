@@ -11,6 +11,7 @@ function Context(props) {
   const [productosPublicos, setProductosPublicos] = useState([]);
   const [productosPublicosCopia, setProductosPublicosCopia] = useState([]);
   const [contadorOfert, setContadorOfert] = useState(0);
+  const [cupones, setCupones] = useState([]);
 
   const [secciones, setSecciones] = useState([]);
   const [estadoUsuario, setEstadoUsuario] = useState(0);
@@ -52,6 +53,7 @@ function Context(props) {
     const infoDocu = consulta.data();
     setProductos(infoDocu.items);
     setProductosCopia(infoDocu.items);
+    setCupones(infoDocu.cupones);
 
     const array = infoDocu.items.filter((item) => item.stock > 0);
 
@@ -80,6 +82,7 @@ function Context(props) {
         productosPublicos: productosPublicos,
         productosPublicosCopia: productosPublicosCopia,
         contadorOfert: contadorOfert,
+        cupones: cupones,
         estadoUsuario: estadoUsuario,
         loader: loader,
         auth: auth,
@@ -100,6 +103,7 @@ function Context(props) {
         setProductosPublicos,
         setProductosPublicosCopia,
         verificarLogin,
+        setCupones,
       }}
     >
       {props.children}
