@@ -64,9 +64,9 @@ function SeccionNueva() {
       </form>
       <div className={style.secciones}>
         <p>Secciones Existentes:</p>
-        {context.secciones.map((item) => {
+        {context.secciones.map((item, i) => {
           return (
-            <div className={style.secciones__item}>
+            <div className={style.secciones__item} key={i}>
               <p
                 className={style.secciones__p}
                 onClick={() => filtrarSeccion(item)}
