@@ -70,8 +70,8 @@ export default function Home() {
             <h3>OFERTAS</h3>
 
             <div className={style.items}>
-              {context.productosPublicos &&
-                context.productosPublicos
+              {context.productosPublicosCopia &&
+                context.productosPublicosCopia
                   .filter((item, i) => item.descuento)
                   .slice(0, 4)
                   .map((item, i) => {
