@@ -61,9 +61,13 @@
     display: grid;
     grid-template-columns: 1fr;
     z-index: 300;
+    bottom: 0;
     .buscador {
       grid-column: 1/2;
       grid-row: 2/3;
+      position: fixed;
+      top: 0;
+      background-color: $black-color;
     }
 
     .navbar {

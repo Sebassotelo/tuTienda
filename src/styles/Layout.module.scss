@@ -21,3 +21,15 @@
     }
   }
 }
+
+@media (max-width: 900px) {
+  .body {
+    margin-top: 0px;
+
+    min-height: 90vh;
+  }
+  .footer {
+    margin-bottom: 58px;
+    border-bottom: 2px solid $white-color;
+  }
+}

@@ -140,7 +140,12 @@ function Carrito({ showCarrito, show }) {
 
   return (
     <div className={style.container} style={{ right: show ? "0px" : "-110vw" }}>
-      <Toaster className={style.toast} />
+      <div className={style.toast}>
+        <Toaster />
+      </div>
+      <div className={style.toast__movil}>
+        <Toaster position="top-center" />
+      </div>
       <p onClick={() => showCarrito(false)} className={style.cerrar}>
         X
       </p>{" "}

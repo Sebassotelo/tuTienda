@@ -221,6 +221,13 @@
   }
 }
 
+.toast {
+  display: grid;
+}
+.toast__movil {
+  display: none;
+}
+
 @media (max-width: 900px) {
   .container {
     z-index: 600;
@@ -230,5 +237,11 @@
     background-color: $white-color;
     top: 0;
     position: fixed;
+  }
+  .toast {
+    display: none;
+  }
+  .toast__movil {
+    display: grid;
   }
 }
