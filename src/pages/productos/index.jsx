@@ -97,6 +97,7 @@ function Index() {
                     <li
                       onClick={() => {
                         setProductosPublicos(context.productosPublicosCopia);
+                        setBusqueda("");
                         mostrarMenu();
                       }}
                     >
@@ -105,6 +106,7 @@ function Index() {
                     <li
                       onClick={() => {
                         filtrarSeccionOfertas();
+                        setBusqueda("");
                         mostrarMenu();
                       }}
                     >
