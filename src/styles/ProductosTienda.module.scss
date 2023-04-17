@@ -3,6 +3,38 @@
 .container {
   width: 100%;
   padding: 20px;
+
+  .p__container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+
+    .tienda__p {
+      background-color: $black-color;
+      color: $white-color;
+      padding: 8px;
+      margin: 10px 0 10px 0;
+      border-radius: 15px;
+      text-align: center;
+
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-weight: 900;
+      user-select: none;
+
+      p {
+        margin: 0;
+      }
+
+      .icon {
+        font-size: 22px;
+        margin-left: 10px;
+      }
+    }
+  }
+
   .container__items {
     width: 100%;
     display: flex;
@@ -10,6 +42,32 @@
     align-items: center;
     flex-wrap: wrap;
     gap: 10px;
+  }
+}
+.paginas {
+  width: 120px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  background-color: rgba(0, 0, 0, 0.199);
+  padding: 10px;
+  border-radius: 15px;
+  margin: auto;
+  margin-top: 15px;
+
+  .icon {
+    font-size: 35px;
+    background-color: $black-color;
+    color: $white-color;
+    border-radius: 50%;
+    padding: 2px;
+    cursor: pointer;
+  }
+  p {
+    margin: 0;
+    font-size: 25px;
+    font-weight: 900;
   }
 }
 

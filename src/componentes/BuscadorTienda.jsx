@@ -1,15 +1,19 @@
 import React, { useState, useContext, useEffect } from "react";
-import style from "../styles/BuscadorPanel.module.scss";
+import style from "../styles/BuscadorTienda.module.scss";
 import ContextGeneral from "@/servicios/contextPrincipal";
 
-function BuscadorTienda() {
+import { push } from "next/router";
+import { AiOutlineSearch } from "react-icons/ai";
+
+function BuscadorTienda({ setShow }) {
   const context = useContext(ContextGeneral);
-  const { setProductosPublicos } = useContext(ContextGeneral);
+  const { setProductosPublicos, setBusqueda } = useContext(ContextGeneral);
   const [search, setSearch] = useState("");
 
   const buscador = (e) => {
     e.preventDefault(e);
     let busca = e.target.inputBusca.value;
+    setBusqueda(e.target.inputBusca.value);
 
     busca = busca.toLowerCase();
 
@@ -22,10 +26,8 @@ function BuscadorTienda() {
 
     setProductosPublicos(objetosFiltrados);
     e.target.inputBusca.value = "";
-  };
-
-  const limpiarBusqueda = () => {
-    setProductosPublicos(context.productosPublicosCopia);
+    push("/productos");
+    setShow(false);
   };
 
   return (
@@ -36,16 +38,10 @@ function BuscadorTienda() {
           placeholder="Ingrese un producto/seccion/caracteristica"
           id="inputBusca"
         />
-        <button type="submit">Buscar</button>
+        <button type="submit">
+          <AiOutlineSearch className={style.icon} />
+        </button>
       </form>
-      {context.productosPublicos != context.productosPublicosCopia && (
-        <>
-          <p onClick={limpiarBusqueda}>Limpiar Busqueda</p>
-          <p style={{ cursor: "default" }}>
-            {context.productosPublicos.length} Productos
-          </p>
-        </>
-      )}
     </div>
   );
 }

@@ -12,7 +12,7 @@ import Loader from "@/componentes/Loader";
 
 import { motion } from "framer-motion";
 
-import { MdKeyboardArrowDown } from "react-icons/md";
+import { MdOutlineKeyboardDoubleArrowDown } from "react-icons/md";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -61,7 +61,7 @@ export default function Home() {
                 className={style.flecha}
               >
                 <p>VER OFERTAS</p>
-                <MdKeyboardArrowDown className={style.icon} />
+                <MdOutlineKeyboardDoubleArrowDown className={style.icon} />
               </Link>
             </header>
           </motion.div>

@@ -7,6 +7,8 @@ import {
   MdOutlineKeyboardArrowUp,
 } from "react-icons/md";
 
+import { Toaster, toast } from "sonner";
+
 function Carrito({ showCarrito, show }) {
   const context = useContext(ContextGeneral);
   const { setCarrito, actualizacionCarrito } = useContext(ContextGeneral);
@@ -52,10 +54,9 @@ function Carrito({ showCarrito, show }) {
         }`
       );
 
-      navigator.clipboard.writeText(pedidoCopy);
-
       if (cantidadFinal > 0) {
         setEstadoPedido(2);
+        toast.success(`Envianos el pedido por WhatsApp`);
       }
     }
   };
@@ -72,6 +73,10 @@ function Carrito({ showCarrito, show }) {
           nuevoArray.find((e) => e.id === id).cantidad += 1;
           setCarrito(nuevoArray);
           actualizacionCarrito();
+        } else {
+          toast.error(
+            `No hay stock suficiente para agregar esa cantidad al carrito`
+          );
         }
       }
     }
@@ -104,7 +109,7 @@ function Carrito({ showCarrito, show }) {
       setCuponActivo(descuento[0]);
       actualizacionCarrito();
     } else {
-      alert("El cupón ingresado ha expirado o es incorrecto");
+      toast.error("El cupón ingresado ha expirado o es incorrecto");
       setCuponActivo(0);
       descuento = [];
     }
@@ -135,6 +140,7 @@ function Carrito({ showCarrito, show }) {
 
   return (
     <div className={style.container} style={{ right: show ? "0px" : "-110vw" }}>
+      <Toaster className={style.toast} />
       <p onClick={() => showCarrito(false)} className={style.cerrar}>
         X
       </p>{" "}
@@ -185,6 +191,7 @@ function Carrito({ showCarrito, show }) {
             <MdKeyboardArrowDown className={style.icon} />
           )}
         </div>
+
         {showCupon && (
           <>
             {cuponActivo && cuponActivo.activo ? (

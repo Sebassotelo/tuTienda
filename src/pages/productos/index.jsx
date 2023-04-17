@@ -6,16 +6,12 @@ import ProductosTienda from "@/componentes/productos/ProductosTienda";
 import Head from "next/head";
 import { BiMenu } from "react-icons/bi";
 import Loader from "@/componentes/Loader";
+import { motion } from "framer-motion";
 
 function Index() {
   const context = useContext(ContextGeneral);
-  const {
-    setProductos,
-    setProductosCopia,
-    llamadaDB,
-    setProductosPublicos,
-    verificarLogin,
-  } = useContext(ContextGeneral);
+  const { llamadaDB, setProductosPublicos, verificarLogin } =
+    useContext(ContextGeneral);
 
   const [showCategoria, setShowCategoria] = useState(false);
 
@@ -26,7 +22,7 @@ function Index() {
     setProductosPublicos(nuevoArray);
   };
   const filtrarSeccionOfertas = () => {
-    const nuevoArray = context.productosPublicos.filter(
+    const nuevoArray = context.productosPublicosCopia.filter(
       (item) => item.descuento
     );
     setProductosPublicos(nuevoArray);
@@ -41,7 +37,7 @@ function Index() {
       llamadaDB();
     }
     verificarLogin();
-  }, []);
+  }, [context.productosPublicos, context.loader]);
 
   return (
     <>
@@ -66,6 +62,7 @@ function Index() {
                 <li onClick={filtrarSeccionOfertas}>
                   Ofertas {`(${context.contadorOfert})`}{" "}
                 </li>
+
                 {context.secciones &&
                   context.secciones.map((item, i) => {
                     return (
@@ -85,15 +82,26 @@ function Index() {
                 </div>
 
                 {showCategoria && (
-                  <>
+                  <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 0.5 }}
+                    className={style.buscador}
+                  >
                     <li
-                      onClick={() =>
-                        setProductosPublicos(context.productosPublicosCopia)
-                      }
+                      onClick={() => {
+                        setProductosPublicos(context.productosPublicosCopia);
+                        mostrarMenu();
+                      }}
                     >
                       Todo {`(${context.productosPublicosCopia.length})`}
                     </li>
-                    <li onClick={filtrarSeccionOfertas}>
+                    <li
+                      onClick={() => {
+                        filtrarSeccionOfertas();
+                        mostrarMenu();
+                      }}
+                    >
                       Ofertas {`(${context.contadorOfert})`}{" "}
                     </li>
                     {context.secciones &&
@@ -107,7 +115,7 @@ function Index() {
                           />
                         );
                       })}
-                  </>
+                  </motion.div>
                 )}
               </ul>
               <div className={style.tienda}>

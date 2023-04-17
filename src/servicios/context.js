@@ -12,6 +12,7 @@ function Context(props) {
   const [productosPublicosCopia, setProductosPublicosCopia] = useState([]);
   const [contadorOfert, setContadorOfert] = useState(0);
   const [cupones, setCupones] = useState([]);
+  const [busqueda, setBusqueda] = useState("");
 
   const [secciones, setSecciones] = useState([]);
   const [estadoUsuario, setEstadoUsuario] = useState(0);
@@ -92,6 +93,7 @@ function Context(props) {
         secciones: secciones,
         carrito: carrito,
         actuCarrito: actuCarrito,
+        busqueda: busqueda,
         setSecciones,
         setProductos,
         setProductosCopia,
@@ -104,6 +106,7 @@ function Context(props) {
         setProductosPublicosCopia,
         verificarLogin,
         setCupones,
+        setBusqueda,
       }}
     >
       {props.children}

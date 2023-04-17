@@ -10,6 +10,7 @@
   background-color: $white-color;
   position: fixed;
   transition-duration: 0.3s;
+  border-left: 2px solid rgba(0, 0, 0, 0.493);
 
   .lista__productos {
     border-bottom: 1px solid $black-color;
@@ -113,10 +114,10 @@
 
   .carrito__precio {
     display: flex;
-    flex-wrap: wrap;
+
     justify-content: space-between;
     align-items: center;
-    gap: 10px;
+    gap: 5px;
 
     p {
       font-weight: 900;

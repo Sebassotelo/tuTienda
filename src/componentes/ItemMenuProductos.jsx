@@ -5,6 +5,9 @@ import style from "../styles/ItemMenu.module.scss";
 function ItemMenuProductos({ funcion, item, click }) {
   const [contador, setContador] = useState(0);
   const context = useContext(ContextGeneral);
+  const { setBusqueda } = useContext(ContextGeneral);
+
+  const [colSeccion, setColSeccion] = useState(null);
 
   const contadorProductos = () => {
     const nuevoArray = context.productosPublicosCopia.filter(
@@ -32,6 +35,7 @@ function ItemMenuProductos({ funcion, item, click }) {
         onClick={() => {
           funcion(item);
           click();
+          setBusqueda("");
         }}
       >
         {item} {`(${contador})`}

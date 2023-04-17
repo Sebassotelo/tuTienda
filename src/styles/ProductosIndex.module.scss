@@ -47,9 +47,9 @@
     .container__productos {
       width: 100vw;
       min-width: 280px;
-      display: grid;
+      display: flex;
 
-      grid-template-columns: 1fr;
+      flex-direction: column;
 
       .menu {
         display: none;

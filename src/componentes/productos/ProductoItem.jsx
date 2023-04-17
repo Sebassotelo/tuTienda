@@ -6,6 +6,8 @@ import Link from "next/link";
 import { BsCartPlus } from "react-icons/bs";
 import { TbDiscount2 } from "react-icons/tb";
 
+import { Toaster, toast } from "sonner";
+
 function ProductoItem({ item }) {
   const context = useContext(ContextGeneral);
   const { setCarrito, actualizacionCarrito } = useContext(ContextGeneral);
@@ -21,6 +23,10 @@ function ProductoItem({ item }) {
         nuevoArray.find((e, i) => e.id === item.id).cantidad += 1;
         setCarrito(nuevoArray);
         actualizacionCarrito();
+      } else {
+        toast.error(
+          `No hay stock suficiente para agregar esa cantidad al carrito`
+        );
       }
     } else {
       let prec;
@@ -38,6 +44,7 @@ function ProductoItem({ item }) {
         cantidad: 1,
       };
       setCarrito((prev) => [...prev, itemCarrito]);
+      toast.success(`${item.title} Agregado al carrito`);
       actualizacionCarrito();
     }
   };

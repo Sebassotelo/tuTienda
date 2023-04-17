@@ -1,4 +1,18 @@
 @import "./Variables.module.scss";
+.productoNoExiste {
+  height: 100%;
+  width: 100%;
+  display: grid;
+  align-items: center;
+  justify-items: center;
+  background-color: $white-color;
+
+  p {
+    color: $black-color;
+    font-weight: 600;
+    font-size: 32px;
+  }
+}
 
 .container {
   width: 100%;
