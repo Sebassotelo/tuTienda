@@ -26,6 +26,7 @@ function ItemMenuProductos({ funcion, item, click }) {
         className={style.li}
         onClick={() => {
           funcion(item);
+          setBusqueda("");
         }}
       >
         {item} {`(${contador})`}

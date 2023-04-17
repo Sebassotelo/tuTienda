@@ -10,7 +10,7 @@ import { motion } from "framer-motion";
 
 function Index() {
   const context = useContext(ContextGeneral);
-  const { llamadaDB, setProductosPublicos, verificarLogin } =
+  const { llamadaDB, setProductosPublicos, verificarLogin, setBusqueda } =
     useContext(ContextGeneral);
 
   const [showCategoria, setShowCategoria] = useState(false);
@@ -53,13 +53,19 @@ function Index() {
               <ul className={style.menu}>
                 <h3>Categorias</h3>
                 <li
-                  onClick={() =>
-                    setProductosPublicos(context.productosPublicosCopia)
-                  }
+                  onClick={() => {
+                    setProductosPublicos(context.productosPublicosCopia);
+                    setBusqueda("");
+                  }}
                 >
                   Todo {`(${context.productosPublicosCopia.length})`}
                 </li>
-                <li onClick={filtrarSeccionOfertas}>
+                <li
+                  onClick={() => {
+                    filtrarSeccionOfertas();
+                    setBusqueda("");
+                  }}
+                >
                   Ofertas {`(${context.contadorOfert})`}{" "}
                 </li>
 
