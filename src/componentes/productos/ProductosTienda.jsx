@@ -32,6 +32,7 @@ function ProductosTienda() {
     setProductosMostrar(context.productosPublicos.slice(index, index + 12));
 
     setNumeroPagina(nextPage);
+    window.scroll(0, 0);
   };
   const paginaAnterior = () => {
     const prevPage = numeroPagina - 1;
@@ -43,6 +44,7 @@ function ProductosTienda() {
     setProductosMostrar(context.productosPublicos.slice(index, index + 12));
 
     setNumeroPagina(prevPage);
+    window.scroll(0, 0);
   };
 
   useEffect(() => {

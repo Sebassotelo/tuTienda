@@ -16,7 +16,7 @@ function ProductoRuta() {
   const context = useContext(ContextGeneral);
   const {
     llamadaDB,
-    setProductos,
+    inspectorSesion,
     setCarrito,
     actualizacionCarrito,
     setProductosPublicos,
@@ -81,9 +81,13 @@ function ProductoRuta() {
   };
 
   useEffect(() => {
-    llamadaDB();
+    if (context.productosPublicos.length == 0) {
+      llamadaDB();
+    }
+    inspectorSesion();
+
     filtrarProducto();
-  }, [context.loader]);
+  }, [context.loader, router.query.producto]);
 
   return (
     <>

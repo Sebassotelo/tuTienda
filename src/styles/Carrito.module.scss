@@ -75,7 +75,10 @@
       margin: 0;
 
       .carrito__title {
-        font-weight: 600;
+        font-weight: 900;
+        font-size: 16px;
+        color: $black-color;
+        text-decoration: none;
       }
 
       p {

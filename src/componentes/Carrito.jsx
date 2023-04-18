@@ -8,6 +8,7 @@ import {
 } from "react-icons/md";
 
 import { Toaster, toast } from "sonner";
+import Link from "next/link";
 
 function Carrito({ showCarrito, show }) {
   const context = useContext(ContextGeneral);
@@ -33,30 +34,44 @@ function Carrito({ showCarrito, show }) {
 
   let pedidoCopy = "";
   const confirmarPedido = () => {
+    let notFoundArray = context.carrito.filter(
+      (obj) => !context.productosPublicos.some((o) => o.id === obj.id)
+    );
+    notFoundArray.length === 0 ? true : notFoundArray;
+    console.log(notFoundArray);
+
     if (cantidadFinal > 0) {
-      pedidoCopy = "";
-      context.carrito.map(
-        (e) =>
-          (pedidoCopy =
-            pedidoCopy +
-            `${e.cantidad}X%20${e.title}%20-----%20$${
-              e.precio * e.cantidad
-            }%20%0A`)
-      );
-      let cuponDesc = "";
+      if (notFoundArray.length === 0) {
+        pedidoCopy = "";
+        context.carrito.map(
+          (e) =>
+            (pedidoCopy =
+              pedidoCopy +
+              `${e.cantidad}X%20${e.title}%20-----%20$${
+                e.precio * e.cantidad
+              }%20%0A`)
+        );
+        let cuponDesc = "";
 
-      if (cuponActivo && cuponActivo.activo) {
-        cuponDesc = `%0ACupon%20${cuponActivo.cupon}%20activo.%20Descuento%20de%20$${cuponActivo.monto}`;
-      }
-      setPedido(
-        `Hola,%20te%20pido%20esto:%0A%0A${pedidoCopy}%0ATotal:%20$${precioFinal}${
-          cuponActivo && cuponDesc
-        }`
-      );
+        if (cuponActivo && cuponActivo.activo) {
+          cuponDesc = `%0ACupon%20${cuponActivo.cupon}%20activo.%20Descuento%20de%20$${cuponActivo.monto}`;
+        }
+        setPedido(
+          `Hola,%20te%20pido%20esto:%0A%0A${pedidoCopy}%0ATotal:%20$${precioFinal}${
+            cuponActivo && cuponDesc
+          }`
+        );
 
-      if (cantidadFinal > 0) {
-        setEstadoPedido(2);
-        toast.success(`Envianos el pedido por WhatsApp`);
+        if (cantidadFinal > 0) {
+          setEstadoPedido(2);
+          toast.success(`Envianos el pedido por WhatsApp`);
+        }
+      } else {
+        toast.error(
+          `Sin stock en: '${notFoundArray.map((item) => {
+            return item.title;
+          })}'`
+        );
       }
     }
   };
@@ -156,11 +171,18 @@ function Carrito({ showCarrito, show }) {
             context.carrito.map((item) => {
               return (
                 <div className={style.carrito__item} key={item.id}>
-                  <div className={style.img}>
+                  <Link href={`/productos/${item.id}`} className={style.img}>
                     <img src={item.img} alt="" />
-                  </div>
+                  </Link>
+
                   <div className={style.carrito__desc}>
-                    <p className={style.carrito__title}>{item.title}</p>
+                    <Link
+                      href={`/productos/${item.id}`}
+                      className={style.carrito__title}
+                    >
+                      {item.title}
+                    </Link>
+
                     <div className={style.carrito__cantidad}>
                       <p
                         className={style.icon}

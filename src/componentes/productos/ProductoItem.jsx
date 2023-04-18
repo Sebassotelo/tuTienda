@@ -44,8 +44,9 @@ function ProductoItem({ item }) {
         cantidad: 1,
       };
       setCarrito((prev) => [...prev, itemCarrito]);
-      toast.success(`${item.title} Agregado al carrito`);
+
       actualizacionCarrito();
+      toast.success(`${item.title} Agregado al carrito`);
     }
   };
   return (
@@ -61,7 +62,10 @@ function ProductoItem({ item }) {
         </div>
       </Link>
       <div className={style.text}>
-        <h4>{item.title}</h4>
+        <div className={style.text__title}>
+          <h4>{item.title}</h4>
+        </div>
+
         {item.descuento ? (
           <div className={style.text__precio}>
             <p style={{ textDecoration: "line-through", color: "grey" }}>

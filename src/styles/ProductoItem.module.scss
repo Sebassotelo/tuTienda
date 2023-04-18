@@ -60,8 +60,14 @@
       gap: 5px;
     }
 
-    h4 {
-      margin: 0;
+    .text__title {
+      display: flex;
+      justify-items: center;
+      align-items: center;
+      height: 35px;
+      h4 {
+        margin: 0;
+      }
     }
 
     p {

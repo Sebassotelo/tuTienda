@@ -55,6 +55,7 @@ function Context(props) {
     setProductos(infoDocu.items);
     setProductosCopia(infoDocu.items);
     setCupones(infoDocu.cupones);
+    recuperarStorage();
 
     const array = infoDocu.items.filter((item) => item.stock > 0);
 
@@ -73,7 +74,33 @@ function Context(props) {
     setActuCarrito(!actuCarrito);
   };
 
-  const prueba = "contexto funciona n.n";
+  const setearLocalStorage = () => {
+    console.log(JSON.stringify(carrito));
+    localStorage.setItem("carrito", JSON.stringify(carrito));
+  };
+
+  const recuperarStorage = () => {
+    // Obtener la cadena de texto guardada en el localStorage con la clave "carrito"
+    const carritoString = localStorage.getItem("carrito");
+
+    console.log("localstorage", carritoString);
+    // Si existe la cadena de texto, convertirla en un objeto del carrito
+    if (carritoString) {
+      setCarrito(JSON.parse(carritoString));
+      setActuCarrito(!actuCarrito);
+    }
+    // Si no hay valor en localStorage, devolver un objeto vacío
+    return [];
+  };
+
+  const [prevCarritoLength, setPrevCarritoLength] = useState(carrito.length);
+
+  useEffect(() => {
+    if (prevCarritoLength >= 1 && carrito.length >= 0) {
+      setearLocalStorage();
+    }
+    setPrevCarritoLength(carrito.length);
+  }, [carrito, carrito.map((item) => item.cantidad)]);
 
   return (
     <ContextPrincipal.Provider
@@ -88,7 +115,6 @@ function Context(props) {
         loader: loader,
         auth: auth,
         firestore: firestore,
-        prueba: prueba,
         user: user,
         secciones: secciones,
         carrito: carrito,

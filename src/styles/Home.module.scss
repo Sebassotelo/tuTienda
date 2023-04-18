@@ -111,15 +111,18 @@
     color: $white-color;
     padding: 8px 12px 8px 12px;
     border-radius: 10px;
-    border: none;
+    border: 2px solid rgba(245, 222, 179, 0);
     font-size: 18px;
     font-family: $fuente2;
     margin-bottom: 15px;
     cursor: pointer;
     text-decoration: none;
+    transition-duration: 0.3s;
 
     &:hover {
-      color: $primary-color;
+      color: $black-color;
+      background-color: white;
+      border: 2px solid $black-color;
     }
   }
 }
@@ -130,7 +133,7 @@
     min-height: 93vh;
     display: grid;
     height: 100vh;
-    margin-top: -40px;
+
     justify-items: center;
     align-items: center;
     background-color: $white-color;
@@ -202,16 +205,11 @@
       color: $white-color;
       padding: 8px 12px 8px 12px;
       border-radius: 10px;
-      border: none;
       font-size: 16px;
       font-family: $fuente2;
       margin: 15px 0 15px 0;
       cursor: pointer;
       text-decoration: none;
-
-      &:hover {
-        color: $primary-color;
-      }
     }
   }
 }
