@@ -120,7 +120,6 @@
   display: grid;
   justify-items: center;
   align-items: center;
-  grid-template-rows: 100px 1fr;
   background-color: white;
 
   h3 {
@@ -138,6 +137,7 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
+    align-items: center;
     gap: 15px;
   }
 
@@ -273,7 +273,6 @@
     display: grid;
     justify-items: center;
     align-items: center;
-    grid-template-rows: 100px 1fr 80px;
 
     h3 {
       text-align: center;
