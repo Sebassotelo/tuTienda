@@ -78,17 +78,29 @@ function ProductoNuevo({ setShowNuevoProducto }) {
   return (
     <div className={style.container}>
       <form action="" className={style.form} onSubmit={agregarProducto}>
-        <p>Titulo:</p>
+        <p>Nombre del Producto:</p>
         <input type="text" name="" id="inputTitle" />
         <p>Descripcion:</p>
         <input type="text" name="" id="inputDesc" />
-        <p>Precio:</p>
-        <input type="number" name="" id="inputPrecio" />
+        <div className={style.precios}>
+          <div className={style.precios__item}>
+            <p>Precio:</p>
+            <input type="number" name="" id="inputPrecio" />
+          </div>
+          <div className={style.precios__item}>
+            <p>Precio oferta:</p>
+            <input type="number" name="" id="inputPrecioDescuento" />
+          </div>
+          <div className={style.precios__item}>
+            <p>Stock:</p>
+            <input type="number" name="" id="inputStock" />
+          </div>
+        </div>
+
         <p>Url de Imagen:</p>
         <input type="text" name="" id="inputImagen" />
-        <p>Stock:</p>
-        <input type="number" name="" id="inputStock" />
-        <p>Seccion:</p>
+
+        <p>Categoría del producto ​ :</p>
         <select name="" id="inputSeccion">
           {context.secciones.map((item, i) => {
             return <option key={i}>{item}</option>;
@@ -99,17 +111,16 @@ function ProductoNuevo({ setShowNuevoProducto }) {
           y las palabras{" "}
         </p>
         <input type="text" name="" id="inputCaracteristicas" />
-        <div className={style.checkbox}>
-          <p>Descuento Activo:</p>
-          <input type="checkbox" id="inputDescuento" />
+        <div className={style.check__container}>
+          <div className={style.checkbox}>
+            <p>Descuento Activo:</p>
+            <input type="checkbox" id="inputDescuento" />
+          </div>
+          <div className={style.checkbox}>
+            <p>Producto Destacado:</p>
+            <input type="checkbox" id="inputDestacado" />
+          </div>
         </div>
-        <div className={style.checkbox}>
-          <p>Producto Destacado:</p>
-          <input type="checkbox" id="inputDestacado" />
-        </div>
-
-        <p>Precio con Descuento:</p>
-        <input type="number" name="" id="inputPrecioDescuento" />
 
         <button type="submit">Agregar Producto</button>
         <button onClick={() => setShowNuevoProducto(false)}>Cerrar</button>

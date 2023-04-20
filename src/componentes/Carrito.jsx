@@ -56,7 +56,7 @@ function Carrito({ showCarrito, show }) {
           cuponDesc = `%0ACupon%20${cuponActivo.cupon}%20activo.%20Descuento%20de%20$${cuponActivo.monto}`;
         }
         setPedido(
-          `Hola,%20te%20pido%20esto:%0A%0A${pedidoCopy}%0ATotal:%20$${precioFinal}${
+          `Hola%20chico%20de%20las%20medias%20🧦!%20Este%20es%20mi%20pedido:%0A%0A${pedidoCopy}%0ATotal:%20$${precioFinal}${
             cuponActivo && cuponDesc
           }`
         );
@@ -268,7 +268,7 @@ function Carrito({ showCarrito, show }) {
               style={{ backgroundColor: "rgb(2, 190, 18)" }}
             >
               <a
-                href={`https://api.whatsapp.com/send?phone=543794258393&text=${pedido}`}
+                href={`https://api.whatsapp.com/send?phone=5493624148393&text=${pedido}`}
                 target={"_blank"}
               >
                 Ir a WhatsApp

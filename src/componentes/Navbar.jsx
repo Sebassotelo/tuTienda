@@ -8,6 +8,8 @@ import {
   AiOutlineHome,
   AiOutlineSearch,
 } from "react-icons/ai";
+import { MdOutlineDashboardCustomize, MdOutlineLogout } from "react-icons/md";
+
 import { RiStore2Line } from "react-icons/ri";
 import { motion } from "framer-motion";
 
@@ -65,9 +67,14 @@ function Navbar({ showCarrito, show }) {
         {context.estadoUsuario == 1 && (
           <>
             {" "}
-            <Link href="/panel-de-control">Panel de Control</Link>
+            <Link href="/panel-de-control">
+              <MdOutlineDashboardCustomize className={style.icon} />
+            </Link>
             {context.user && (
-              <p onClick={() => signOut(context.auth)}>Cerrar Sesion</p>
+              <MdOutlineLogout
+                onClick={() => signOut(context.auth)}
+                className={style.icon}
+              />
             )}
           </>
         )}

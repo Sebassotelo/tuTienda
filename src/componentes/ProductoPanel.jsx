@@ -71,41 +71,43 @@ function ProductoPanel({
               )}
             </p>
 
-            <div className={style.checkbox}>
-              <p>Descuento:</p>
-              {descuento ? (
-                <p
-                  className={style.descuentoActivo}
-                  style={{ backgroundColor: "green" }}
-                >
-                  ON
-                </p>
-              ) : (
-                <p
-                  className={style.descuentoActivo}
-                  style={{ backgroundColor: "red" }}
-                >
-                  OFF
-                </p>
-              )}
-            </div>
-            <div className={style.checkbox}>
-              <p>Destacado:</p>
-              {destacado ? (
-                <p
-                  className={style.descuentoActivo}
-                  style={{ backgroundColor: "green" }}
-                >
-                  ON
-                </p>
-              ) : (
-                <p
-                  className={style.descuentoActivo}
-                  style={{ backgroundColor: "red" }}
-                >
-                  OFF
-                </p>
-              )}
+            <div className={style.check__container}>
+              <div className={style.checkbox}>
+                <p>Descuento:</p>
+                {descuento ? (
+                  <p
+                    className={style.descuentoActivo}
+                    style={{ backgroundColor: "green" }}
+                  >
+                    ON
+                  </p>
+                ) : (
+                  <p
+                    className={style.descuentoActivo}
+                    style={{ backgroundColor: "red" }}
+                  >
+                    OFF
+                  </p>
+                )}
+              </div>
+              <div className={style.checkbox}>
+                <p>Destacado:</p>
+                {destacado ? (
+                  <p
+                    className={style.descuentoActivo}
+                    style={{ backgroundColor: "green" }}
+                  >
+                    ON
+                  </p>
+                ) : (
+                  <p
+                    className={style.descuentoActivo}
+                    style={{ backgroundColor: "red" }}
+                  >
+                    OFF
+                  </p>
+                )}
+              </div>
             </div>
           </div>
           <div className={style.btn}>

@@ -3,23 +3,24 @@
 .container {
   justify-self: center;
   padding: 15px;
-  height: 200px;
-  width: 600px;
+  height: 150px;
+  width: 100%;
   border-radius: 15px;
   background-color: $white-color;
   display: grid;
-  grid-template-columns: 1fr 3fr;
+  grid-template-columns: 150px 1fr;
 
   .img {
-    border-radius: 15px;
+    border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
+    filter: opacity(0.7);
 
     img {
       height: 150px;
-      width: 100%;
-      border-radius: 15px;
+      width: 150px;
+      border-radius: 50%;
       object-fit: cover;
     }
   }
@@ -29,7 +30,9 @@
     grid-template-columns: 1fr 0.5fr;
 
     .text {
-      padding: 15px;
+      padding: 10px;
+      display: grid;
+      align-items: center;
       h3 {
         margin: 0;
       }
@@ -49,12 +52,15 @@
       gap: 8px;
 
       .btn__icon {
-        font-size: 22px;
+        font-size: 30px;
         cursor: pointer;
-
-        border: 1px solid $black-color;
-        padding: 4px;
+        padding: 8px;
         border-radius: 50%;
+        transition-duration: 0.3s;
+
+        &:hover {
+          background-color: rgba(0, 0, 0, 0.144);
+        }
       }
 
       p {
@@ -70,18 +76,138 @@
   }
 }
 
-.checkbox {
-  justify-self: start;
+.check__container {
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  flex-wrap: wrap;
+  gap: 15px;
 
-  .descuentoActivo {
-    margin: 5px 5px 5px 5px !important;
-    color: $white-color;
-    padding: 8px 12px 8px 12px;
+  .checkbox {
+    justify-self: start;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-wrap: wrap;
+    background-color: rgba(0, 0, 0, 0.185);
+    padding: 5px;
+    border-radius: 5px;
+    font-weight: 900;
+
+    .descuentoActivo {
+      margin: 0;
+      color: $white-color;
+      padding: 8px 12px 8px 12px;
+      border-radius: 15px;
+      text-align: center;
+    }
+  }
+}
+
+@media (max-width: 900px) {
+  .container {
+    justify-self: center;
+    padding: 0px;
+    height: auto;
+    width: 95%;
     border-radius: 15px;
-    text-align: center;
+    background-color: $white-color;
+    display: grid;
+    grid-template-columns: 50px 1fr;
+
+    .img {
+      border-radius: 5px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      filter: opacity(0.7);
+
+      img {
+        height: 100%;
+        width: 50px;
+        border-radius: 15px;
+        object-fit: cover;
+      }
+    }
+
+    .desc {
+      width: 100%;
+      display: flex;
+
+      justify-content: center;
+      align-items: center;
+
+      .text {
+        padding: 10px;
+        display: grid;
+        grid-gap: 5px;
+        align-items: center;
+        h3 {
+          margin: 0;
+        }
+        p {
+          margin: 0;
+        }
+      }
+
+      .btn {
+        align-self: center;
+        height: 50%;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 8px;
+
+        .btn__icon {
+          font-size: 30px;
+          cursor: pointer;
+          padding: 8px;
+          border-radius: 50%;
+          transition-duration: 0.3s;
+
+          &:hover {
+            background-color: rgba(0, 0, 0, 0.144);
+          }
+        }
+
+        p {
+          margin: 0;
+          font-weight: 600;
+          background-color: $black-color;
+          color: $white-color;
+          padding: 5px 8px 5px 8px;
+          border-radius: 3px;
+          cursor: pointer;
+        }
+      }
+    }
+  }
+
+  .check__container {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 15px;
+
+    .checkbox {
+      justify-self: start;
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      flex-wrap: wrap;
+      background-color: rgba(0, 0, 0, 0.185);
+      padding: 5px;
+      border-radius: 5px;
+      font-weight: 900;
+
+      .descuentoActivo {
+        margin: 0;
+        color: $white-color;
+        padding: 8px 12px 8px 12px;
+        border-radius: 15px;
+        text-align: center;
+      }
+    }
   }
 }

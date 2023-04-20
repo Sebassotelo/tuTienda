@@ -51,7 +51,14 @@ function Index() {
       <div className={style.container}>
         {context.loader ? (
           <>
+            {/* menu pc */}
             <div className={style.menu}>
+              <li onClick={() => setShowSeccion(1)}>Productos</li>
+              <li onClick={() => setShowSeccion(2)}>Descuentos</li>
+            </div>
+
+            {/* menu Movil */}
+            <div className={style.menu__movil}>
               <li onClick={() => setShowSeccion(1)}>Productos</li>
               <li onClick={() => setShowSeccion(2)}>Descuentos</li>
             </div>
@@ -60,29 +67,28 @@ function Index() {
                 <>
                   <SeccionNueva />
 
-                  <BuscadorPanel />
-
-                  {showNuevoProducto ? (
-                    <>
-                      <p
-                        className={style.producto__nuevo__btn}
-                        onClick={mostrarVentana}
-                      >
-                        Nuevo Producto
-                      </p>
-                      <ProductoNuevo setShowNuevoProducto={mostrarVentana} />
-                    </>
-                  ) : (
-                    <>
-                      <p
-                        className={style.producto__nuevo__btn}
-                        onClick={mostrarVentana}
-                      >
-                        Nuevo Producto
-                      </p>
-                    </>
-                  )}
                   <div className={style.listaProducto}>
+                    {showNuevoProducto ? (
+                      <>
+                        <p
+                          className={style.producto__nuevo__btn}
+                          onClick={mostrarVentana}
+                        >
+                          Nuevo Producto
+                        </p>
+                        <ProductoNuevo setShowNuevoProducto={mostrarVentana} />
+                      </>
+                    ) : (
+                      <>
+                        <p
+                          className={style.producto__nuevo__btn}
+                          onClick={mostrarVentana}
+                        >
+                          Nuevo Producto
+                        </p>
+                      </>
+                    )}
+                    <BuscadorPanel />
                     {context.productos &&
                       context.productos.map((item) => {
                         return (

@@ -10,7 +10,9 @@ function CategoriaCard({ item }) {
   const [producto, setProducto] = useState({});
 
   const filtrar = () => {
-    const elem = context.productosPublicos.filter((e) => e.seccion == item);
+    const elem = context.productosPublicosCopia.filter(
+      (e) => e.seccion == item
+    );
     setProducto(elem[0]);
   };
 

@@ -1,7 +1,7 @@
 @import "./Variables.module.scss";
 
 .body {
-  margin-top: 60px;
+  padding-top: 80px;
   min-height: 90vh;
 }
 
@@ -24,7 +24,7 @@
 
 @media (max-width: 900px) {
   .body {
-    margin-top: 40px;
+    padding-top: 40px;
 
     min-height: 90vh;
   }

@@ -54,7 +54,7 @@ function SeccionNueva() {
   return (
     <div className={style.container}>
       <form action="" onSubmit={nuevaSeccion}>
-        <p>Nombre de seccion:</p>
+        <p>Nombre de seccion nueva:</p>
         <input
           type="text"
           id="inputSeccion"
@@ -62,8 +62,8 @@ function SeccionNueva() {
         />
         <button type="submit">Agregar Seccion</button>
       </form>
+      <h4>Secciones Existentes:</h4>
       <div className={style.secciones}>
-        <p>Secciones Existentes:</p>
         {context.secciones.map((item, i) => {
           return (
             <div className={style.secciones__item} key={i}>

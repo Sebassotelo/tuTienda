@@ -11,7 +11,7 @@
   left: 0;
   min-width: 500px;
   min-height: 300px;
-  background-color: rgba(0, 0, 0, 0.295);
+  background-color: rgba(0, 0, 0, 0.747);
   display: grid;
   justify-items: center;
   align-items: center;
@@ -19,9 +19,9 @@
 
   .form {
     width: 50vw;
-    background-color: $white-color;
+    background-color: rgb(238, 238, 238);
     padding: 15px;
-    border-radius: 15px;
+    border-radius: 5px;
     display: grid;
     p {
       font-weight: 600;
@@ -29,18 +29,31 @@
     }
 
     input {
-      padding: 0 15px 0 15px;
+      padding: 0 0px 0 15px;
       width: 97%;
       height: 30px;
       border-radius: 5px;
       border: none;
       outline: none;
+      border: 1px solid $black-color;
+      margin-bottom: 5px;
+    }
+    .precios {
+      display: grid;
+      grid-gap: 10px;
+      grid-template-columns: 1fr 1fr 1fr;
+
+      .precios__item {
+        width: 90%;
+      }
     }
 
     select {
+      height: 30px;
       padding: 5px;
       border-radius: 5px;
       outline: none;
+      border: 1px solid $black-color;
     }
 
     button {
@@ -50,15 +63,35 @@
       padding: 8px 12px 8px 12px;
       border-radius: 15px;
       cursor: pointer;
+      background-color: $black-color;
+      color: $white-color;
+      font-weight: 600;
     }
   }
 }
-.checkbox {
-  justify-self: start;
+
+.check__container {
   display: flex;
   justify-content: center;
   align-items: center;
-  flex-wrap: wrap;
+  gap: 25px;
+}
+.checkbox {
+  justify-self: start;
+  display: grid;
+  justify-items: center;
+  align-items: center;
+  grid-template-columns: 1fr 0.3fr;
+  border: 1px solid $black-color;
+  padding: 5px;
+  border-radius: 5px;
+  margin: 5px 0 5px 0;
+  width: 250px;
+
+  p {
+    width: 100%;
+    margin: 0;
+  }
 
   .descuentoActivo {
     margin: 5px 5px 5px 5px !important;

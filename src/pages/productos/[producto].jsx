@@ -91,7 +91,6 @@ function ProductoRuta() {
     if (context.productosPublicos.length == 0) {
       llamadaDB();
     }
-    inspectorSesion();
 
     filtrarProducto();
   }, [context.loader, router.query.producto]);
