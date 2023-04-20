@@ -179,7 +179,11 @@ function ProductoRuta() {
                 <div className={style.items}>
                   {context.productosPublicosCopia &&
                     context.productosPublicosCopia
-                      .filter((item, i) => item.seccion == producto.seccion)
+                      .filter(
+                        (item, i) =>
+                          item.seccion == producto.seccion &&
+                          item.id != producto.id
+                      )
                       .slice(0, 4)
                       .map((item, i) => {
                         return <ProductoItem key={i} item={item} />;

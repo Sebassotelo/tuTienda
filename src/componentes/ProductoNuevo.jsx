@@ -27,6 +27,7 @@ function ProductoNuevo({ setShowNuevoProducto }) {
     const caracteristicas = e.target.inputCaracteristicas.value;
     const descuento = e.target.inputDescuento.value;
     const precioDescuento = e.target.inputPrecioDescuento.value;
+    const destacado = e.target.inputDestacado.value;
 
     //traemos los datos de base de datos
     const docRef = doc(context.firestore, `users/sebassotelo97@gmail.com`);
@@ -49,6 +50,7 @@ function ProductoNuevo({ setShowNuevoProducto }) {
         caracteristicas: caracteristicas,
         descuento: descuento,
         precioDescuento: precioDescuento,
+        destacado: destacado,
       },
       ...infoDocu.items
     );
@@ -100,6 +102,10 @@ function ProductoNuevo({ setShowNuevoProducto }) {
         <div className={style.checkbox}>
           <p>Descuento Activo:</p>
           <input type="checkbox" id="inputDescuento" />
+        </div>
+        <div className={style.checkbox}>
+          <p>Producto Destacado:</p>
+          <input type="checkbox" id="inputDestacado" />
         </div>
 
         <p>Precio con Descuento:</p>

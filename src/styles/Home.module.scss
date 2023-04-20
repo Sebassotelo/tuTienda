@@ -62,9 +62,10 @@
     text-decoration: none;
     p {
       font-weight: 900;
-      font-size: 22px;
+      font-size: 32px;
       text-align: center;
       margin: 0;
+      font-family: $fuente3;
     }
 
     .icon {
@@ -84,18 +85,51 @@
     }
   }
 }
+
+.seccion {
+  display: grid;
+  justify-items: center;
+  align-items: center;
+  padding: 15px 0 15px 0;
+  background-color: $white-color;
+
+  h3 {
+    text-align: center;
+    font-size: 45px;
+    margin: 15px 0 15px 0;
+    color: $black-color;
+    border-bottom: 3px solid $black-color;
+    font-family: $fuente3;
+  }
+
+  .seccion__items {
+    width: 70%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    padding: 25px 0 25px 0;
+  }
+}
+
 .ofertas {
+  padding: 25px 0 25px 0;
   min-height: 400px;
   width: 100%;
   display: grid;
   justify-items: center;
+  align-items: center;
   grid-template-rows: 100px 1fr;
+  background-color: white;
 
   h3 {
     text-align: center;
-    font-family: $fuente2;
-    font-size: 28px;
+    font-size: 45px;
     margin: 15px 0 15px 0;
+    color: $black-color;
+    border-bottom: 3px solid $black-color;
+    font-family: $fuente3;
   }
 
   .items {
@@ -185,7 +219,7 @@
       text-decoration: none;
       p {
         font-weight: 900;
-        font-size: 22px;
+        font-size: 30px;
         text-align: center;
         margin: 0;
       }
@@ -207,6 +241,32 @@
       }
     }
   }
+
+  .seccion {
+    width: 100%;
+    display: grid;
+    justify-items: center;
+    align-items: center;
+    padding: 15px 0 15px 0;
+
+    h3 {
+      text-align: center;
+      font-size: 40px;
+      margin: 15px 0 15px 0;
+      color: $black-color;
+    }
+
+    .seccion__items {
+      width: 100%;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      gap: 15px;
+      padding: 25px 0 25px 0;
+    }
+  }
+
   .ofertas {
     min-height: 400px;
     width: 100%;
@@ -217,8 +277,8 @@
 
     h3 {
       text-align: center;
-      font-family: $fuente2;
-      font-size: 35px;
+      font-family: $fuente3;
+      font-size: 40px;
       margin: 15px 0 15px 0;
     }
 

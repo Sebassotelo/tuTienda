@@ -23,11 +23,13 @@ function EditarProducto({
   descuento2,
   precioDescuento2,
   setEditarProducto,
+  destacado2,
 }) {
   const context = useContext(ContextGeneral);
-  const { setProductos } = useContext(ContextGeneral);
+  const { setProductos, setProductosCopia } = useContext(ContextGeneral);
 
   const [descuentoActivo, setDescuentoActivo] = useState(descuento2);
+  const [destacadoActivo, setDestacadoActivo] = useState(destacado2);
 
   const editarProducto = async (e) => {
     e.preventDefault(e);
@@ -55,6 +57,7 @@ function EditarProducto({
       caracteristicas: caracteristicas,
       descuento: descuentoActivo,
       precioDescuento: precioDescuento,
+      destacado: destacadoActivo,
     };
 
     const productosCopia = [...context.productosCopia];
@@ -67,7 +70,8 @@ function EditarProducto({
 
     const docRef = doc(context.firestore, `users/sebassotelo97@gmail.com`);
     await updateDoc(docRef, { items: [...productosCopia] });
-    setProductos(productosCopia);
+
+    setProductosCopia(productosCopia);
     //limpiar Form
     e.target.inputTitle.value = "";
     e.target.inputDesc.value = "";
@@ -82,6 +86,9 @@ function EditarProducto({
 
   const activarDescuento = () => {
     setDescuentoActivo(!descuentoActivo);
+  };
+  const activarDestacado = () => {
+    setDestacadoActivo(!destacadoActivo);
   };
 
   useEffect(() => {}, []);
@@ -172,6 +179,27 @@ function EditarProducto({
           id="inputPrecioDescuento"
           defaultValue={precioDescuento2 ? precioDescuento2 : ""}
         />
+        <div className={style.checkbox}>
+          <p>Desctacado Activo:</p>
+          {destacadoActivo ? (
+            <p
+              className={style.descuentoActivo}
+              onClick={activarDestacado}
+              style={{ backgroundColor: "green" }}
+            >
+              ON
+            </p>
+          ) : (
+            <p
+              className={style.descuentoActivo}
+              onClick={activarDestacado}
+              style={{ backgroundColor: "red" }}
+            >
+              OFF
+            </p>
+          )}
+        </div>
+
         <button type="submit">Guardar</button>
         <button onClick={setEditarProducto}>Cerrar</button>
       </form>

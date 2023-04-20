@@ -24,6 +24,7 @@ function ProductoPanel({
   seccion,
   descuento,
   precioDescuento,
+  destacado,
 }) {
   const [editarProducto, setEditarProducto] = useState(false);
   const context = useContext(ContextGeneral);
@@ -88,6 +89,24 @@ function ProductoPanel({
                 </p>
               )}
             </div>
+            <div className={style.checkbox}>
+              <p>Destacado:</p>
+              {destacado ? (
+                <p
+                  className={style.descuentoActivo}
+                  style={{ backgroundColor: "green" }}
+                >
+                  ON
+                </p>
+              ) : (
+                <p
+                  className={style.descuentoActivo}
+                  style={{ backgroundColor: "red" }}
+                >
+                  OFF
+                </p>
+              )}
+            </div>
           </div>
           <div className={style.btn}>
             <GrEdit onClick={mostrarEditar} className={style.btn__icon} />
@@ -112,6 +131,7 @@ function ProductoPanel({
           descuento2={descuento}
           precioDescuento2={precioDescuento}
           setEditarProducto={mostrarEditar}
+          destacado2={destacado}
         />
       )}
     </>

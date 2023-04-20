@@ -99,6 +99,7 @@ function Index() {
                               seccion={item.seccion}
                               descuento={item.descuento}
                               precioDescuento={item.precioDescuento}
+                              destacado={item.destacado}
                             />
                           </>
                         );

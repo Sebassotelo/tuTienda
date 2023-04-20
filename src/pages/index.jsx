@@ -3,7 +3,7 @@ import Image from "next/image";
 import { Inter } from "next/font/google";
 import style from "../styles/Home.module.scss";
 import Layout from "@/componentes/Layout";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import ContextGeneral from "@/servicios/contextPrincipal";
 import ProductoItem from "@/componentes/productos/ProductoItem";
 import LinkNext from "next/link";
@@ -13,6 +13,7 @@ import Loader from "@/componentes/Loader";
 import { motion } from "framer-motion";
 
 import { MdOutlineKeyboardDoubleArrowDown } from "react-icons/md";
+import CategoriaCard from "@/componentes/CategoriaCard";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -20,6 +21,8 @@ export default function Home() {
   const context = useContext(ContextGeneral);
   const { verificarLogin, llamadaDB, setProductosPublicos } =
     useContext(ContextGeneral);
+
+  const [itemsCategoria, setItemsCategoria] = useState([]);
 
   const filtrarOfertas = () => {
     const nuevoArray = context.productosPublicosCopia.filter(
@@ -65,6 +68,30 @@ export default function Home() {
               </Link>
             </header>
           </motion.div>
+          <section className={style.ofertas}>
+            <h3>DESTACADOS</h3>
+
+            <div className={style.items}>
+              {context.productosPublicosCopia &&
+                context.productosPublicosCopia
+                  .filter((item, i) => item.destacado)
+                  .slice(0, 4)
+                  .map((item, i) => {
+                    return <ProductoItem key={i} item={item} />;
+                  })}
+            </div>
+          </section>
+
+          <section className={style.seccion}>
+            <h3>CATEGORIAS</h3>
+
+            <div className={style.seccion__items}>
+              {context.secciones &&
+                context.secciones.slice(0, 4).map((item, i) => {
+                  return <CategoriaCard key={i} item={item} />;
+                })}
+            </div>
+          </section>
 
           <section className={style.ofertas} id="ofertas">
             <h3>OFERTAS</h3>

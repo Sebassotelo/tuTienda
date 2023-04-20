@@ -1,0 +1,76 @@
+@import "./Variables.module.scss";
+
+.container {
+  height: 250px;
+  width: 550px;
+  background-color: $black-color;
+  border-radius: 3px;
+  position: relative;
+  display: grid;
+  justify-items: center;
+  align-items: center;
+
+  .img {
+    height: 100%;
+    width: 100%;
+    background-color: $black-color;
+    border-radius: 3px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    transition-duration: 0.3s;
+    overflow: hidden;
+
+    .imagen {
+      height: 350px;
+      width: 100%;
+      border-radius: 3px;
+      object-fit: cover;
+    }
+  }
+
+  .p {
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    display: grid;
+    justify-items: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.637);
+    backdrop-filter: blur(3px);
+    border-radius: 3px;
+    color: $white-color;
+    text-decoration: none;
+    overflow: hidden;
+    transition-duration: 0.3s;
+
+    &:hover {
+      background-color: rgba(0, 0, 0, 0);
+      backdrop-filter: blur(1px);
+
+      p {
+        color: $black-color;
+      }
+    }
+
+    p {
+      font-size: 28px;
+      font-weight: 900;
+      margin: 0;
+      color: $white-color;
+      text-align: center;
+    }
+
+    span {
+      font-size: 32px;
+    }
+  }
+}
+
+@media (max-width: 900px) {
+  .container {
+    height: 250px;
+    width: 350px;
+  }
+}

@@ -35,9 +35,9 @@ function Layout({ children, title }) {
           rel="stylesheet"
         />
         <link
-          href="https://fonts.googleapis.com/css2?family=Kanit:wght@400;600;700;900&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Kanit:wght@400;600;700;900&display=swap"
           rel="stylesheet"
-        ></link>
+        />
       </Head>
       <Navbar showCarrito={mostrarCarrito} show={showCarrito} />
 
