@@ -15,6 +15,7 @@ import BuscadorTienda from "./BuscadorTienda";
 
 function Navbar({ showCarrito, show }) {
   const context = useContext(ContextGeneral);
+  const { setProductosPublicos } = useContext(ContextGeneral);
   const [contadorProductos, setContadorProductos] = useState(0);
   const [showBuscador, setShowBuscador] = useState(false);
 
@@ -36,6 +37,14 @@ function Navbar({ showCarrito, show }) {
 
   return (
     <div className={style.container}>
+      <Link
+        href="/productos"
+        className={style.img}
+        onClick={() => setProductosPublicos(context.productosPublicosCopia)}
+      >
+        <img src="https://i.imgur.com/bywVC6u.png" alt="" />
+      </Link>
+
       <ul className={style.navbar}>
         <Link href="/">
           {" "}
@@ -65,9 +74,9 @@ function Navbar({ showCarrito, show }) {
       </ul>
       {showBuscador && (
         <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.5 }}
+          initial={{ y: -200 }}
+          animate={{ y: 0 }}
+          transition={{ type: "lineal" }}
           className={style.buscador}
         >
           <BuscadorTienda setShow={setShowBuscador} />

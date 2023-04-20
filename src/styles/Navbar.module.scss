@@ -2,7 +2,7 @@
 
 .container {
   position: fixed;
-  height: 60px;
+  height: 80px;
   width: 100%;
   background-color: $black-color;
   display: grid;
@@ -12,13 +12,24 @@
 
   z-index: 300;
 
+  .img {
+    grid-column: 2/3;
+    display: grid;
+    justify-items: center;
+    align-items: center;
+
+    img {
+      height: 60px;
+    }
+  }
+
   .buscador {
     grid-column: 1/2;
     grid-row: 1/2;
   }
 
   .navbar {
-    grid-column: 2/3;
+    grid-column: 3/4;
     margin: 0;
     display: flex;
     justify-content: center;
@@ -62,7 +73,24 @@
     grid-template-columns: 1fr;
     z-index: 300;
     bottom: 0;
+
+    .img {
+      grid-column: 2/3;
+      display: grid;
+      justify-items: center;
+      align-items: center;
+      position: fixed;
+      top: 0;
+      background-color: $black-color;
+      width: 100%;
+      z-index: 300;
+
+      img {
+        height: 40px;
+      }
+    }
     .buscador {
+      margin-top: 40px;
       grid-column: 1/2;
       grid-row: 2/3;
       position: fixed;

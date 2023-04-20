@@ -26,6 +26,7 @@
       font-weight: 900;
       text-align: center;
       margin: 0;
+      color: $black-color;
     }
 
     a {
@@ -130,13 +131,12 @@
 @media (max-width: 900px) {
   .header {
     width: 100%;
-    min-height: 93vh;
+    min-height: 100vh;
     display: grid;
-    height: 100vh;
-
     justify-items: center;
     align-items: center;
     background-color: $white-color;
+    grid-template-rows: 1fr 200px;
 
     .logo {
       display: grid;
@@ -171,6 +171,38 @@
           color: $black-color;
           background-color: $white-color;
           border: 2px solid $black-color;
+        }
+      }
+    }
+    .flecha {
+      align-self: start;
+      display: grid;
+      justify-items: center;
+      align-items: center;
+      margin-bottom: 0px;
+      cursor: pointer;
+      color: $black-color;
+      text-decoration: none;
+      p {
+        font-weight: 900;
+        font-size: 22px;
+        text-align: center;
+        margin: 0;
+      }
+
+      .icon {
+        font-size: 55px;
+        -webkit-animation: icon 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) infinite
+          alternate both;
+        animation: icon 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) infinite
+          alternate both;
+      }
+      @keyframes icon {
+        0% {
+          transform: translateY(0);
+        }
+        100% {
+          transform: translateY(10px);
         }
       }
     }

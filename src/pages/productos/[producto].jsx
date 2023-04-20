@@ -10,6 +10,7 @@ import { push } from "next/router";
 
 import { motion } from "framer-motion";
 import { toast } from "sonner";
+import ProductoItem from "@/componentes/productos/ProductoItem";
 
 function ProductoRuta() {
   const router = useRouter();
@@ -78,6 +79,12 @@ function ProductoRuta() {
     }
 
     console.log(nuevoArray);
+  };
+  const filtrarOfertas = () => {
+    const nuevoArray = context.productosPublicosCopia.filter(
+      (item) => item.seccion == producto.seccion
+    );
+    setProductosPublicos(nuevoArray);
   };
 
   useEffect(() => {
@@ -166,6 +173,27 @@ function ProductoRuta() {
                   </div>
                 </div>
               </div>
+              <section className={style.ofertas}>
+                <h3>Te podria interesar</h3>
+
+                <div className={style.items}>
+                  {context.productosPublicosCopia &&
+                    context.productosPublicosCopia
+                      .filter((item, i) => item.seccion == producto.seccion)
+                      .slice(0, 4)
+                      .map((item, i) => {
+                        return <ProductoItem key={i} item={item} />;
+                      })}
+                </div>
+
+                <Link
+                  className={style.a}
+                  href="/productos"
+                  onClick={filtrarOfertas}
+                >
+                  Ver Productos
+                </Link>
+              </section>
             </>
           ) : (
             <div className={style.productoNoExiste}>

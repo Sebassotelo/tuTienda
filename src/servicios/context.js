@@ -75,7 +75,6 @@ function Context(props) {
   };
 
   const setearLocalStorage = () => {
-    console.log(JSON.stringify(carrito));
     localStorage.setItem("carrito", JSON.stringify(carrito));
   };
 
@@ -83,7 +82,6 @@ function Context(props) {
     // Obtener la cadena de texto guardada en el localStorage con la clave "carrito"
     const carritoString = localStorage.getItem("carrito");
 
-    console.log("localstorage", carritoString);
     // Si existe la cadena de texto, convertirla en un objeto del carrito
     if (carritoString) {
       setCarrito(JSON.parse(carritoString));

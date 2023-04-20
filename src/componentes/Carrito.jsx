@@ -38,7 +38,6 @@ function Carrito({ showCarrito, show }) {
       (obj) => !context.productosPublicos.some((o) => o.id === obj.id)
     );
     notFoundArray.length === 0 ? true : notFoundArray;
-    console.log(notFoundArray);
 
     if (cantidadFinal > 0) {
       if (notFoundArray.length === 0) {

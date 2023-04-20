@@ -45,7 +45,7 @@ export default function Home() {
           >
             <header className={style.header}>
               <div className={style.logo}>
-                <img src="https://i.imgur.com/Us77N0f.png" alt="" />{" "}
+                <img src="https://i.imgur.com/Z7pbZ5q.png" alt="" />{" "}
                 <p> 🛸 E S T A M O S EN EL F U T U R O</p>
                 <p> ⚡P I C K U P ⚡</p>
                 <LinkNext href="/productos">IR AL CATALOGO</LinkNext>
