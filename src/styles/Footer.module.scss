@@ -4,6 +4,7 @@
   display: grid;
   justify-items: center;
   border-top: 2px solid $black-color;
+
   .footer {
     width: 50%;
     display: flex;
@@ -58,6 +59,12 @@
           font-size: 14px;
           font-weight: 600;
         }
+        p {
+          color: $black-color;
+          margin: 0;
+          font-size: 14px;
+          font-weight: 600;
+        }
       }
     }
   }
@@ -87,12 +94,13 @@
     display: grid;
     justify-items: start;
     border-top: 2px solid $black-color;
-    margin-bottom: 60px;
+    margin-bottom: 58px;
+    border-bottom: 2px solid $white-color;
 
     .footer {
       width: 90%;
       display: flex;
-      gap: 30px;
+      gap: 10px;
       justify-content: space-between;
       flex-wrap: wrap;
       align-items: flex-start;
