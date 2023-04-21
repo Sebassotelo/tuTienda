@@ -1,0 +1,103 @@
+@import "./Variables.module.scss";
+
+.container {
+  display: grid;
+  justify-items: center;
+  border-top: 2px solid $black-color;
+  .footer {
+    width: 50%;
+    display: flex;
+    gap: 30px;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    padding: 20px 0 20px 0;
+
+    .text {
+      h3 {
+        color: $black-color;
+        margin: 16px 0 0px 0;
+      }
+
+      p {
+        margin: 0;
+        color: $black-color;
+      }
+    }
+
+    .contacto {
+      h3 {
+        color: $black-color;
+        margin: 15px 0 0 0;
+      }
+      .icon__container {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+
+        a {
+          text-decoration: none;
+          margin: 0;
+        }
+
+        .icon {
+          color: $black-color;
+          font-size: 28px;
+        }
+      }
+      .contacto__item {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        margin-top: 5px;
+
+        a {
+          text-decoration: none;
+          color: $black-color;
+          margin: 0;
+          font-size: 14px;
+          font-weight: 600;
+        }
+      }
+    }
+  }
+
+  .p {
+    font-size: 16px;
+    color: $white-color;
+    align-self: center;
+    justify-self: center;
+    margin: 0;
+    margin-top: 20px;
+    padding: 15px 0 15px 0;
+    width: 100%;
+    text-align: center;
+    background-color: $black-color;
+
+    a {
+      color: $white-color;
+      font-weight: 900;
+      text-decoration: none;
+    }
+  }
+}
+
+@media (max-width: 900px) {
+  .container {
+    display: grid;
+    justify-items: start;
+    border-top: 2px solid $black-color;
+    margin-bottom: 60px;
+
+    .footer {
+      width: 90%;
+      display: flex;
+      gap: 30px;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      align-items: flex-start;
+      padding: 20px 0 20px 0;
+      padding-left: 20px;
+    }
+  }
+}

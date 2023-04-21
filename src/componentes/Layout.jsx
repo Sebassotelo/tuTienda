@@ -3,6 +3,7 @@ import Head from "next/head";
 import Navbar from "./Navbar";
 import style from "../styles/Layout.module.scss";
 import Carrito from "./Carrito";
+import Footer from "./Footer";
 
 function Layout({ children, title }) {
   const [showCarrito, setShowCarrito] = useState(false);
@@ -45,11 +46,7 @@ function Layout({ children, title }) {
 
       <Carrito showCarrito={mostrarCarrito} show={showCarrito} />
 
-      <footer className={style.footer}>
-        <p>
-          Hecho por <span>Sebas Sotelo</span>
-        </p>
-      </footer>
+      <Footer />
     </div>
   );
 }
