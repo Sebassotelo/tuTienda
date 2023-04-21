@@ -16,8 +16,12 @@
     display: grid;
     align-items: center;
     justify-items: center;
+
+    img {
+      height: 180px;
+    }
     span {
-      color: black !important;
+      color: $black-color;
     }
   }
 }
@@ -28,7 +32,10 @@
     align-items: center;
     justify-items: center;
     img {
-      height: 150px;
+      height: 50px;
+    }
+    span {
+      font-size: 22px;
     }
   }
 }
