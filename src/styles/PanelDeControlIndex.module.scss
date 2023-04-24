@@ -76,7 +76,7 @@
 
 @media (max-width: 900px) {
   .container {
-    width: 100%;
+    width: 100vw;
     min-height: 90vh;
     display: grid;
     justify-items: center;
@@ -134,7 +134,7 @@
       display: flex;
       flex-wrap: wrap;
       justify-content: space-around;
-      width: 100%;
+      width: 90%;
       grid-gap: 15px;
     }
   }

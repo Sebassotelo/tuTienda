@@ -1,27 +1,24 @@
 @import "./Variables.module.scss";
 .container {
-  width: 100%;
+  width: 90%;
   display: grid;
   justify-items: start;
-
-  .p__productos {
-    margin: 15px 0 15px 0;
-    font-weight: 400;
-    font-size: 18px;
-    padding: 5px;
-    background-color: rgba(0, 0, 0, 0.103);
-    border-radius: 15px;
-  }
+  grid-gap: 15px;
 
   .container__descuentos {
+    background-color: white;
+    border-radius: 15px;
+    padding: 15px;
+    width: 100%;
     display: flex;
+    flex-wrap: wrap;
     justify-content: flex-start;
     gap: 20px;
 
     .container__descuentos__item {
       margin: 10px 0 10px 0;
       padding: 10px;
-      background-color: rgba(0, 0, 0, 0.103);
+      border: 1px solid rgba(0, 0, 0, 0.315);
       border-radius: 15px;
       display: grid;
       justify-items: center;
@@ -37,10 +34,18 @@
     font-weight: 900;
     margin: 15px 0 0px 0;
   }
-  .title {
-    text-decoration: underline;
-    font-size: 20px;
-    margin-top: 20px;
+
+  .cupones__container {
+    background-color: white;
+    padding: 15px;
+    border-radius: 15px;
+    width: 100%;
+
+    .title {
+      text-decoration: underline;
+      font-size: 32px;
+      margin: 0;
+    }
   }
 
   form {
@@ -95,4 +100,59 @@
   justify-content: space-around;
   width: 100%;
   grid-gap: 15px;
+}
+
+.productos_descuentos {
+  background-color: white;
+  padding: 15px;
+  border-radius: 15px;
+  width: 100%;
+  .p__productos {
+    margin: 15px 0 15px 0;
+    font-weight: 400;
+    font-size: 18px;
+    padding: 9px;
+    background-color: rgba(0, 0, 0, 0.103);
+    border-radius: 15px;
+  }
+}
+
+@media (max-width: 900px) {
+  .container {
+    width: 100%;
+    display: grid;
+    justify-items: center;
+    grid-gap: 15px;
+    .container__descuentos {
+      width: 90%;
+      justify-content: center;
+    }
+    .cupones__container {
+      background-color: white;
+      padding: 15px;
+      border-radius: 15px;
+      width: 90%;
+      justify-content: center;
+
+      .title {
+        text-decoration: underline;
+        font-size: 32px;
+        margin: 0;
+      }
+    }
+  }
+  .productos_descuentos {
+    background-color: white;
+    padding: 5px;
+    border-radius: 15px;
+    width: 90%;
+    .p__productos {
+      margin: 15px 0 15px 0;
+      font-weight: 400;
+      font-size: 18px;
+      padding: 9px;
+      background-color: rgba(0, 0, 0, 0.103);
+      border-radius: 15px;
+    }
+  }
 }

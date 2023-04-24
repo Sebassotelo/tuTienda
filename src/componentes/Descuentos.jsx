@@ -127,8 +127,6 @@ function Descuentos() {
 
   return (
     <div className={style.container}>
-      <h3 className={style.h3}>Descuentos</h3>
-
       <div className={style.container__descuentos}>
         <div className={style.container__descuentos__item}>
           <p className={style.title}>Aplicar Descuentos:</p>
@@ -174,34 +172,38 @@ function Descuentos() {
         </div>
       </div>
 
-      <p className={style.title}>Cupones</p>
+      <div className={style.cupones__container}>
+        <p className={style.title}>Cupones</p>
 
-      <Cupones />
+        <Cupones />
+      </div>
 
-      <p className={style.title}>Productos en Descuento:</p>
-      <p className={style.p__productos}>
-        Hay en descuento <span>{contadorProductos}</span> productos{" "}
-      </p>
-      <div className={style.listaProducto}>
-        {context.productosCopia
-          .filter((item) => item.descuento)
-          .map((item) => {
-            return (
-              <ProductoPanel
-                key={item.id}
-                title={item.title}
-                precio={item.precio}
-                desc={item.desc}
-                img={item.img}
-                stock={item.stock}
-                caracteristicas={item.caracteristicas}
-                id={item.id}
-                seccion={item.seccion}
-                descuento={item.descuento}
-                precioDescuento={item.precioDescuento}
-              />
-            );
-          })}
+      <div className={style.productos_descuentos}>
+        <p>Productos en Descuento:</p>
+        <p className={style.p__productos}>
+          Hay en descuento <span>{contadorProductos}</span> productos{" "}
+        </p>
+        <div className={style.listaProducto}>
+          {context.productosCopia
+            .filter((item) => item.descuento)
+            .map((item) => {
+              return (
+                <ProductoPanel
+                  key={item.id}
+                  title={item.title}
+                  precio={item.precio}
+                  desc={item.desc}
+                  img={item.img}
+                  stock={item.stock}
+                  caracteristicas={item.caracteristicas}
+                  id={item.id}
+                  seccion={item.seccion}
+                  descuento={item.descuento}
+                  precioDescuento={item.precioDescuento}
+                />
+              );
+            })}
+        </div>
       </div>
     </div>
   );
