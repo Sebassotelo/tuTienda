@@ -6,10 +6,11 @@ import style from "../styles/Cupones.module.scss";
 
 import EditarCupon from "./EditarCupon";
 import CuponItem from "./CuponItem";
+import { toast } from "sonner";
 
 function Cupones() {
   const context = useContext(ContextGeneral);
-  const { setCupones, setLoader } = useContext(ContextGeneral);
+  const { setCupones, setLoader, llamadaDB } = useContext(ContextGeneral);
   const docRef = doc(context.firestore, `users/sebassotelo97@gmail.com`);
 
   const [showCupon, setShowCupon] = useState(false);
@@ -46,6 +47,8 @@ function Cupones() {
       setCupones(nuevoArray);
 
       await updateDoc(docRef, { cupones: [...nuevoArray] });
+      llamadaDB();
+      toast.success(`Cupon ${cupon} de $${monto} creado Correctamente`);
     }
 
     e.target.inputCupon.value = "";
@@ -59,6 +62,8 @@ function Cupones() {
       setCupones(nuevoArray);
 
       await updateDoc(docRef, { cupones: [...nuevoArray] });
+      llamadaDB();
+      toast.success(`Cupon Eliminado`);
     }
   };
 

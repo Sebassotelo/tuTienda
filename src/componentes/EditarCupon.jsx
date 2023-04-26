@@ -2,10 +2,11 @@ import React, { useContext, useState } from "react";
 import style from "../styles/EditarCupon.module.scss";
 import ContextGeneral from "@/servicios/contextPrincipal";
 import { updateDoc, doc } from "firebase/firestore";
+import { toast } from "sonner";
 
 function EditarCupon({ item, setShow, show }) {
   const context = useContext(ContextGeneral);
-  const { setCupones } = useContext(ContextGeneral);
+  const { setCupones, llamadaDB } = useContext(ContextGeneral);
   const [activo, setActivo] = useState(item.activo);
 
   const activarDescuento = () => {
@@ -31,7 +32,8 @@ function EditarCupon({ item, setShow, show }) {
 
     const docRef = doc(context.firestore, `users/sebassotelo97@gmail.com`);
     await updateDoc(docRef, { cupones: [...cuponesCopia] });
-    setCupones(cuponesCopia);
+    llamadaDB();
+    toast.success("Cambio Guardado Correctamente");
 
     setShow(false);
   };

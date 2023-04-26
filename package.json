@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "browser-image-compression": "^2.0.2",
     "eslint": "^8.38.0",
     "eslint-config-next": "13.2.4",
     "firebase": "^9.17.2",

@@ -49,6 +49,7 @@ function Context(props) {
   };
 
   const llamadaDB = async () => {
+    setLoader(false);
     const docRef = doc(firestore, `users/sebassotelo97@gmail.com`);
     const consulta = await getDoc(docRef);
     const infoDocu = consulta.data();

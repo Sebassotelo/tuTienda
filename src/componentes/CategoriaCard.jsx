@@ -24,7 +24,6 @@ function CategoriaCard({ item }) {
   };
 
   useEffect(() => {
-    console.log("ffffffff", item);
     filtrar();
   }, []);
 

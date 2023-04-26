@@ -12,6 +12,7 @@ import {
   setDoc,
   updateDoc,
 } from "firebase/firestore";
+import { toast } from "sonner";
 
 function ProductoPanel({
   title,
@@ -28,7 +29,7 @@ function ProductoPanel({
 }) {
   const [editarProducto, setEditarProducto] = useState(false);
   const context = useContext(ContextGeneral);
-  const { setProductos } = useContext(ContextGeneral);
+  const { setProductos, llamadaDB } = useContext(ContextGeneral);
 
   const eliminarProducto = async (e) => {
     if (confirm("Seguro que desea eliminar este producto?") === true) {
@@ -38,7 +39,8 @@ function ProductoPanel({
 
       const docRef = doc(context.firestore, `users/sebassotelo97@gmail.com`);
       await updateDoc(docRef, { items: [...nuevoItems] });
-      setProductos(nuevoItems);
+      llamadaDB();
+      toast.success(`${title} Eliminado Correctamente`);
     }
   };
 

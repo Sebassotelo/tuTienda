@@ -7,7 +7,7 @@ import Cupones from "./Cupones";
 
 function Descuentos() {
   const context = useContext(ContextGeneral);
-  const { setProductos, setProductosCopia, setLoader, setCupones } =
+  const { setProductos, setProductosCopia, setLoader, setCupones, llamadaDB } =
     useContext(ContextGeneral);
 
   const [contadorProductos, setContadorProductos] = useState(0);
@@ -34,10 +34,8 @@ function Descuentos() {
 
       await updateDoc(docRef, { items: [...nuevoArray] });
 
-      setProductos(nuevoArray);
-      setProductosCopia(nuevoArray);
+      llamadaDB();
       contadorProductosDescuento();
-      setLoader(true);
     }
   };
 
@@ -62,10 +60,8 @@ function Descuentos() {
       }
 
       await updateDoc(docRef, { items: [...nuevoArray] });
-      setProductos(nuevoArray);
-      setProductosCopia(nuevoArray);
+      llamadaDB();
       contadorProductosDescuento();
-      setLoader(true);
     }
   };
 
@@ -86,10 +82,8 @@ function Descuentos() {
       }
 
       await updateDoc(docRef, { items: [...nuevoArray] });
-      setProductos(nuevoArray);
-      setProductosCopia(nuevoArray);
+      llamadaDB();
       contadorProductosDescuento();
-      setLoader(true);
     }
   };
   const quitarDescuentoTotal = async () => {
@@ -109,15 +103,13 @@ function Descuentos() {
       }
 
       await updateDoc(docRef, { items: [...nuevoArray] });
-      setProductos(nuevoArray);
-      setProductosCopia(nuevoArray);
+      llamadaDB();
       contadorProductosDescuento();
-      setLoader(true);
     }
   };
 
   const contadorProductosDescuento = () => {
-    const nuevoArray = context.productos.filter((item) => item.descuento);
+    const nuevoArray = context.productosCopia.filter((item) => item.descuento);
     setContadorProductos(nuevoArray.length);
   };
 
@@ -199,6 +191,7 @@ function Descuentos() {
                   id={item.id}
                   seccion={item.seccion}
                   descuento={item.descuento}
+                  destacado={item.destacado}
                   precioDescuento={item.precioDescuento}
                 />
               );

@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import ContextGeneral from "@/servicios/contextPrincipal";
 import style from "../styles/ProductoNuevo.module.scss";
+import { toast } from "sonner";
 
 import {
   getFirestore,
@@ -10,6 +11,7 @@ import {
   updateDoc,
 } from "firebase/firestore";
 import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
+import SubirFoto from "./SubirFoto";
 
 function EditarProducto({
   title2,
@@ -26,10 +28,13 @@ function EditarProducto({
   destacado2,
 }) {
   const context = useContext(ContextGeneral);
-  const { setProductos, setProductosCopia } = useContext(ContextGeneral);
+  const { setProductos, setProductosCopia, llamadaDB } =
+    useContext(ContextGeneral);
 
   const [descuentoActivo, setDescuentoActivo] = useState(descuento2);
   const [destacadoActivo, setDestacadoActivo] = useState(destacado2);
+
+  const [image, setImage] = useState(img2);
 
   const editarProducto = async (e) => {
     e.preventDefault(e);
@@ -37,7 +42,6 @@ function EditarProducto({
     const title = e.target.inputTitle.value;
     const desc = e.target.inputDesc.value;
     const precio = e.target.inputPrecio.value;
-    const img = e.target.inputImagen.value;
     const stock = e.target.inputStock.value;
     const seccion = e.target.inputSeccion.value;
     const caracteristicas = e.target.inputCaracteristicas.value;
@@ -53,7 +57,7 @@ function EditarProducto({
       precio: precio,
       desc: desc,
       seccion: seccion,
-      img: img,
+      img: image,
       caracteristicas: caracteristicas,
       descuento: descuentoActivo,
       precioDescuento: precioDescuento,
@@ -71,16 +75,16 @@ function EditarProducto({
     const docRef = doc(context.firestore, `users/sebassotelo97@gmail.com`);
     await updateDoc(docRef, { items: [...productosCopia] });
 
-    setProductosCopia(productosCopia);
     //limpiar Form
     e.target.inputTitle.value = "";
     e.target.inputDesc.value = "";
     e.target.inputPrecio.value = "";
-    e.target.inputImagen.value = "";
     e.target.inputStock.value = "";
     e.target.inputSeccion.value = "";
     e.target.inputCaracteristicas.value = "";
-
+    setImage("");
+    llamadaDB();
+    toast.success("Cambio Guardado");
     setEditarProducto(false);
   };
 
@@ -110,27 +114,37 @@ function EditarProducto({
           id="inputDesc"
           defaultValue={desc2 ? desc2 : ""}
         />
-        <p>Precio:</p>
-        <input
-          type="number"
-          name=""
-          id="inputPrecio"
-          defaultValue={precio2 ? precio2 : ""}
-        />
+        <div className={style.precios}>
+          <div className={style.precios__item}>
+            <p>Precio:</p>
+            <input
+              type="number"
+              name=""
+              id="inputPrecio"
+              defaultValue={precio2 ? precio2 : ""}
+            />
+          </div>
+          <div className={style.precios__item}>
+            <p>Precio oferta:</p>
+            <input
+              type="number"
+              name=""
+              id="inputPrecioDescuento"
+              defaultValue={precioDescuento2 ? precioDescuento2 : ""}
+            />
+          </div>
+          <div className={style.precios__item}>
+            <p>Stock:</p>
+            <input
+              type="number"
+              name=""
+              id="inputStock"
+              defaultValue={stock2 ? stock2 : ""}
+            />
+          </div>
+        </div>
         <p>Url de Imagen:</p>
-        <input
-          type="text"
-          name=""
-          id="inputImagen"
-          defaultValue={img2 ? img2 : ""}
-        />
-        <p>Stock:</p>
-        <input
-          type="number"
-          name=""
-          id="inputStock"
-          defaultValue={stock2 ? stock2 : ""}
-        />
+        <SubirFoto setImage={setImage} />
         <p>Seccion:</p>
         <select
           name=""
@@ -151,53 +165,48 @@ function EditarProducto({
           id="inputCaracteristicas"
           defaultValue={caracteristicas2 ? caracteristicas2 : ""}
         />
-        <div className={style.checkbox}>
-          <p>Descuento Activo:</p>
-          {descuentoActivo ? (
-            <p
-              className={style.descuentoActivo}
-              onClick={activarDescuento}
-              style={{ backgroundColor: "green" }}
-            >
-              ON
-            </p>
-          ) : (
-            <p
-              className={style.descuentoActivo}
-              onClick={activarDescuento}
-              style={{ backgroundColor: "red" }}
-            >
-              OFF
-            </p>
-          )}
-        </div>
 
-        <p>Precio con Descuento:</p>
-        <input
-          type="number"
-          name=""
-          id="inputPrecioDescuento"
-          defaultValue={precioDescuento2 ? precioDescuento2 : ""}
-        />
-        <div className={style.checkbox}>
-          <p>Desctacado Activo:</p>
-          {destacadoActivo ? (
-            <p
-              className={style.descuentoActivo}
-              onClick={activarDestacado}
-              style={{ backgroundColor: "green" }}
-            >
-              ON
-            </p>
-          ) : (
-            <p
-              className={style.descuentoActivo}
-              onClick={activarDestacado}
-              style={{ backgroundColor: "red" }}
-            >
-              OFF
-            </p>
-          )}
+        <div className={style.check__container}>
+          <div className={style.checkbox}>
+            <p>Descuento:</p>
+            {descuentoActivo ? (
+              <p
+                className={style.descuentoActivo}
+                style={{ backgroundColor: "green" }}
+                onClick={activarDescuento}
+              >
+                ON
+              </p>
+            ) : (
+              <p
+                className={style.descuentoActivo}
+                style={{ backgroundColor: "red" }}
+                onClick={activarDescuento}
+              >
+                OFF
+              </p>
+            )}
+          </div>
+          <div className={style.checkbox}>
+            <p>Destacado:</p>
+            {destacadoActivo ? (
+              <p
+                onClick={activarDestacado}
+                className={style.descuentoActivo}
+                style={{ backgroundColor: "green" }}
+              >
+                ON
+              </p>
+            ) : (
+              <p
+                onClick={activarDestacado}
+                className={style.descuentoActivo}
+                style={{ backgroundColor: "red" }}
+              >
+                OFF
+              </p>
+            )}
+          </div>
         </div>
 
         <button type="submit">Guardar</button>

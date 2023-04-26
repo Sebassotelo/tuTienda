@@ -1,6 +1,7 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import ContextGeneral from "@/servicios/contextPrincipal";
 import style from "../styles/ProductoNuevo.module.scss";
+import { toast } from "sonner";
 
 import {
   getFirestore,
@@ -10,10 +11,15 @@ import {
   updateDoc,
 } from "firebase/firestore";
 import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
+import SubirFoto from "./SubirFoto";
 
 function ProductoNuevo({ setShowNuevoProducto }) {
+  const [image, setImage] = useState("");
+  const [descuentoActivo, setDescuentoActivo] = useState(false);
+  const [destacadoActivo, setDestacadoActivo] = useState(false);
+
   const context = useContext(ContextGeneral);
-  const { setProductos } = useContext(ContextGeneral);
+  const { setProductos, llamadaDB } = useContext(ContextGeneral);
 
   const agregarProducto = async (e) => {
     e.preventDefault(e);
@@ -21,13 +27,10 @@ function ProductoNuevo({ setShowNuevoProducto }) {
     const title = e.target.inputTitle.value;
     const desc = e.target.inputDesc.value;
     const precio = e.target.inputPrecio.value;
-    const img = e.target.inputImagen.value;
     const stock = e.target.inputStock.value;
     const seccion = e.target.inputSeccion.value;
     const caracteristicas = e.target.inputCaracteristicas.value;
-    const descuento = e.target.inputDescuento.value;
     const precioDescuento = e.target.inputPrecioDescuento.value;
-    const destacado = e.target.inputDestacado.value;
 
     //traemos los datos de base de datos
     const docRef = doc(context.firestore, `users/sebassotelo97@gmail.com`);
@@ -46,11 +49,11 @@ function ProductoNuevo({ setShowNuevoProducto }) {
         precio: precio,
         desc: desc,
         seccion: seccion,
-        img: img,
+        img: image,
         caracteristicas: caracteristicas,
-        descuento: descuento,
+        descuento: descuentoActivo,
         precioDescuento: precioDescuento,
-        destacado: destacado,
+        destacado: destacadoActivo,
       },
       ...infoDocu.items
     );
@@ -62,17 +65,28 @@ function ProductoNuevo({ setShowNuevoProducto }) {
     //   setArray(newArray);
     updateDoc(docRef, { items: [...newArray] });
 
+    toast.success(`${title} Agregado con exito`);
+
     //limpiar Form
     e.target.inputTitle.value = "";
     e.target.inputDesc.value = "";
     e.target.inputPrecio.value = "";
-    e.target.inputImagen.value = "";
+    // e.target.inputImagen.value = "";
     e.target.inputStock.value = "";
     e.target.inputSeccion.value = "";
     e.target.inputCaracteristicas.value = "";
+    setImage("");
+    llamadaDB();
 
     // setShow(false);
     setShowNuevoProducto(false);
+  };
+
+  const activarDescuento = () => {
+    setDescuentoActivo(!descuentoActivo);
+  };
+  const activarDestacado = () => {
+    setDestacadoActivo(!destacadoActivo);
   };
 
   return (
@@ -96,10 +110,11 @@ function ProductoNuevo({ setShowNuevoProducto }) {
             <input type="number" name="" id="inputStock" />
           </div>
         </div>
+        <p>Subir Imagen:</p>
 
-        <p>Url de Imagen:</p>
-        <input type="text" name="" id="inputImagen" />
-
+        <SubirFoto setImage={setImage} />
+        {/* <p>Url de Imagen:</p>
+        <input type="text" name="" id="inputImagen" /> */}
         <p>Categoría del producto ​ :</p>
         <select name="" id="inputSeccion">
           {context.secciones.map((item, i) => {
@@ -113,15 +128,47 @@ function ProductoNuevo({ setShowNuevoProducto }) {
         <input type="text" name="" id="inputCaracteristicas" />
         <div className={style.check__container}>
           <div className={style.checkbox}>
-            <p>Descuento Activo:</p>
-            <input type="checkbox" id="inputDescuento" />
+            <p>Descuento:</p>
+            {descuentoActivo ? (
+              <p
+                className={style.descuentoActivo}
+                onClick={activarDescuento}
+                style={{ backgroundColor: "green" }}
+              >
+                ON
+              </p>
+            ) : (
+              <p
+                className={style.descuentoActivo}
+                onClick={activarDescuento}
+                style={{ backgroundColor: "red" }}
+              >
+                OFF
+              </p>
+            )}
           </div>
+
           <div className={style.checkbox}>
-            <p>Producto Destacado:</p>
-            <input type="checkbox" id="inputDestacado" />
+            <p>Desctacado:</p>
+            {destacadoActivo ? (
+              <p
+                className={style.descuentoActivo}
+                onClick={activarDestacado}
+                style={{ backgroundColor: "green" }}
+              >
+                ON
+              </p>
+            ) : (
+              <p
+                className={style.descuentoActivo}
+                onClick={activarDestacado}
+                style={{ backgroundColor: "red" }}
+              >
+                OFF
+              </p>
+            )}
           </div>
         </div>
-
         <button type="submit">Agregar Producto</button>
         <button onClick={() => setShowNuevoProducto(false)}>Cerrar</button>
       </form>
