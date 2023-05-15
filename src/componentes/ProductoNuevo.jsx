@@ -91,6 +91,11 @@ function ProductoNuevo({ setShowNuevoProducto }) {
 
   return (
     <div className={style.container}>
+      {image && (
+        <div className={style.container__img}>
+          <img src={image} alt="" />
+        </div>
+      )}
       <form action="" className={style.form} onSubmit={agregarProducto}>
         <p>Nombre del Producto:</p>
         <input type="text" name="" id="inputTitle" />

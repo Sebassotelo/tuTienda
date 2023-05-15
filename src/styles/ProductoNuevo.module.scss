@@ -12,10 +12,27 @@
   min-width: 500px;
   min-height: 300px;
   background-color: rgba(0, 0, 0, 0.747);
-  display: grid;
-  justify-items: center;
+  display: flex;
+  justify-content: center;
   align-items: center;
+  flex-direction: column;
+  gap: 15px;
   backdrop-filter: blur(3px);
+
+  .container__img {
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    filter: opacity(0.7);
+
+    img {
+      height: 150px;
+      width: 150px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+  }
 
   .form {
     width: 50vw;
@@ -112,6 +129,10 @@
   .container {
     min-width: 300px;
     min-height: 300px;
+
+    .container__img {
+      display: none;
+    }
 
     .form {
       width: 90vw;

@@ -99,6 +99,11 @@ function EditarProducto({
 
   return (
     <div className={style.container}>
+      {image && (
+        <div className={style.container__img}>
+          <img src={image} alt="" />
+        </div>
+      )}
       <form action="" className={style.form} onSubmit={editarProducto}>
         <p>Titulo:</p>
         <input
