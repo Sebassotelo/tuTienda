@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
 import imageCompression from "browser-image-compression";
 
-function SubirFoto({ setImage }) {
+function SubirFoto({ setImage, setLoad }) {
   const handleImageUpload = async (e) => {
     const imageFile = e.target.files[0];
+
+    setLoad(false);
 
     console.log("originalFile instanceof Blob", imageFile instanceof Blob); // true
     console.log(`originalFile size ${imageFile.size / 1024 / 1024} MB`);
@@ -25,6 +27,8 @@ function SubirFoto({ setImage }) {
       //   ); // smaller than maxSizeMB
 
       await uploadToServer(compressedFile); // write your own logic
+
+      setLoad(true);
     } catch (error) {
       console.log(error);
     }

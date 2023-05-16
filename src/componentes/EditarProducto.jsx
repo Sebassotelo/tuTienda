@@ -32,7 +32,10 @@ function EditarProducto({
     useContext(ContextGeneral);
 
   const [descuentoActivo, setDescuentoActivo] = useState(descuento2);
-  const [destacadoActivo, setDestacadoActivo] = useState(destacado2);
+  const [destacadoActivo, setDestacadoActivo] = useState(() => {
+    destacado2 ? destacado2 : false;
+  });
+  const [loadImg, setLoadImg] = useState(true);
 
   const [image, setImage] = useState(img2);
 
@@ -149,7 +152,7 @@ function EditarProducto({
           </div>
         </div>
         <p>Url de Imagen:</p>
-        <SubirFoto setImage={setImage} />
+        <SubirFoto setImage={setImage} setLoad={setLoadImg} />
         <p>Seccion:</p>
         <select
           name=""
@@ -214,7 +217,11 @@ function EditarProducto({
           </div>
         </div>
 
-        <button type="submit">Guardar</button>
+        {loadImg ? (
+          <button type="submit">Guardar</button>
+        ) : (
+          <button>Cargando Imagen...</button>
+        )}
         <button onClick={setEditarProducto}>Cerrar</button>
       </form>
     </div>

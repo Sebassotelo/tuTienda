@@ -17,6 +17,7 @@ function ProductoNuevo({ setShowNuevoProducto }) {
   const [image, setImage] = useState("");
   const [descuentoActivo, setDescuentoActivo] = useState(false);
   const [destacadoActivo, setDestacadoActivo] = useState(false);
+  const [loadImg, setLoadImg] = useState(true);
 
   const context = useContext(ContextGeneral);
   const { setProductos, llamadaDB } = useContext(ContextGeneral);
@@ -117,7 +118,7 @@ function ProductoNuevo({ setShowNuevoProducto }) {
         </div>
         <p>Subir Imagen:</p>
 
-        <SubirFoto setImage={setImage} />
+        <SubirFoto setImage={setImage} setLoad={setLoadImg} />
         {/* <p>Url de Imagen:</p>
         <input type="text" name="" id="inputImagen" /> */}
         <p>Categoría del producto ​ :</p>
@@ -174,7 +175,11 @@ function ProductoNuevo({ setShowNuevoProducto }) {
             )}
           </div>
         </div>
-        <button type="submit">Agregar Producto</button>
+        {loadImg ? (
+          <button type="submit">Agregar Producto</button>
+        ) : (
+          <button>Cargando Imagen...</button>
+        )}
         <button onClick={() => setShowNuevoProducto(false)}>Cerrar</button>
       </form>
     </div>
