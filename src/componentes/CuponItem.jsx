@@ -12,7 +12,7 @@ function CuponItem({ item, eliminarCupon }) {
       <div key={item.id} className={style.cupon__item}>
         <div className={style.desc}>
           <p>{item.cupon}</p>
-          <p>${item.monto}</p>
+          <p>{item.monto}%</p>
           {item.activo ? (
             <p className={style.icons__on}>ON</p>
           ) : (

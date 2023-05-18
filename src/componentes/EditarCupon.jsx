@@ -42,7 +42,7 @@ function EditarCupon({ item, setShow, show }) {
     <form action="" onSubmit={editarCupon} className={style.form}>
       <p>Nombre de Cupon:</p>
       <input type="text" id="inputCupon" defaultValue={item.cupon} />
-      <p>Monto de Descuento</p>
+      <p>Monto de Descuento %</p>
       <input type="text" id="inputMonto" defaultValue={item.monto} />
       {activo ? (
         <p className={style.icons__on} onClick={activarDescuento}>

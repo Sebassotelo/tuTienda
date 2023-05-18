@@ -53,7 +53,7 @@ function Carrito({ showCarrito, show }) {
         let cuponDesc = "";
 
         if (cuponActivo && cuponActivo.activo) {
-          cuponDesc = `%0ACupon%20${cuponActivo.cupon}%20activo.%20Descuento%20de%20$${cuponActivo.monto}`;
+          cuponDesc = `%0ACupon%20${cuponActivo.cupon}%20activo.%20Descuento%20de%20${cuponActivo.monto}%20porciento.`;
         }
         setPedido(
           `Hola%20chico%20de%20las%20medias%20🧦!%20Este%20es%20mi%20pedido:%0A%0A${pedidoCopy}%0ATotal:%20$${precioFinal}${
@@ -119,7 +119,7 @@ function Carrito({ showCarrito, show }) {
     );
 
     if (descuento[0] && descuento[0].activo) {
-      setPrecioFinal(precioFinal - descuento[0].monto);
+      setPrecioFinal(precioFinal - precioTotal * (cuponActivo.monto / 100));
       setCuponActivo(descuento[0]);
       actualizacionCarrito();
     } else {
@@ -140,10 +140,9 @@ function Carrito({ showCarrito, show }) {
       cantidadTotal = cantidadTotal + e.cantidad;
     });
 
-    console.log(precioTotal, cantidadTotal);
-
     if (cuponActivo && cuponActivo.activo) {
-      setPrecioFinal(precioTotal - cuponActivo.monto);
+      setPrecioFinal(precioTotal - precioTotal * (cuponActivo.monto / 100));
+      console.log("asfasdasd", precioTotal * (cuponActivo.monto / 100));
     } else {
       setPrecioFinal(precioTotal);
     }
@@ -222,7 +221,7 @@ function Carrito({ showCarrito, show }) {
           <>
             {cuponActivo && cuponActivo.activo ? (
               <p className={style.cupon__aplicado}>
-                Cupon aplicado de ${cuponActivo.monto}
+                Cupon aplicado de {cuponActivo.monto}%
               </p>
             ) : (
               <form

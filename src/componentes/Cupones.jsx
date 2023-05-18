@@ -73,7 +73,7 @@ function Cupones() {
         <form action="" onSubmit={crearCupon} className={style.form}>
           <p>Nombre de Cupon:</p>
           <input type="text" id="inputCupon" required />
-          <p>Monto de Descuento</p>
+          <p>Monto de Descuento %</p>
           <input type="text" id="inputMonto" required />
           <div>
             <button type="submit" onClick={() => setShowCupon(false)}>
