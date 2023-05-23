@@ -260,7 +260,8 @@ function Carrito({ showCarrito, show }) {
 
         {cantidadFinal >= 4 && (
           <p>
-            Descuento aplicado de <span>$60</span> por par
+            Descuento aplicado de <span>$60</span> por par. Total:{" "}
+            <span>${cantidadFinal * 60}</span>
           </p>
         )}
 
