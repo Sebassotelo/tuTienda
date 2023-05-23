@@ -51,14 +51,21 @@ function Carrito({ showCarrito, show }) {
               }%20%0A`)
         );
         let cuponDesc = "";
+        let descuentoCantidad = "";
 
         if (cuponActivo && cuponActivo.activo) {
           cuponDesc = `%0ACupon%20${cuponActivo.cupon}%20activo.%20Descuento%20de%20${cuponActivo.monto}%20porciento.`;
         }
+
+        if (cantidadFinal >= 4) {
+          descuentoCantidad = `%0ADescuento%20por%20Cantidad.%20Descuento%20de%20$${
+            cantidadFinal * 60
+          }%20.`;
+        }
         setPedido(
           `Hola%20chico%20de%20las%20medias%20🧦!%20Este%20es%20mi%20pedido:%0A%0A${pedidoCopy}%0ATotal:%20$${precioFinal}${
             cuponActivo && cuponDesc
-          }`
+          }${cantidadFinal && descuentoCantidad}`
         );
 
         if (cantidadFinal > 0) {
@@ -137,6 +144,7 @@ function Carrito({ showCarrito, show }) {
   useEffect(() => {
     context.carrito.map((e, i) => {
       precioTotal = precioTotal + e.precio * e.cantidad;
+
       cantidadTotal = cantidadTotal + e.cantidad;
     });
 
@@ -144,6 +152,11 @@ function Carrito({ showCarrito, show }) {
       setPrecioFinal(precioTotal - precioTotal * (cuponActivo.monto / 100));
       console.log("asfasdasd", precioTotal * (cuponActivo.monto / 100));
     } else {
+      setPrecioFinal(precioTotal);
+    }
+
+    if (cantidadTotal >= 4) {
+      precioTotal = precioTotal - cantidadTotal * 60;
       setPrecioFinal(precioTotal);
     }
 
@@ -244,6 +257,12 @@ function Carrito({ showCarrito, show }) {
           <p>Total:</p>
           <p>${precioFinal}</p>
         </div>
+
+        {cantidadFinal >= 4 && (
+          <p>
+            Descuento aplicado de <span>$60</span> por par
+          </p>
+        )}
 
         <div className={style.container__confirmacion}>
           {estadoPedido == 0 && (
