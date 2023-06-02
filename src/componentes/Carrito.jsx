@@ -57,11 +57,12 @@ function Carrito({ showCarrito, show }) {
           cuponDesc = `%0ACupon%20${cuponActivo.cupon}%20activo.%20Descuento%20de%20${cuponActivo.monto}%20porciento.`;
         }
 
-        if (cantidadFinal >= 4) {
-          descuentoCantidad = `%0ADescuento%20por%20Cantidad.%20Descuento%20de%20$${
-            cantidadFinal * 60
-          }%20.`;
-        }
+        // if (cantidadFinal >= 4) {
+        //   descuentoCantidad = `%0ADescuento%20por%20Cantidad.%20Descuento%20de%20$${
+        //     cantidadFinal * 60
+        //   }%20.`;
+        // }
+
         setPedido(
           `Hola%20chico%20de%20las%20medias%20🧦!%20Este%20es%20mi%20pedido:%0A%0A${pedidoCopy}%0ATotal:%20$${precioFinal}${
             cuponActivo && cuponDesc
@@ -155,10 +156,10 @@ function Carrito({ showCarrito, show }) {
       setPrecioFinal(precioTotal);
     }
 
-    if (cantidadTotal >= 4) {
-      precioTotal = precioTotal - cantidadTotal * 60;
-      setPrecioFinal(precioTotal);
-    }
+    // if (cantidadTotal >= 4) {
+    //   precioTotal = precioTotal - cantidadTotal * 60;
+    //   setPrecioFinal(precioTotal);
+    // }
 
     setCantidadFinal(cantidadTotal);
     setEstadoPedido(0);
@@ -258,12 +259,12 @@ function Carrito({ showCarrito, show }) {
           <p>${precioFinal}</p>
         </div>
 
-        {cantidadFinal >= 4 && (
+        {/* {cantidadFinal >= 4 && (
           <p>
             Descuento aplicado de <span>$60</span> por par. Total:{" "}
             <span>${cantidadFinal * 60}</span>
           </p>
-        )}
+        )} */}
 
         <div className={style.container__confirmacion}>
           {estadoPedido == 0 && (
