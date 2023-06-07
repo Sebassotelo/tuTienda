@@ -4,13 +4,14 @@ import { initializeApp } from "firebase/app";
 // https://firebase.google.com/docs/web/setup#available-libraries
 
 // Your web app's Firebase configuration
+
 const firebaseConfig = {
-  apiKey: "AIzaSyCw-Ss94pbUo_x7wqw0CojX8HfQdFE99cs",
-  authDomain: "tienda-ec313.firebaseapp.com",
-  projectId: "tienda-ec313",
-  storageBucket: "tienda-ec313.appspot.com",
-  messagingSenderId: "956442042739",
-  appId: "1:956442042739:web:906caab1e2dde2c304a506",
+  apiKey: `${process.env.NEXT_PUBLIC_APIKEY}`,
+  authDomain: `${process.env.NEXT_PUBLIC_AUTHDOMAIN}`,
+  projectId: `${process.env.NEXT_PUBLIC_PROJECTID}`,
+  storageBucket: `${process.env.NEXT_PUBLIC_STORAGEBUCKET}`,
+  messagingSenderId: `${process.env.NEXT_PUBLIC_MESSAGINGSENDERID}`,
+  appId: `${process.env.NEXT_PUBLIC_APPID}`,
 };
 
 // Initialize Firebase

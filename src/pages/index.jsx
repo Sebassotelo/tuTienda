@@ -34,7 +34,6 @@ export default function Home() {
   useEffect(() => {
     llamadaDB();
     verificarLogin();
-    console.log(context.secciones);
   }, []);
 
   return (
