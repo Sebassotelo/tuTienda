@@ -102,7 +102,7 @@ function ProductoRuta() {
           {producto ? (
             <>
               <Head>
-                <title>SrasMedias 🧦 | {producto.title}</title>
+                <title>JaimePrint | {producto.title}</title>
               </Head>
               <div className={style.container}>
                 <div className={style.container__item}>

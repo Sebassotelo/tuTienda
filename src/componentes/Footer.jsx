@@ -21,24 +21,24 @@ function Footer() {
         <div className={style.contacto}>
           <h3>NUESTRAS REDES SOCIALES</h3>
           <div className={style.icon__container}>
-            <a href="https://www.instagram.com/sras.medias/" target={"_blank"}>
+            <a href="https://www.instagram.com/jaimeprint/" target={"_blank"}>
               <AiOutlineInstagram className={style.icon} />
             </a>
             <a
-              href="https://api.whatsapp.com/send/?phone=5493624148393&text=Pega+aqui+tu+pedido%21&type=phone_number&app_absent=0"
+              href="https://api.whatsapp.com/send/?phone=5493794120724&type=phone_number&app_absent=0"
               target={"_blank"}
             >
               <AiOutlineWhatsApp className={style.icon} />
             </a>
           </div>
           <h3>CONTACTO</h3>
-          <div className={style.contacto__item}>
+          {/* <div className={style.contacto__item}>
             <AiOutlineMail />
             <a href="">sras.medias22@gmail.com</a>
-          </div>
+          </div> */}
           <div className={style.contacto__item}>
             <AiOutlinePhone />
-            <p>3624148393</p>
+            <p>379-4120724</p>
           </div>
           <div className={style.contacto__item}>
             <FaMapMarkerAlt />{" "}
@@ -46,7 +46,7 @@ function Footer() {
               href="https://www.google.com/maps/place/Catamarca+1326,+W3400CEU+W3400CEU,+Corrientes/@-27.4726349,-58.8335555,19z/data=!4m6!3m5!1s0x94456c9f58a152cd:0x7af34e30d000883e!8m2!3d-27.4726694!4d-58.8336816!16s%2Fg%2F11fssw2pdc"
               target={"_blank"}
             >
-              Catamarca 1326. Corrientes, Argentina
+              B° 17 de agosto. Milán esq. Los Laureles
             </a>
           </div>
         </div>

@@ -44,7 +44,7 @@ function Index() {
       {context.loader ? (
         <>
           <Head>
-            <title>SrasMedias 🧦 | Productos</title>
+            <title>JaimePrint | Productos</title>
           </Head>
 
           <div className={style.container}>

@@ -46,7 +46,7 @@ function Index() {
   return (
     <>
       <Head>
-        <title>SrasMedias 🧦 | Panel de Control</title>
+        <title>JaimePrint | Panel de Control</title>
       </Head>
       <div className={style.container}>
         {context.loader ? (

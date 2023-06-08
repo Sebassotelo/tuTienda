@@ -35,10 +35,13 @@
     width: 100%;
     padding: 15px 0 15px 0;
     background-color: rgb(236, 236, 236);
-    display: grid;
-    justify-items: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     grid-gap: 15px;
+
     .producto__nuevo__btn {
+      height: 20px;
       cursor: pointer;
       color: $white-color;
       justify-self: center;
@@ -69,6 +72,7 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
+    align-items: flex-start;
     width: 90%;
     grid-gap: 15px;
     max-height: 60vh;
