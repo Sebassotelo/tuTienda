@@ -12,7 +12,7 @@ function Loader() {
         style={{ width: "100%" }}
       >
         <div className={style.img}>
-          <img src="https://i.imgur.com/Z7pbZ5q.png" alt="" />
+          <img src="https://i.imgur.com/DJfPyy2.png" alt="" />
           <span>Cargando...</span>
         </div>
       </motion.div>

@@ -44,7 +44,7 @@ function Navbar({ showCarrito, show }) {
         className={style.img}
         onClick={() => setProductosPublicos(context.productosPublicosCopia)}
       >
-        <img src="https://i.imgur.com/bywVC6u.png" alt="" />
+        <img src="https://i.imgur.com/ZEhj8e8.png" alt="" />
       </Link>
 
       <ul className={style.navbar}>
