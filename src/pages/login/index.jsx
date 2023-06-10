@@ -7,6 +7,7 @@ import {
   signOut,
 } from "firebase/auth";
 import ContextGeneral from "@/servicios/contextPrincipal";
+import { FcGoogle } from "react-icons/fc";
 
 import { useEffect } from "react";
 
@@ -24,6 +25,7 @@ function Login() {
     <div className={style.login__container}>
       <div>
         <p onClick={() => signInWithPopup(context.auth, googleProvider)}>
+          <FcGoogle className={style.google} />
           Ingresar con Google
         </p>
         {context.user && (

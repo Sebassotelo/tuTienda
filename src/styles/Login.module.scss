@@ -1,3 +1,5 @@
+@import "./Variables.module.scss";
+
 .login__container {
   min-height: 90vh;
   display: grid;
@@ -5,12 +7,24 @@
   justify-items: center;
   p {
     text-align: center;
-    padding: 10px 15px 10px 15px;
+    padding: 20px 30px 20px 30px;
     font-size: 16px;
     font-weight: 900;
-    background-color: rgb(223, 194, 221);
+    background-color: $black-color;
     color: white;
-    border-radius: 25px;
+    border-radius: 10px;
     cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    transition-duration: 0.3s;
+
+    &:hover {
+      background-color: $secondary-color;
+    }
+
+    .google {
+      font-size: 32px;
+    }
   }
 }
