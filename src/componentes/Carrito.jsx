@@ -64,7 +64,7 @@ function Carrito({ showCarrito, show }) {
         // }
 
         setPedido(
-          `Hola%20chico%20de%20las%20medias%20🧦!%20Este%20es%20mi%20pedido:%0A%0A${pedidoCopy}%0ATotal:%20$${precioFinal}${
+          `Hola!%20Este%20es%20mi%20pedido:%0A%0A${pedidoCopy}%0ATotal:%20$${precioFinal}${
             cuponActivo && cuponDesc
           }${cantidadFinal && descuentoCantidad}`
         );
