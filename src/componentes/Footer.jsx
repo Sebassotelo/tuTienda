@@ -25,7 +25,7 @@ function Footer() {
               <AiOutlineInstagram className={style.icon} />
             </a>
             <a
-              href="https://api.whatsapp.com/send/?phone=5493794120724&type=phone_number&app_absent=0"
+              href="https://api.whatsapp.com/send/?phone=5493795334274&type=phone_number&app_absent=0"
               target={"_blank"}
             >
               <AiOutlineWhatsApp className={style.icon} />
@@ -38,7 +38,7 @@ function Footer() {
           </div> */}
           <div className={style.contacto__item}>
             <AiOutlinePhone />
-            <p>379-4120724</p>
+            <p>379-5334274</p>
           </div>
           <div className={style.contacto__item}>
             <FaMapMarkerAlt />{" "}
