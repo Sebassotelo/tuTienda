@@ -32,9 +32,9 @@ function EditarProducto({
     useContext(ContextGeneral);
 
   const [descuentoActivo, setDescuentoActivo] = useState(descuento2);
-  const [destacadoActivo, setDestacadoActivo] = useState(() => {
-    destacado2 ? destacado2 : false;
-  });
+
+  const dest = destacado2 ? destacado2 : false;
+  const [destacadoActivo, setDestacadoActivo] = useState(dest);
   const [loadImg, setLoadImg] = useState(true);
 
   const [image, setImage] = useState(img2);
@@ -48,7 +48,7 @@ function EditarProducto({
     const stock = e.target.inputStock.value;
     const seccion = e.target.inputSeccion.value;
     const caracteristicas = e.target.inputCaracteristicas.value;
-    const descuento = descuentoActivo;
+    // const descuento = descuentoActivo;
     const precioDescuento = e.target.inputPrecioDescuento.value;
 
     //filtramos la propiedad .items y creamos un array nuevo
@@ -67,11 +67,15 @@ function EditarProducto({
       destacado: destacadoActivo,
     };
 
+    console.log("producto actu", nuevoProducto);
+
     const productosCopia = [...context.productosCopia];
     const index = productosCopia.findIndex((item) => item.id === id2);
 
     // Actualizar la noticia en el array copiado
     productosCopia[index] = nuevoProducto;
+
+    console.log("producto actu", productosCopia[index]);
 
     //seteamos el estado y updateamos la base de datos
 
