@@ -92,27 +92,30 @@ export default function Home() {
             </div>
           </section>
 
-          <section className={style.ofertas} id="ofertas">
-            <h3>OFERTAS</h3>
+          {context.productosPublicosCopia.filter((item, i) => item.descuento)
+            .length > 0 && (
+            <section className={style.ofertas} id="ofertas">
+              <h3>OFERTAS</h3>
 
-            <div className={style.items}>
-              {context.productosPublicosCopia &&
-                context.productosPublicosCopia
-                  .filter((item, i) => item.descuento)
-                  .slice(0, 4)
-                  .map((item, i) => {
-                    return <ProductoItem key={i} item={item} />;
-                  })}
-            </div>
+              <div className={style.items}>
+                {context.productosPublicosCopia &&
+                  context.productosPublicosCopia
+                    .filter((item, i) => item.descuento)
+                    .slice(0, 4)
+                    .map((item, i) => {
+                      return <ProductoItem key={i} item={item} />;
+                    })}
+              </div>
 
-            <LinkNext
-              className={style.a}
-              href="/productos"
-              onClick={filtrarOfertas}
-            >
-              Ver Ofertas
-            </LinkNext>
-          </section>
+              <LinkNext
+                className={style.a}
+                href="/productos"
+                onClick={filtrarOfertas}
+              >
+                Ver Ofertas
+              </LinkNext>
+            </section>
+          )}
         </main>
       ) : (
         <Loader />
