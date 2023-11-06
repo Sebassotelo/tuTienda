@@ -22,7 +22,7 @@ function Layout({ children, title }) {
   return (
     <div style={{ display: "grid" }}>
       <Head>
-        <title>JaimePrint | Home</title>
+        <title>Sagi Lenceria | Home</title>
         <meta
           name="description"
           content="JaimePrint  |  Diseño e impresiónes 📚🖨"
