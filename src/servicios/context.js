@@ -23,6 +23,7 @@ function Context(props) {
   const [carrito, setCarrito] = useState([]);
   const [actuCarrito, setActuCarrito] = useState(false);
   const [loader, setLoader] = useState(false);
+  const urlLogo = "https://i.imgur.com/6LRIe3A.png";
 
   const auth = getAuth(firebaseApp);
   const firestore = getFirestore(firebaseApp);
@@ -119,6 +120,7 @@ function Context(props) {
         carrito: carrito,
         actuCarrito: actuCarrito,
         busqueda: busqueda,
+        urlLogo: urlLogo,
         setSecciones,
         setProductos,
         setProductosCopia,

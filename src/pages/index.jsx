@@ -48,8 +48,7 @@ export default function Home() {
           >
             <header className={style.header}>
               <div className={style.logo}>
-                <img src="https://i.imgur.com/DJfPyy2.png" alt="" />{" "}
-                <p> Diseño e impresiónes</p>
+                <img src={context.urlLogo} alt="" /> <p>❤️ Moda interior ❤️</p>
                 <LinkNext href="/productos">IR AL CATALOGO</LinkNext>
               </div>
 

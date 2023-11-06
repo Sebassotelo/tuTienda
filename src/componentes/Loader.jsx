@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useContext } from "react";
 import style from "../styles/Loader.module.scss";
 import { motion } from "framer-motion";
+import ContextGeneral from "@/servicios/contextPrincipal";
 
 function Loader() {
+  const context = useContext(ContextGeneral);
   return (
     <div className={style.container}>
       <motion.div
@@ -12,8 +14,7 @@ function Loader() {
         style={{ width: "100%" }}
       >
         <div className={style.img}>
-          <img src="https://i.imgur.com/DJfPyy2.png" alt="" />
-          <span>Cargando...</span>
+          <img src={context.urlLogo} alt="" />
         </div>
       </motion.div>
     </div>

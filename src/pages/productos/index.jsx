@@ -44,7 +44,7 @@ function Index() {
       {context.loader ? (
         <>
           <Head>
-            <title>JaimePrint | Productos</title>
+            <title>SAGI Lencería | Productos</title>
           </Head>
 
           <div className={style.container}>

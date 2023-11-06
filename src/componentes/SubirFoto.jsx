@@ -35,7 +35,7 @@ function SubirFoto({ setImage, setLoad }) {
   };
 
   const uploadToServer = async (img) => {
-    const url = `https://api.imgbb.com/1/upload?key=7a35857bf317ac3c3bf9a667ea364bf9&name=${img.name}`;
+    const url = `https://api.imgbb.com/1/upload?key=${process.env.NEXT_PUBLIC_IMGBB}&name=${img.name}`;
     const data = new FormData();
     data.append("image", img);
 

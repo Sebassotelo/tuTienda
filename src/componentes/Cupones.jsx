@@ -48,7 +48,7 @@ function Cupones() {
 
       await updateDoc(docRef, { cupones: [...nuevoArray] });
       llamadaDB();
-      toast.success(`Cupon ${cupon} de $${monto} creado Correctamente`);
+      toast.success(`Cupon ${cupon} de %${monto} creado Correctamente`);
     }
 
     e.target.inputCupon.value = "";
