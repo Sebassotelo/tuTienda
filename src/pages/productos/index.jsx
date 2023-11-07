@@ -10,8 +10,13 @@ import { motion } from "framer-motion";
 
 function Index() {
   const context = useContext(ContextGeneral);
-  const { llamadaDB, setProductosPublicos, verificarLogin, setBusqueda } =
-    useContext(ContextGeneral);
+  const {
+    llamadaDB,
+    setProductosPublicos,
+    verificarLogin,
+    setBusqueda,
+    setLoader,
+  } = useContext(ContextGeneral);
 
   const [showCategoria, setShowCategoria] = useState(false);
 
@@ -36,8 +41,9 @@ function Index() {
     if (context.productosPublicos.length == 0) {
       llamadaDB();
     }
+    console.log(context.loader);
     verificarLogin();
-  }, [context.productosPublicos, context.loader]);
+  }, []);
 
   return (
     <>
@@ -127,7 +133,13 @@ function Index() {
                 )}
               </ul>
               <div className={style.tienda}>
-                <ProductosTienda />
+                {context.productosPublicos.length != 0 ? (
+                  <ProductosTienda />
+                ) : (
+                  <p className={style.tienda__p}>
+                    No se encontraron productos 😓
+                  </p>
+                )}
               </div>
             </div>
           </div>

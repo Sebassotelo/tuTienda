@@ -28,6 +28,11 @@
     }
     .tienda {
       grid-column: 2/3;
+      .tienda__p {
+        text-align: center;
+        font-weight: 600;
+        font-size: 24px;
+      }
     }
   }
 }
