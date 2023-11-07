@@ -34,7 +34,7 @@ function Context(props) {
       setUser(usuarioFirebase);
       if (
         usuarioFirebase.email == "sebassotelo97@gmail.com" ||
-        usuarioFirebase.email == "jaimeprint1@gmail.com"
+        usuarioFirebase.email == "fatima04tkd@gmail.com"
       ) {
         setEstadoUsuario(1);
         setUser(usuarioFirebase);
