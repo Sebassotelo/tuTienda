@@ -85,7 +85,7 @@ export default function Home() {
 
             <div className={style.seccion__items}>
               {context.secciones &&
-                context.secciones.slice(0, 4).map((item, i) => {
+                context.secciones.map((item, i) => {
                   return <CategoriaCard key={i} item={item} />;
                 })}
             </div>

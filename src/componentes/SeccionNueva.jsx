@@ -17,7 +17,7 @@ function SeccionNueva() {
   const nuevaSeccion = async (e) => {
     e.preventDefault(e);
 
-    const seccion = e.target.inputSeccion.value;
+    let seccion = e.target.inputSeccion.value;
 
     //traemos los datos de base de datos
     const docRef = doc(context.firestore, `users/sebassotelo97@gmail.com`);
@@ -26,6 +26,9 @@ function SeccionNueva() {
 
     const newArray = [];
 
+    while (seccion.charAt(seccion.length - 1) === " ") {
+      seccion = seccion.slice(0, -1);
+    }
     newArray.push(seccion, ...infoDocu.secciones);
 
     await updateDoc(docRef, { secciones: [...newArray] });
