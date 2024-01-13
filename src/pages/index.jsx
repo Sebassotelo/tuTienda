@@ -32,7 +32,6 @@ export default function Home() {
   };
 
   useEffect(() => {
-    llamadaDB();
     verificarLogin();
   }, []);
 
@@ -48,7 +47,8 @@ export default function Home() {
           >
             <header className={style.header}>
               <div className={style.logo}>
-                <img src={context.urlLogo} alt="" /> <p>❤️ Moda interior ❤️</p>
+                <img src={context.urlLogo} alt="" />{" "}
+                <p>Tu tienda en 3 Clicks</p>
                 <LinkNext href="/productos">IR AL CATALOGO</LinkNext>
               </div>
 

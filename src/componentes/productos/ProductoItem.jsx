@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import style from "../../styles/ProductoItem.module.scss";
 import ContextGeneral from "@/servicios/contextPrincipal";
 import Link from "next/link";
@@ -7,10 +7,13 @@ import { BsCartPlus } from "react-icons/bs";
 import { TbDiscount2 } from "react-icons/tb";
 
 import { Toaster, toast } from "sonner";
+import Popup from "./popup/Popup";
 
 function ProductoItem({ item }) {
   const context = useContext(ContextGeneral);
   const { setCarrito, actualizacionCarrito } = useContext(ContextGeneral);
+
+  const [showPopUp, setShowPopUp] = useState(false);
 
   const agregarCarrito = () => {
     const nuevoArray = context.carrito;
@@ -49,10 +52,14 @@ function ProductoItem({ item }) {
       toast.success(`${item.title} Agregado al carrito`);
     }
   };
+
+  const handlePopUp = () => {
+    setShowPopUp(!showPopUp);
+  };
   return (
-    <div className={style.container}>
-      <Link href={`/productos/${item.id}`}>
-        <div className={style.img}>
+    <>
+      <div className={style.container}>
+        <div className={style.img} onClick={handlePopUp}>
           <img className={style.imgg} src={item.img} alt="" />
           {item.descuento && (
             <div className={style.descuentoIcon}>
@@ -60,28 +67,37 @@ function ProductoItem({ item }) {
             </div>
           )}
         </div>
-      </Link>
-      <div className={style.text}>
-        <div className={style.text__title}>
-          <h4>{item.title}</h4>
-        </div>
 
-        {item.descuento ? (
-          <div className={style.text__precio}>
-            <p style={{ textDecoration: "line-through", color: "grey" }}>
-              ${item.precio}
-            </p>{" "}
-            <p>${item.precioDescuento}</p>
+        <div className={style.text}>
+          <div className={style.text__title}>
+            <h4>{item.title}</h4>
           </div>
-        ) : (
-          <p>${item.precio}</p>
-        )}
 
-        <div className={style.agregar__carrito} onClick={agregarCarrito}>
-          <BsCartPlus />
+          {item.descuento ? (
+            <div className={style.text__precio}>
+              <p style={{ textDecoration: "line-through", color: "grey" }}>
+                ${item.precio}
+              </p>{" "}
+              <p>${item.precioDescuento}</p>
+            </div>
+          ) : (
+            <p>${item.precio}</p>
+          )}
+
+          <div className={style.agregar__carrito} onClick={agregarCarrito}>
+            <BsCartPlus />
+          </div>
         </div>
       </div>
-    </div>
+
+      {showPopUp && (
+        <Popup
+          setShow={handlePopUp}
+          item={item}
+          agregarCarrito={agregarCarrito}
+        />
+      )}
+    </>
   );
 }
 

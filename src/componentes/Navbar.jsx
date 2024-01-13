@@ -15,11 +15,16 @@ import { motion } from "framer-motion";
 
 import BuscadorTienda from "./BuscadorTienda";
 
+import { useRouter } from "next/router";
+
 function Navbar({ showCarrito, show }) {
   const context = useContext(ContextGeneral);
   const { setProductosPublicos } = useContext(ContextGeneral);
   const [contadorProductos, setContadorProductos] = useState(0);
   const [showBuscador, setShowBuscador] = useState(false);
+
+  const router = useRouter();
+  const currentPath = router.asPath;
 
   const cantidadProductos = () => {
     let acumulador = 0;
@@ -44,7 +49,7 @@ function Navbar({ showCarrito, show }) {
         className={style.img}
         onClick={() => setProductosPublicos(context.productosPublicosCopia)}
       >
-        <img src="https://i.imgur.com/cVharx8.png" alt="" />
+        <img src="https://i.imgur.com/ZQ7yfOm.png" alt="" />
       </Link>
 
       <ul className={style.navbar}>
@@ -52,9 +57,11 @@ function Navbar({ showCarrito, show }) {
           {" "}
           <AiOutlineHome className={style.icon} />{" "}
         </Link>
-        <Link href="/productos">
-          <RiStore2Line className={style.icon} />{" "}
-        </Link>
+        {currentPath.includes("panel-de-control") && (
+          <Link href={`/u/${context.nombreTienda}`}>
+            <RiStore2Line className={style.icon} />{" "}
+          </Link>
+        )}
 
         <AiOutlineSearch className={style.icon} onClick={mostrarBuscador} />
 

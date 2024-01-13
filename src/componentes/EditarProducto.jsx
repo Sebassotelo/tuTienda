@@ -79,7 +79,7 @@ function EditarProducto({
 
     //seteamos el estado y updateamos la base de datos
 
-    const docRef = doc(context.firestore, `users/sebassotelo97@gmail.com`);
+    const docRef = doc(context.firestore, `users/${context.user.email}`);
     await updateDoc(docRef, { items: [...productosCopia] });
 
     //limpiar Form

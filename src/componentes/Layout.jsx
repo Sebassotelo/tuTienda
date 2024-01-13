@@ -22,7 +22,7 @@ function Layout({ children, title }) {
   return (
     <div style={{ display: "grid" }}>
       <Head>
-        <title>SAGI Lencería | Home</title>
+        <title>Tu Tienda | Home</title>
         <meta name="description" content="SAGI Lenceria  |  Moda interior❤️" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />

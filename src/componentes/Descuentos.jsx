@@ -22,7 +22,7 @@ function Descuentos() {
     ) {
       setLoader(false);
       //traemos los datos de base de datos
-      const docRef = doc(context.firestore, `users/sebassotelo97@gmail.com`);
+      const docRef = doc(context.firestore, `users/${context.user.email}`);
 
       let nuevoArray = context.productosCopia;
 
@@ -50,7 +50,7 @@ function Descuentos() {
     ) {
       setLoader(false);
       //traemos los datos de base de datos
-      const docRef = doc(context.firestore, `users/sebassotelo97@gmail.com`);
+      const docRef = doc(context.firestore, `users/${context.user.email}`);
 
       let nuevoArray = context.productosCopia;
       for (let i = 0; i < nuevoArray.length; i++) {
@@ -73,7 +73,7 @@ function Descuentos() {
     ) {
       setLoader(false);
       //traemos los datos de base de datos
-      const docRef = doc(context.firestore, `users/sebassotelo97@gmail.com`);
+      const docRef = doc(context.firestore, `users/${context.user.email}`);
 
       let nuevoArray = context.productosCopia;
 
@@ -94,7 +94,7 @@ function Descuentos() {
     ) {
       setLoader(false);
       //traemos los datos de base de datos
-      const docRef = doc(context.firestore, `users/sebassotelo97@gmail.com`);
+      const docRef = doc(context.firestore, `users/${context.user.email}`);
 
       let nuevoArray = context.productosCopia;
 

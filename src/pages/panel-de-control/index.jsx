@@ -12,13 +12,15 @@ import BuscadorPanel from "@/componentes/BuscadorPanel";
 
 import { push } from "next/router";
 import Loader from "@/componentes/Loader";
+import Configuracion from "@/componentes/configuracion/Configuracion";
 
 function Index() {
   const context = useContext(ContextGeneral);
   const { llamadaDB, inspectorSesion, verificarLogin } =
     useContext(ContextGeneral);
 
-  const [showSeccion, setShowSeccion] = useState(1);
+  const [showSeccion, setShowSeccion] = useState(0);
+  // 0 = Seccion Configuracion Perfil
   // 1 = Seccion Productos
   // 2 = Seccion Descuentos
   // 3 = Seccion Stock
@@ -37,7 +39,6 @@ function Index() {
 
   useEffect(() => {
     verificarLogin();
-    llamadaDB();
 
     if (context.estadoUsuario == 0) {
       push("/");
@@ -53,16 +54,19 @@ function Index() {
           <>
             {/* menu pc */}
             <div className={style.menu}>
+              <li onClick={() => setShowSeccion(0)}>Configuracion</li>
               <li onClick={() => setShowSeccion(1)}>Productos</li>
               <li onClick={() => setShowSeccion(2)}>Descuentos</li>
             </div>
 
             {/* menu Movil */}
             <div className={style.menu__movil}>
+              <li onClick={() => setShowSeccion(0)}>Configuracion</li>
               <li onClick={() => setShowSeccion(1)}>Productos</li>
               <li onClick={() => setShowSeccion(2)}>Descuentos</li>
             </div>
             <div className={style.secciones}>
+              {showSeccion == 0 && <Configuracion />}
               {showSeccion == 1 && (
                 <>
                   <SeccionNueva />

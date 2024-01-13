@@ -8,7 +8,7 @@ import {
   MdKeyboardArrowLeft,
 } from "react-icons/md";
 
-function ProductosTienda() {
+function ProductosTienda({ productos }) {
   const context = useContext(ContextGeneral);
   const { setProductosPublicos, setBusqueda } = useContext(ContextGeneral);
 
@@ -77,7 +77,7 @@ function ProductosTienda() {
 
       <div className={style.container__items}>
         {context.productosPublicos &&
-          productosMostrar.map((item) => {
+          context.productosPublicos.map((item) => {
             return <ProductoItem key={item.id} item={item} />;
           })}
       </div>

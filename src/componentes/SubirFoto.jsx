@@ -11,7 +11,7 @@ function SubirFoto({ setImage, setLoad }) {
     console.log(`originalFile size ${imageFile.size / 1024 / 1024} MB`);
 
     const options = {
-      maxSizeMB: 0.3,
+      maxSizeMB: 0.2,
       maxWidthOrHeight: 1920,
       useWebWorker: true,
     };

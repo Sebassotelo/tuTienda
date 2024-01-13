@@ -20,9 +20,11 @@ function SeccionNueva() {
     let seccion = e.target.inputSeccion.value;
 
     //traemos los datos de base de datos
-    const docRef = doc(context.firestore, `users/sebassotelo97@gmail.com`);
+    const docRef = doc(context.firestore, `users/${context.user.email}`);
     const consulta = await getDoc(docRef);
     const infoDocu = consulta.data();
+
+    console.log("secc", context.user.email);
 
     const newArray = [];
 
@@ -42,7 +44,7 @@ function SeccionNueva() {
 
       setSecciones(nuevoArray);
 
-      const docRef = doc(context.firestore, `users/sebassotelo97@gmail.com`);
+      const docRef = doc(context.firestore, `users/${context.user.email}`);
       await updateDoc(docRef, { secciones: [...nuevoArray] });
     }
   };

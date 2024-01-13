@@ -1,0 +1,77 @@
+@import "../../../styles/Variables.module.scss";
+
+.container {
+  height: 100vh;
+  width: 100vw;
+  background-color: rgba(0, 0, 0, 0.411);
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 300;
+
+  .container__item {
+    position: relative;
+    height: 500px;
+    width: 800px;
+    background-color: white;
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .img {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 15px;
+      width: 400px;
+
+      img {
+        height: 100%;
+        width: 100%;
+        border-radius: 15px;
+        border: 2px solid rgba(0, 0, 0, 0.199);
+        object-fit: cover;
+      }
+    }
+
+    .descripcion {
+      width: 400px;
+
+      .precioDescuento {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        gap: 15px;
+      }
+
+      h3 {
+        font-family: $fuente2;
+        font-size: 32px;
+        margin: 0;
+      }
+    }
+
+    button {
+      width: 80%;
+      border: none;
+      margin: 15px 0 0 0;
+      font-weight: 900;
+      padding: 5px 8px 5px 8px;
+      border-radius: 15px;
+      text-align: center;
+      cursor: pointer;
+      font-family: $fuente1;
+      background-color: $black-color;
+      color: $white-color;
+    }
+    .cerrar {
+      position: absolute;
+      bottom: 10px;
+      width: 80px;
+    }
+  }
+}

@@ -37,7 +37,7 @@ function ProductoPanel({
 
       const nuevoItems = context.productosCopia.filter((item) => item.id != id);
 
-      const docRef = doc(context.firestore, `users/sebassotelo97@gmail.com`);
+      const docRef = doc(context.firestore, `users/${context.user.email}`);
       await updateDoc(docRef, { items: [...nuevoItems] });
       llamadaDB();
       toast.success(`${title} Eliminado Correctamente`);

@@ -53,7 +53,6 @@ function BuscadorTienda({ setShow }) {
       setBusqueda(e.target.inputBusca.value);
       setProductosPublicos(objetosFiltrados);
       e.target.inputBusca.value = "";
-      push("/productos");
       setShow(false);
     }
   };

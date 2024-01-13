@@ -30,7 +30,7 @@ function EditarCupon({ item, setShow, show }) {
 
     cuponesCopia[index] = nuevoCupon;
 
-    const docRef = doc(context.firestore, `users/sebassotelo97@gmail.com`);
+    const docRef = doc(context.firestore, `users/${context.user.email}`);
     await updateDoc(docRef, { cupones: [...cuponesCopia] });
     llamadaDB();
     toast.success("Cambio Guardado Correctamente");

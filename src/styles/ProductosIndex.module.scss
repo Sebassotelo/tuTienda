@@ -3,18 +3,23 @@
 .container {
   width: 100%;
   min-height: 100vh;
-  display: grid;
-  justify-items: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: rgb(230, 230, 230);
 
   .container__productos {
     width: 70vw;
     min-width: 600px;
     display: grid;
+    background-color: white;
+    border-radius: 15px;
 
     grid-template-columns: 250px 1fr;
 
     .menu {
       list-style: none;
+      border-right: 2px solid rgba(0, 0, 0, 0.603);
 
       li {
         font-weight: 600;

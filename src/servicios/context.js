@@ -3,7 +3,7 @@ import ContextPrincipal from "./contextPrincipal";
 import firebaseApp from "./firebase";
 
 import { getAuth, onAuthStateChanged } from "firebase/auth";
-import { getFirestore, doc, getDoc } from "firebase/firestore";
+import { getFirestore, doc, getDoc, setDoc } from "firebase/firestore";
 
 function Context(props) {
   const [productos, setProductos] = useState([]);
@@ -20,10 +20,15 @@ function Context(props) {
   // 0 = No logueado
   // 1 = Logueado
   const [user, setUser] = useState(null);
+  let user1 = "";
+
+  const [configuracion, setConfiguracion] = useState({});
+  const [nombreTienda, setNombreTienda] = useState("");
+
   const [carrito, setCarrito] = useState([]);
   const [actuCarrito, setActuCarrito] = useState(false);
   const [loader, setLoader] = useState(false);
-  const urlLogo = "https://i.imgur.com/6LRIe3A.png";
+  const urlLogo = "https://i.imgur.com/ZQ7yfOm.png";
 
   const auth = getAuth(firebaseApp);
   const firestore = getFirestore(firebaseApp);
@@ -31,14 +36,10 @@ function Context(props) {
   const inspectorSesion = (usuarioFirebase) => {
     //en caso de que haya seison iniciada
     if (usuarioFirebase) {
+      user1 = usuarioFirebase;
       setUser(usuarioFirebase);
-      if (
-        usuarioFirebase.email == "sebassotelo97@gmail.com" ||
-        usuarioFirebase.email == "fatima04tkd@gmail.com"
-      ) {
-        setEstadoUsuario(1);
-        setUser(usuarioFirebase);
-      }
+      setEstadoUsuario(1);
+      buscarOCrearUsuario();
     } else {
       //en caso de que haya seison iniciada
       setUser(null);
@@ -49,15 +50,39 @@ function Context(props) {
     onAuthStateChanged(auth, inspectorSesion);
   };
 
+  const buscarOCrearUsuario = async () => {
+    const docRef = doc(firestore, `users/${user1.email}`);
+    const consulta = await getDoc(docRef);
+    if (consulta.exists()) {
+      llamadaDB();
+    } else {
+      await setDoc(docRef, {
+        cupones: [],
+        idCuenta: new Date().getTime().toString(),
+        items: [],
+        secciones: [],
+        usuario: [],
+        configuracion: {},
+      });
+      llamadaDB();
+    }
+  };
+
   const llamadaDB = async () => {
     setLoader(false);
-    const docRef = doc(firestore, `users/sebassotelo97@gmail.com`);
+    console.log("CORREO", user1.email);
+    const docRef = doc(
+      firestore,
+      `users/${user1.email ? user1.email : user.email}`
+    );
     const consulta = await getDoc(docRef);
     const infoDocu = consulta.data();
+    console.log("LLAMDA DB", infoDocu);
     setProductos(infoDocu.items);
     setProductosCopia(infoDocu.items);
     setCupones(infoDocu.cupones);
-    recuperarStorage();
+    setConfiguracion(infoDocu.configuracion);
+    setNombreTienda(infoDocu.usuario);
 
     const array = infoDocu.items.filter((item) => item.stock > 0);
 
@@ -76,32 +101,6 @@ function Context(props) {
     setActuCarrito(!actuCarrito);
   };
 
-  const setearLocalStorage = () => {
-    localStorage.setItem("carritoJaime", JSON.stringify(carrito));
-  };
-
-  const recuperarStorage = () => {
-    // Obtener la cadena de texto guardada en el localStorage con la clave "carrito"
-    const carritoString = localStorage.getItem("carritoJaime");
-
-    // Si existe la cadena de texto, convertirla en un objeto del carrito
-    if (carritoString) {
-      setCarrito(JSON.parse(carritoString));
-      setActuCarrito(!actuCarrito);
-    }
-    // Si no hay valor en localStorage, devolver un objeto vacío
-    return [];
-  };
-
-  const [prevCarritoLength, setPrevCarritoLength] = useState(carrito.length);
-
-  useEffect(() => {
-    if (prevCarritoLength >= 1 && carrito.length >= 0) {
-      setearLocalStorage();
-    }
-    setPrevCarritoLength(carrito.length);
-  }, [carrito, carrito.map((item) => item.cantidad)]);
-
   return (
     <ContextPrincipal.Provider
       value={{
@@ -116,11 +115,14 @@ function Context(props) {
         auth: auth,
         firestore: firestore,
         user: user,
+        user1: user1,
         secciones: secciones,
         carrito: carrito,
         actuCarrito: actuCarrito,
         busqueda: busqueda,
         urlLogo: urlLogo,
+        configuracion: configuracion,
+        nombreTienda: nombreTienda,
         setSecciones,
         setProductos,
         setProductosCopia,
@@ -134,6 +136,11 @@ function Context(props) {
         verificarLogin,
         setCupones,
         setBusqueda,
+        buscarOCrearUsuario,
+        setConfiguracion,
+        setNombreTienda,
+        setContadorOfert,
+        setNombreTienda,
       }}
     >
       {props.children}

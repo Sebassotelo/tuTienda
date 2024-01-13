@@ -11,7 +11,7 @@ import { toast } from "sonner";
 function Cupones() {
   const context = useContext(ContextGeneral);
   const { setCupones, setLoader, llamadaDB } = useContext(ContextGeneral);
-  const docRef = doc(context.firestore, `users/sebassotelo97@gmail.com`);
+  const docRef = doc(context.firestore, `users/${context.user.email}`);
 
   const [showCupon, setShowCupon] = useState(false);
 
