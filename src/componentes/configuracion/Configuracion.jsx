@@ -4,7 +4,16 @@ import Perfil from "../perfil/Perfil";
 import Form from "./form/Form";
 import ContextGeneral from "@/servicios/contextPrincipal";
 
-import { doc, updateDoc } from "firebase/firestore";
+import { toast } from "sonner";
+
+import {
+  doc,
+  updateDoc,
+  collection,
+  query,
+  where,
+  getDocs,
+} from "firebase/firestore";
 
 function Configuracion() {
   const [showForm, setShowForm] = useState(false);
@@ -15,23 +24,32 @@ function Configuracion() {
   const setearUsuario = async (e) => {
     e.preventDefault(e);
 
-    const usuario = e.target.inputUsuario.value;
+    if (
+      confirm(
+        `Quiere asignar ${e.target.inputUsuario.value} como nombre de la tienda?`
+      ) === true
+    ) {
+      const usuario = e.target.inputUsuario.value;
 
-    //traemos los datos de base de datos
-    const docRef = doc(context.firestore, `users/${context.user.email}`);
+      const docRefQuery = collection(context.firestore, `users`);
+      const q = query(docRefQuery, where("usuario", "==", usuario));
+      const fetchUsuarios = await getDocs(q);
 
-    //filtramos la propiedad .items y creamos un array nuevo
+      if (!fetchUsuarios) {
+        //traemos los datos de base de datos
+        const docRef = doc(context.firestore, `users/${context.user.email}`);
 
-    //seteamos el estado y updateamos la base de datos
-    //   setArray(newArray);
+        updateDoc(docRef, { usuario: usuario });
 
-    updateDoc(docRef, { usuario: usuario });
+        toast.success(`Nombre de tienda asignada correctamente`);
 
-    // toast.success(`Perfil Configurado Correctamente`);
-
-    //limpiar Form
-    e.target.inputUsuario.value = "";
-    llamadaDB();
+        //limpiar Form
+        e.target.inputUsuario.value = "";
+        llamadaDB();
+      } else {
+        toast.success(`El nombre de la tienda no se encuentra disponible`);
+      }
+    }
   };
 
   return (
@@ -40,7 +58,7 @@ function Configuracion() {
         <Perfil configuracion={context.configuracion} />
       </div>
 
-      <form action="" onSubmit={setearUsuario}>
+      <form action="" onSubmit={setearUsuario} className={styles.formUsuario}>
         <p>Nombre de Tienda:</p>
         <input
           type="text"
@@ -51,7 +69,12 @@ function Configuracion() {
         <button type="submit">Guardar</button>
       </form>
 
-      <button onClick={() => setShowForm(true)}>Editar Configuracion</button>
+      <button
+        onClick={() => setShowForm(true)}
+        className={styles.abrir__config}
+      >
+        Editar Configuracion
+      </button>
 
       {showForm && <Form setShowForm={setShowForm} />}
     </div>

@@ -63,14 +63,18 @@ function Navbar({ showCarrito, show }) {
           </Link>
         )}
 
-        <AiOutlineSearch className={style.icon} onClick={mostrarBuscador} />
+        {currentPath.includes("/u/") && (
+          <AiOutlineSearch className={style.icon} onClick={mostrarBuscador} />
+        )}
 
-        <p className={style.icon} onClick={showCarrito}>
-          <AiOutlineShoppingCart style={{ color: show && "#f2ced1" }} />{" "}
-          {contadorProductos > 0 && (
-            <p style={{ color: show && "#f2ced1" }}>({contadorProductos})</p>
-          )}
-        </p>
+        {currentPath.includes("/u/") && (
+          <p className={style.icon} onClick={showCarrito}>
+            <AiOutlineShoppingCart style={{ color: show && "#f2ced1" }} />{" "}
+            {contadorProductos > 0 && (
+              <p style={{ color: show && "#f2ced1" }}>({contadorProductos})</p>
+            )}
+          </p>
+        )}
         {context.estadoUsuario == 1 && (
           <>
             {" "}

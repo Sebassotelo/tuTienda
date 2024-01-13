@@ -128,14 +128,18 @@ function User() {
                 >
                   Todo {`(${context.productosPublicosCopia.length})`}
                 </li>
-                <li
-                  onClick={() => {
-                    filtrarSeccionOfertas();
-                    setBusqueda("");
-                  }}
-                >
-                  Ofertas {`(${context.contadorOfert})`}{" "}
-                </li>
+                {context.productosPublicosCopia.filter(
+                  (item) => item.descuento
+                ) > 0 && (
+                  <li
+                    onClick={() => {
+                      filtrarSeccionOfertas();
+                      setBusqueda("");
+                    }}
+                  >
+                    Ofertas {`(${context.contadorOfert})`}{" "}
+                  </li>
+                )}
 
                 {context.secciones &&
                   context.secciones.map((item, i) => {

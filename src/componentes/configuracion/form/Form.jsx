@@ -7,12 +7,16 @@ import { doc, updateDoc } from "firebase/firestore";
 
 import SubirFoto from "@/componentes/SubirFoto";
 
+import { toast } from "sonner";
+
 function Form({ setShowForm }) {
   const context = useContext(ContextGeneral);
   const { setConfiguracion, llamadaDB } = useContext(ContextGeneral);
 
-  const [image, setImage] = useState("");
-  const [load, setLoad] = useState("");
+  const [image, setImage] = useState(() =>
+    context.configuracion.logo ? context.configuracion.logo : ""
+  );
+  const [load, setLoad] = useState(true);
 
   const aplicarConfiguracion = async (e) => {
     e.preventDefault(e);
@@ -39,7 +43,7 @@ function Form({ setShowForm }) {
     //   setArray(newArray);
     updateDoc(docRef, { configuracion: newObject });
 
-    // toast.success(`Perfil Configurado Correctamente`);
+    toast.success(`Perfil Configurado Correctamente`);
 
     //limpiar Form
     e.target.inputInstagram.value = "";
@@ -53,11 +57,25 @@ function Form({ setShowForm }) {
       <form className={styles.form} onSubmit={aplicarConfiguracion}>
         {image && <img src={image} alt="" />}
         <p>Instagram:</p>
-        <input type="text" id="inputInstagram" />
+        <input
+          type="text"
+          id="inputInstagram"
+          defaultValue={
+            context.configuracion && context.configuracion.instagram
+          }
+        />
         <p>Numero de Whatsapp:</p>
-        <input type="number" id="inputWhatsapp" />
+        <input
+          type="number"
+          id="inputWhatsapp"
+          defaultValue={context.configuracion && context.configuracion.whatsapp}
+        />
         <p>Link de Google Maps:</p>
-        <input type="text" id="inputMaps" />
+        <input
+          type="text"
+          id="inputMaps"
+          defaultValue={context.configuracion && context.configuracion.maps}
+        />
         <p>Subir Foto de perfil: </p>
         <SubirFoto setImage={setImage} setLoad={setLoad} />
         {load && <button type="submit">Guardar</button>}

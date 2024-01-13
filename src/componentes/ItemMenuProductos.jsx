@@ -22,25 +22,29 @@ function ItemMenuProductos({ funcion, item, click }) {
 
   return (
     <>
-      <li
-        className={style.li}
-        onClick={() => {
-          funcion(item);
-          setBusqueda("");
-        }}
-      >
-        {item} {`(${contador})`}
-      </li>
-      <li
-        className={style.li__movil}
-        onClick={() => {
-          funcion(item);
-          click();
-          setBusqueda("");
-        }}
-      >
-        {item} {`(${contador})`}
-      </li>
+      {contador > 0 && (
+        <>
+          <li
+            className={style.li}
+            onClick={() => {
+              funcion(item);
+              setBusqueda("");
+            }}
+          >
+            {item} {`(${contador})`}
+          </li>
+          <li
+            className={style.li__movil}
+            onClick={() => {
+              funcion(item);
+              click();
+              setBusqueda("");
+            }}
+          >
+            {item} {`(${contador})`}
+          </li>
+        </>
+      )}
     </>
   );
 }

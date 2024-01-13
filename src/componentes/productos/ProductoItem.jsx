@@ -56,6 +56,7 @@ function ProductoItem({ item }) {
   const handlePopUp = () => {
     setShowPopUp(!showPopUp);
   };
+
   return (
     <>
       <div className={style.container}>
