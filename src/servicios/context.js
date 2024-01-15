@@ -16,6 +16,7 @@ function Context(props) {
 
   const [secciones, setSecciones] = useState([]);
   const [estadoUsuario, setEstadoUsuario] = useState(0);
+  const [premium, setPremium] = useState({});
 
   // 0 = No logueado
   // 1 = Logueado
@@ -56,6 +57,10 @@ function Context(props) {
     if (consulta.exists()) {
       llamadaDB();
     } else {
+      const fecha = new Date();
+      const fechaDeRegistro = `${fecha.getDate()}/${
+        fecha.getMonth() + 1
+      }/${fecha.getFullYear()}`;
       await setDoc(docRef, {
         cupones: [],
         idCuenta: new Date().getTime().toString(),
@@ -63,6 +68,8 @@ function Context(props) {
         secciones: [],
         usuario: [],
         configuracion: {},
+        fechaDeRegistro: fechaDeRegistro,
+        premium: { nivel: 1, activo: true },
       });
       llamadaDB();
     }
@@ -123,6 +130,7 @@ function Context(props) {
         urlLogo: urlLogo,
         configuracion: configuracion,
         nombreTienda: nombreTienda,
+        premium: premium,
         setSecciones,
         setProductos,
         setProductosCopia,
@@ -141,6 +149,7 @@ function Context(props) {
         setNombreTienda,
         setContadorOfert,
         setNombreTienda,
+        setPremium,
       }}
     >
       {props.children}

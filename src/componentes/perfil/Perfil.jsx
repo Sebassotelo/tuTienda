@@ -17,7 +17,8 @@ function Perfil({ configuracion }) {
         <img src={context.configuracion.logo} alt="" className={styles.foto} />
       )}
 
-      <h3 className={styles.titulo}>@{context.nombreTienda}</h3>
+      <h3 className={styles.titulo}>{context.nombreTienda}</h3>
+      {context.configuracion.slogan && <p>{context.configuracion.slogan}</p>}
 
       <div className={styles.redes}>
         {context.configuracion.instagram && (

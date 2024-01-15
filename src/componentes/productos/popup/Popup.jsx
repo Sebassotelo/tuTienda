@@ -30,9 +30,8 @@ function Popup({ setShow, item, agregarCarrito }) {
                 setBusqueda("");
               }}
             >
-              Inicio
-            </p>{" "}
-            /
+              Inicio/
+            </p>
             <p
               className={styles.p}
               onClick={() => {
@@ -43,7 +42,7 @@ function Popup({ setShow, item, agregarCarrito }) {
             >
               {item.seccion}
             </p>
-            <p>/ {item.title}</p>
+            <p> / {item.title}</p>
           </div>
 
           <h4>{item.title}</h4>

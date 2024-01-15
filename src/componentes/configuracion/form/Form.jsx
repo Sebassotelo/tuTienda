@@ -23,6 +23,7 @@ function Form({ setShowForm }) {
 
     const instagram = e.target.inputInstagram.value;
     const whatsapp = e.target.inputWhatsapp.value;
+    const slogan = e.target.inputSlogan.value;
     const maps = e.target.inputMaps.value;
 
     //traemos los datos de base de datos
@@ -35,6 +36,7 @@ function Form({ setShowForm }) {
       whatsapp: whatsapp,
       maps: maps,
       logo: image,
+      slogan: slogan,
     };
 
     setConfiguracion(newObject);
@@ -49,6 +51,7 @@ function Form({ setShowForm }) {
     e.target.inputInstagram.value = "";
     e.target.inputWhatsapp.value = "";
     e.target.inputMaps.value = "";
+    e.target.inputSlogan.value = "";
     setImage("");
     llamadaDB();
   };
@@ -64,11 +67,17 @@ function Form({ setShowForm }) {
             context.configuracion && context.configuracion.instagram
           }
         />
-        <p>Numero de Whatsapp:</p>
+        <p>Numero de Whatsapp: {"(sin 0 ni 15. Ej: 3794250000)"}</p>
         <input
           type="number"
           id="inputWhatsapp"
           defaultValue={context.configuracion && context.configuracion.whatsapp}
+        />
+        <p>Slogan:</p>
+        <input
+          type="text"
+          id="inputSlogan"
+          defaultValue={context.configuracion && context.configuracion.slogan}
         />
         <p>Link de Google Maps:</p>
         <input

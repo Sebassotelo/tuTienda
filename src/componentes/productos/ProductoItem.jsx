@@ -3,7 +3,9 @@ import style from "../../styles/ProductoItem.module.scss";
 import ContextGeneral from "@/servicios/contextPrincipal";
 import Link from "next/link";
 
-import { BsCartPlus } from "react-icons/bs";
+import { BsCartPlus, BsPinAngleFill } from "react-icons/bs";
+import { MdOutlineLocalOffer } from "react-icons/md";
+
 import { TbDiscount2 } from "react-icons/tb";
 
 import { Toaster, toast } from "sonner";
@@ -64,7 +66,12 @@ function ProductoItem({ item }) {
           <img className={style.imgg} src={item.img} alt="" />
           {item.descuento && (
             <div className={style.descuentoIcon}>
-              <TbDiscount2 />
+              <MdOutlineLocalOffer />
+            </div>
+          )}
+          {item.destacado && (
+            <div className={style.descuentoIcon2}>
+              <BsPinAngleFill />
             </div>
           )}
         </div>

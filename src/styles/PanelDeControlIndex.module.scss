@@ -97,15 +97,15 @@
       height: 40px;
       background-color: $black-color;
       color: $white-color;
-      display: grid;
+      display: flex;
+      justify-content: space-around;
       align-items: center;
-      justify-items: center;
-      grid-template-columns: 1fr 1fr;
+      gap: 15px;
 
       li {
         list-style: none;
         font-weight: 900;
-        font-size: 22px;
+        font-size: 16px;
       }
     }
 
@@ -140,8 +140,9 @@
       display: flex;
       flex-wrap: wrap;
       justify-content: space-around;
-      width: 90%;
+      width: 100%;
       grid-gap: 15px;
+      padding: 0;
     }
   }
 }

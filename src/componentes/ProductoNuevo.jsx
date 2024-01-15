@@ -59,6 +59,10 @@ function ProductoNuevo({ setShowNuevoProducto }) {
       ...infoDocu.items
     );
 
+    if (context.premium.nivel == 1) {
+      //agregar los condiciones de los niveles
+    }
+
     setProductos(newArray);
     console.log("array", newArray);
 

@@ -27,9 +27,15 @@
     }
     p {
       margin: 10px 0 0 0;
+      font-weight: 600;
+    }
+    input {
+      border-radius: 5px;
+      border: 1px solid black;
+      padding: 2px 2px 2px 8px;
     }
 
-    button{
+    button {
       background-color: $black-color;
       color: $white-color;
       border: none;
@@ -37,6 +43,14 @@
       border-radius: 15px;
       margin: 10px 0 0 0px;
       cursor: pointer;
+      font-weight: 600;
+      font-family: $fuente1;
+      transition-duration: 0.3s;
+
+      &:hover {
+        background-color: $white-color;
+        color: $black-color;
+      }
     }
   }
 }

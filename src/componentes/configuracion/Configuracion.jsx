@@ -29,13 +29,15 @@ function Configuracion() {
         `Quiere asignar ${e.target.inputUsuario.value} como nombre de la tienda?`
       ) === true
     ) {
-      const usuario = e.target.inputUsuario.value;
+      const usuario = e.target.inputUsuario.value.toLowerCase();
 
+      let productosArrayOriginal;
       const docRefQuery = collection(context.firestore, `users`);
       const q = query(docRefQuery, where("usuario", "==", usuario));
       const fetchUsuarios = await getDocs(q);
+      fetchUsuarios.forEach((doc) => (productosArrayOriginal = doc.data()));
 
-      if (!fetchUsuarios) {
+      if (!productosArrayOriginal) {
         //traemos los datos de base de datos
         const docRef = doc(context.firestore, `users/${context.user.email}`);
 

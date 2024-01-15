@@ -5,29 +5,28 @@
 
   border-radius: 15px;
 
-  .formUsuario{
+  .formUsuario {
     background-color: white;
     padding: 10px;
     border-radius: 15px;
     width: 400px;
     margin-left: 10px;
 
-    p{
+    p {
       font-weight: 600;
       margin: 0;
     }
 
-    input{
+    input {
       border: 1px solid rgba(0, 0, 0, 0.555);
       padding: 5px;
       width: 80%;
       border-bottom-left-radius: 10px;
       border-top-left-radius: 10px;
       outline: none;
-      
     }
-    
-    button{
+
+    button {
       background-color: $black-color;
       color: $white-color;
       border: none;
@@ -35,9 +34,15 @@
       border-bottom-right-radius: 10px;
       border-top-right-radius: 10px;
       cursor: pointer;
+      transition-duration: 0.3s;
+
+      &:hover {
+        background-color: $white-color;
+        color: $black-color;
+      }
     }
   }
-  .abrir__config{
+  .abrir__config {
     background-color: $black-color;
     color: $white-color;
     border: none;
@@ -45,6 +50,70 @@
     border-radius: 15px;
     margin: 10px 0 0 10px;
     cursor: pointer;
+    transition-duration: 0.3s;
+    &:hover {
+      background-color: $white-color;
+      color: $black-color;
+    }
   }
+}
 
+@media (max-width: 900px) {
+  .container {
+    width: 100%;
+
+    border-radius: 15px;
+
+    .formUsuario {
+      background-color: white;
+      padding: 10px;
+      border-radius: 15px;
+      width: 95vw;
+      margin-left: 0;
+
+      p {
+        font-weight: 600;
+        margin: 0;
+      }
+
+      input {
+        border: 1px solid rgba(0, 0, 0, 0.555);
+        padding: 5px;
+        width: 70%;
+        border-bottom-left-radius: 10px;
+        border-top-left-radius: 10px;
+        outline: none;
+      }
+
+      button {
+        background-color: $black-color;
+        color: $white-color;
+        border: none;
+        padding: 6px;
+        border-bottom-right-radius: 10px;
+        border-top-right-radius: 10px;
+        cursor: pointer;
+        transition-duration: 0.3s;
+
+        &:hover {
+          background-color: $white-color;
+          color: $black-color;
+        }
+      }
+    }
+    .abrir__config {
+      background-color: $black-color;
+      color: $white-color;
+      border: none;
+      padding: 6px;
+      border-radius: 15px;
+      margin: 10px 0 0 10px;
+      cursor: pointer;
+      transition-duration: 0.3s;
+      &:hover {
+        background-color: $white-color;
+        color: $black-color;
+      }
+    }
+  }
 }

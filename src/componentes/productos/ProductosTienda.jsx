@@ -47,6 +47,14 @@ function ProductosTienda({ productos }) {
     window.scroll(0, 0);
   };
 
+  const ordenarDestacados = () => {
+    const activos = context.productosPublicos.filter((item) => item.destacado);
+    const inactivos = context.productosPublicos.filter(
+      (item) => !item.destacado
+    );
+    setProductosPublicos([...activos, ...inactivos]);
+  };
+
   useEffect(() => {
     setProductosMostrar(context.productosPublicos.slice(0, 12));
     setNumeroPagina(0);
@@ -59,7 +67,8 @@ function ProductosTienda({ productos }) {
           {context.productosPublicos.length} Productos
         </p>
         {(context.busqueda != "" ||
-          context.productosPublicos != context.productosPublicosCopia) && (
+          context.productosPublicos.length !=
+            context.productosPublicosCopia.length) && (
           <div
             className={style.tienda__p}
             onClick={limpiar}
@@ -77,9 +86,11 @@ function ProductosTienda({ productos }) {
 
       <div className={style.container__items}>
         {context.productosPublicos &&
-          context.productosPublicos.map((item) => {
-            return <ProductoItem key={item.id} item={item} />;
-          })}
+          context.productosPublicos
+            .sort((a, b) => b.destacado - a.destacado)
+            .map((item) => {
+              return <ProductoItem key={item.id} item={item} />;
+            })}
       </div>
 
       {context.productosPublicos.length > 12 && (
