@@ -42,6 +42,18 @@
   }
 }
 
+.tiendaNoDisp {
+  height: 80vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  p {
+    font-weight: 600;
+    font-size: 26px;
+  }
+}
+
 .menu__movil {
   display: none;
 }

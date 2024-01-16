@@ -20,18 +20,32 @@ function ProductoNuevo({ setShowNuevoProducto }) {
   const [loadImg, setLoadImg] = useState(true);
 
   const context = useContext(ContextGeneral);
-  const { setProductos, llamadaDB } = useContext(ContextGeneral);
+  const { setProductos, setProductosCopia, llamadaDB } =
+    useContext(ContextGeneral);
 
   const agregarProducto = async (e) => {
     e.preventDefault(e);
 
-    const title = e.target.inputTitle.value;
-    const desc = e.target.inputDesc.value;
+    let title = e.target.inputTitle.value;
+    let desc = e.target.inputDesc.value;
     const precio = e.target.inputPrecio.value;
     const stock = e.target.inputStock.value;
-    const seccion = e.target.inputSeccion.value;
-    const caracteristicas = e.target.inputCaracteristicas.value;
+    let seccion = e.target.inputSeccion.value;
+    let caracteristicas = e.target.inputCaracteristicas.value;
     const precioDescuento = e.target.inputPrecioDescuento.value;
+
+    // Corroboramos que en los textos no haya & para no tener error al enviar mensaje por wpp
+    if (
+      title.includes("&") ||
+      desc.includes("&") ||
+      seccion.includes("&") ||
+      caracteristicas.includes("&")
+    ) {
+      title = title.replace(/&/g, "y");
+      desc = desc.replace(/&/g, "y");
+      seccion = seccion.replace(/&/g, "y");
+      caracteristicas = caracteristicas.replace(/&/g, "y");
+    }
 
     //traemos los datos de base de datos
     const docRef = doc(context.firestore, `users/${context.user.email}`);
@@ -59,19 +73,44 @@ function ProductoNuevo({ setShowNuevoProducto }) {
       ...infoDocu.items
     );
 
+    console.log("new array", context.premium);
+
     if (context.premium.nivel == 1) {
-      //agregar los condiciones de los niveles
+      if (newArray.length < 30) {
+        setProductos(newArray);
+        setProductosCopia(newArray);
+        //seteamos el estado y updateamos la base de datos
+        updateDoc(docRef, { items: [...newArray] });
+        toast.success(`${title} Agregado con exito `);
+        llamadaDB();
+      } else {
+        toast.error(`Ha alcanzado el limite de productos`);
+      }
+    } else if (context.premium.nivel == 2) {
+      if (newArray.length < 60) {
+        setProductos(newArray);
+        setProductosCopia(newArray);
+        //seteamos el estado y updateamos la base de datos
+        updateDoc(docRef, { items: [...newArray] });
+        toast.success(`${title} Agregado con exito`);
+        llamadaDB();
+      } else {
+        toast.error(`Ha alcanzado el limite de productos`);
+      }
+    } else if (context.premium.nivel == 3) {
+      if (newArray.length < 100) {
+        setProductos(newArray);
+        setProductosCopia(newArray);
+        //seteamos el estado y updateamos la base de datos
+        updateDoc(docRef, { items: [...newArray] });
+        toast.success(`${title} Agregado con exito`);
+        llamadaDB();
+      } else {
+        toast.error(`Ha alcanzado el limite de productos`);
+      }
+    } else if (context.premium.nivel == 0) {
+      toast.error(`No tiene premium activo`);
     }
-
-    setProductos(newArray);
-    console.log("array", newArray);
-
-    //seteamos el estado y updateamos la base de datos
-    //   setArray(newArray);
-    updateDoc(docRef, { items: [...newArray] });
-
-    toast.success(`${title} Agregado con exito`);
-
     //limpiar Form
     e.target.inputTitle.value = "";
     e.target.inputDesc.value = "";
@@ -81,7 +120,6 @@ function ProductoNuevo({ setShowNuevoProducto }) {
     e.target.inputSeccion.value = "";
     e.target.inputCaracteristicas.value = "";
     setImage("");
-    llamadaDB();
 
     // setShow(false);
     setShowNuevoProducto(false);

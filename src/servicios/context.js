@@ -90,6 +90,7 @@ function Context(props) {
     setCupones(infoDocu.cupones);
     setConfiguracion(infoDocu.configuracion);
     setNombreTienda(infoDocu.usuario);
+    setPremium(infoDocu.premium);
 
     const array = infoDocu.items.filter((item) => item.stock > 0);
 

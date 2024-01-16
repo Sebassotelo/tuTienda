@@ -35,6 +35,7 @@ function User() {
     setCupones,
     setNombreTienda,
     setConfiguracion,
+    setPremium,
   } = useContext(ContextGeneral);
 
   const router = useRouter();
@@ -63,38 +64,38 @@ function User() {
 
   const llamada = async () => {
     const user = router.query.user;
-
+    let existe;
     const docRef = collection(context.firestore, `users`);
     const q = query(docRef, where("usuario", "==", user));
     const comoQuieras = await getDocs(q);
 
     comoQuieras.forEach((doc) => (productosArrayOriginal = doc.data()));
 
-    setCupones(productosArrayOriginal.cupones);
-    setConfiguracion(productosArrayOriginal.configuracion);
-    setNombreTienda(productosArrayOriginal.usuario);
+    if (productosArrayOriginal) {
+      existe = true;
+    } else {
+      existe = false;
+    }
 
-    const array = productosArrayOriginal.items.filter((item) => item.stock > 0);
+    if (existe) {
+      setCupones(productosArrayOriginal.cupones);
+      setConfiguracion(productosArrayOriginal.configuracion);
+      setNombreTienda(productosArrayOriginal.usuario);
+      setPremium(productosArrayOriginal.premium);
 
-    setProductosPublicos(array);
-    setProductosPublicosCopia(array);
-    setSecciones(productosArrayOriginal.secciones);
+      const array = productosArrayOriginal.items.filter(
+        (item) => item.stock > 0
+      );
 
-    setPerfilPublico(productosArrayOriginal);
+      setProductosPublicos(array);
+      setProductosPublicosCopia(array);
+      setSecciones(productosArrayOriginal.secciones);
 
-    const nuevoArray = array.filter((e) => e.descuento);
-    setContadorOfert(nuevoArray.length);
+      setPerfilPublico(productosArrayOriginal);
 
-    console.log("asdasdasd", productosArrayOriginal);
-
-    // comoQuieras.forEach((doc) => (busqueda = doc.data()));
-    // if (busqueda) {
-    //   setExiste(true);
-    //   setLoader(true);
-    // } else {
-    //   setExiste(false);
-    //   setLoader(true);
-    // }
+      const nuevoArray = array.filter((e) => e.descuento);
+      setContadorOfert(nuevoArray.length);
+    }
 
     setLoader(true);
   };
@@ -114,105 +115,111 @@ function User() {
             <title>{context.nombreTienda} | Tienda Virtual</title>
           </Head>
 
-          <div className={style.container}>
-            <Perfil configuracion={context.configuracion} />
-            <div className={style.container__productos}>
-              {/* menu PC */}
-              <ul className={style.menu}>
-                <h3>Categorias</h3>
-                <li
-                  onClick={() => {
-                    setProductosPublicos(context.productosPublicosCopia);
-                    setBusqueda("");
-                  }}
-                >
-                  Todo {`(${context.productosPublicosCopia.length})`}
-                </li>
-                {context.productosPublicosCopia.find(
-                  (item) => item.descuento
-                ) && (
+          {context.premium.activo ? (
+            <div className={style.container}>
+              <Perfil configuracion={context.configuracion} />
+              <div className={style.container__productos}>
+                {/* menu PC */}
+                <ul className={style.menu}>
+                  <h3>Categorias</h3>
                   <li
                     onClick={() => {
-                      filtrarSeccionOfertas();
+                      setProductosPublicos(context.productosPublicosCopia);
                       setBusqueda("");
                     }}
                   >
-                    Ofertas {`(${context.contadorOfert})`}{" "}
+                    Todo {`(${context.productosPublicosCopia.length})`}
                   </li>
-                )}
-
-                {context.secciones &&
-                  context.secciones.map((item, i) => {
-                    return (
-                      <ItemMenuProductos
-                        key={i}
-                        funcion={filtrarSeccion}
-                        item={item}
-                      />
-                    );
-                  })}
-              </ul>
-
-              {/* menu mobile */}
-              <ul className={style.menu__movil}>
-                <div className={style.movil__cat} onClick={mostrarMenu}>
-                  <BiMenu className={style.cat__icon} /> <h3>Categorias</h3>
-                </div>
-
-                {showCategoria && (
-                  <motion.div
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ duration: 0.5 }}
-                    className={style.buscador}
-                  >
+                  {context.productosPublicosCopia.find(
+                    (item) => item.descuento
+                  ) && (
                     <li
                       onClick={() => {
-                        setProductosPublicos(context.productosPublicosCopia);
+                        filtrarSeccionOfertas();
                         setBusqueda("");
-                        mostrarMenu();
                       }}
                     >
-                      Todo {`(${context.productosPublicosCopia.length})`}
+                      Ofertas {`(${context.contadorOfert})`}{" "}
                     </li>
-                    {context.productosPublicosCopia.filter(
-                      (item) => item.descuento
-                    ) > 0 && (
+                  )}
+
+                  {context.secciones &&
+                    context.secciones.map((item, i) => {
+                      return (
+                        <ItemMenuProductos
+                          key={i}
+                          funcion={filtrarSeccion}
+                          item={item}
+                        />
+                      );
+                    })}
+                </ul>
+
+                {/* menu mobile */}
+                <ul className={style.menu__movil}>
+                  <div className={style.movil__cat} onClick={mostrarMenu}>
+                    <BiMenu className={style.cat__icon} /> <h3>Categorias</h3>
+                  </div>
+
+                  {showCategoria && (
+                    <motion.div
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      transition={{ duration: 0.5 }}
+                      className={style.buscador}
+                    >
                       <li
                         onClick={() => {
-                          filtrarSeccionOfertas();
+                          setProductosPublicos(context.productosPublicosCopia);
                           setBusqueda("");
                           mostrarMenu();
                         }}
                       >
-                        Ofertas {`(${context.contadorOfert})`}{" "}
+                        Todo {`(${context.productosPublicosCopia.length})`}
                       </li>
-                    )}
-                    {context.secciones &&
-                      context.secciones.map((item, i) => {
-                        return (
-                          <ItemMenuProductos
-                            key={i}
-                            funcion={filtrarSeccion}
-                            item={item}
-                            click={mostrarMenu}
-                          />
-                        );
-                      })}
-                  </motion.div>
-                )}
-              </ul>
-              <div className={style.tienda}>
-                {context.productosPublicos.length != 0 ? (
-                  <ProductosTienda productos={productosArray} />
-                ) : (
-                  <p className={style.tienda__p}>
-                    No se encontraron productos 😓
-                  </p>
-                )}
+                      {context.productosPublicosCopia.filter(
+                        (item) => item.descuento
+                      ) > 0 && (
+                        <li
+                          onClick={() => {
+                            filtrarSeccionOfertas();
+                            setBusqueda("");
+                            mostrarMenu();
+                          }}
+                        >
+                          Ofertas {`(${context.contadorOfert})`}{" "}
+                        </li>
+                      )}
+                      {context.secciones &&
+                        context.secciones.map((item, i) => {
+                          return (
+                            <ItemMenuProductos
+                              key={i}
+                              funcion={filtrarSeccion}
+                              item={item}
+                              click={mostrarMenu}
+                            />
+                          );
+                        })}
+                    </motion.div>
+                  )}
+                </ul>
+                <div className={style.tienda}>
+                  {context.productosPublicos.length != 0 ? (
+                    <ProductosTienda productos={productosArray} />
+                  ) : (
+                    <p className={style.tienda__p}>
+                      No se encontraron productos 😓
+                    </p>
+                  )}
+                </div>
               </div>
             </div>
-          </div>
+          ) : (
+            <div className={style.tiendaNoDisp}>
+              <p>Esta tienda no se encuentra disponible 😓</p>
+            </div>
+          )}
         </>
       ) : (
         <Loader />
