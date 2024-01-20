@@ -1,306 +1,393 @@
 @import "./Variables.module.scss";
 
 .main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
+
 .header {
   margin-top: -80px;
   width: 100%;
   min-height: 95vh;
   height: 100vh;
-  display: grid;
-  grid-template-rows: 1fr 100px;
-  justify-items: center;
+  display: flex;
+  justify-content: center;
   align-items: center;
-  background-color: $white-color;
+  gap: 20px;
+  background-color: $fondoColor;
+  background-image: $fondoGradiente;
 
-  .logo {
-    display: grid;
-    justify-items: center;
-
-    img {
-      height: 40vh;
-    }
-
-    p {
-      font-size: 25px;
-      font-weight: 500;
-      text-align: center;
-      margin: 0;
-      color: $black-color;
-    }
-
-    a {
-      padding: 10px 25px 10px 25px;
-      border-radius: 15px;
-      text-align: center;
-      background-color: $black-color;
-      border: 2px solid rgba(0, 0, 0, 0);
-      color: $white-color;
-      font-weight: 700;
-      font-size: 20px;
-      font-family: $fuente1;
-      margin-top: 15px;
-      cursor: pointer;
-      text-decoration: none;
-      transition-duration: 0.3s;
-
-      &:hover {
-        color: $black-color;
-        background-color: $white-color;
-        border: 2px dotted $black-color;
-      }
-    }
-  }
-  .flecha {
-    align-self: end;
-    display: grid;
-    justify-items: center;
-    align-items: center;
-    margin-bottom: 15px;
-    cursor: pointer;
-    color: $black-color;
-    text-decoration: none;
-    p {
-      font-weight: 900;
-      font-size: 32px;
-      text-align: center;
-      margin: 0;
-      font-family: $fuente3;
-    }
-
-    .icon {
-      font-size: 55px;
-      -webkit-animation: icon 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) infinite
-        alternate both;
-      animation: icon 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) infinite alternate
-        both;
-    }
-    @keyframes icon {
-      0% {
-        transform: translateY(0);
-      }
-      100% {
-        transform: translateY(10px);
-      }
-    }
-  }
-}
-
-.seccion {
-  display: grid;
-  justify-items: center;
-  align-items: center;
-  padding: 15px 0 15px 0;
-  background-color: $white-color;
-
-  h3 {
-    text-align: center;
-    font-size: 45px;
-    margin: 15px 0 15px 0;
-    color: $black-color;
-    border-bottom: 3px solid $black-color;
-    font-family: $fuente3;
-  }
-
-  .seccion__items {
-    width: 70%;
+  .container {
+    width: 70vw;
     display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
+    justify-content: space-around;
     align-items: center;
-    gap: 15px;
-    padding: 25px 0 25px 0;
-  }
-}
 
-.ofertas {
-  padding: 25px 0 25px 0;
-  min-height: 400px;
-  width: 100%;
-  display: grid;
-  justify-items: center;
-  align-items: center;
-  background-color: white;
+    .title {
+      width: 600px;
+      font-family: $fuente4;
+      font-weight: 400;
+      font-size: 30px;
 
-  h3 {
-    text-align: center;
-    font-size: 45px;
-    margin: 15px 0 15px 0;
-    color: $black-color;
-    border-bottom: 3px solid $black-color;
-    font-family: $fuente3;
-  }
+      span {
+        font-weight: 700;
+      }
 
-  .items {
-    width: 70%;
-    min-width: 600px;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
-    gap: 15px;
-  }
+      button {
+        background-color: white;
+        color: black;
+        padding: 15px;
+        border-radius: 20px;
+        border: none;
+        font-size: 18px;
+        font-weight: 900;
+        font-family: $fuente1;
+        cursor: pointer;
+        transition-duration: 0.3s;
 
-  .a {
-    background-color: $black-color;
-    color: $white-color;
-    padding: 8px 12px 8px 12px;
-    border-radius: 10px;
-    border: 2px solid rgba(245, 222, 179, 0);
-    font-size: 18px;
-    font-family: $fuente2;
-    margin: 15px 0 15px 0;
-    cursor: pointer;
-    text-decoration: none;
-    transition-duration: 0.3s;
-
-    &:hover {
-      color: $black-color;
-      background-color: white;
-      border: 2px solid $black-color;
+        &:hover {
+          background-color: rgb(48, 160, 20);
+          color: white;
+        }
+      }
     }
-  }
-}
-
-@media (max-width: 900px) {
-  .header {
-    width: 100%;
-    min-height: 100vh;
-    display: grid;
-    justify-items: center;
-    align-items: center;
-    background-color: $white-color;
-    grid-template-rows: 1fr 200px;
 
     .logo {
       display: grid;
       justify-items: center;
 
       img {
-        height: 250px;
+        height: 40vh;
+        filter: drop-shadow(5px 5px 5px #666666);
       }
+    }
+  }
+}
 
-      p {
-        font-size: 20px;
-        font-weight: 900;
-        text-align: center;
+.about {
+  margin: 15px 0 15px 0;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 450px;
+
+  .container {
+    width: 70vw;
+    height: 100%;
+
+    h2 {
+      font-size: 28px;
+      font-family: $fuente4;
+      border-bottom: 2px solid black;
+    }
+
+    .about__icons {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-around;
+      align-items: center;
+      gap: 15px;
+    }
+  }
+}
+
+.pasos {
+  min-height: 400px;
+  width: 70vw;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 100px 0 100px 0;
+
+  img {
+    max-width: 1280px;
+    height: 600px;
+    width: 70vw;
+    object-fit: cover;
+    z-index: -1;
+    left: 300px;
+    border-radius: 5px;
+    filter: blur(1px);
+    margin-right: 250px;
+  }
+
+  .pasos__text {
+    position: absolute;
+    width: 70vw;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    gap: 50px;
+
+    h3 {
+      color: white;
+      font-size: 32px;
+      text-shadow: 1px 2px 2px rgba(17, 17, 17, 0.685);
+      font-family: $fuente4;
+    }
+
+    p {
+      margin-left: 100px;
+      background-color: white;
+      border-radius: 10px;
+      padding: 15px;
+      font-weight: 600;
+      box-shadow: 0 20px 80px 0 rgba(0, 0, 0, 0.1);
+      width: 350px;
+    }
+  }
+}
+
+.precio {
+  width: 100%;
+  min-height: 70vh;
+  display: flex;
+
+  .precio__precio {
+    width: 50%;
+    height: auto;
+    background-color: $nowhite-color;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    text-align: left;
+
+    .conte {
+      width: 70%;
+
+      h3 {
+        font-family: $fuente1;
+        font-size: 100px;
+        font-weight: 400;
+        color: white;
         margin: 0;
       }
 
-      a {
-        padding: 15px 25px 15px 25px;
-        border-radius: 15px;
-        text-align: center;
-        background-color: $black-color;
-        border: 2px solid rgba(255, 0, 0, 0);
-        color: $white-color;
-        font-weight: 700;
-        font-size: 16px;
+      p {
+        text-align: left;
+        color: white;
+        font-size: 22px;
+      }
+
+      button {
+        background-color: white;
+        padding: 15px;
+        border-radius: 20px;
+        font-weight: 900;
+        border: none;
         font-family: $fuente1;
-        margin-top: 25px;
         cursor: pointer;
-        text-decoration: none;
+        transition-duration: 0.3s;
+        font-size: 18px;
 
         &:hover {
-          color: $black-color;
           background-color: $white-color;
-          border: 2px solid $black-color;
         }
       }
     }
-    .flecha {
-      align-self: start;
-      display: grid;
-      justify-items: center;
-      align-items: center;
-      margin-bottom: 0px;
-      cursor: pointer;
-      color: $black-color;
-      text-decoration: none;
+  }
+
+  .precio__benef {
+    width: 50%;
+    height: auto;
+    background-color: $white-color;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 20px;
+
+    .card {
+      display: flex;
+      flex-direction: column;
+      margin: 15px 0 15px 25px;
+      h4 {
+        margin: 0;
+
+        span {
+          font-size: 28px;
+        }
+      }
+
       p {
-        font-weight: 900;
-        font-size: 30px;
-        text-align: center;
         margin: 0;
       }
+    }
+  }
+}
 
-      .icon {
-        font-size: 55px;
-        -webkit-animation: icon 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) infinite
-          alternate both;
-        animation: icon 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) infinite
-          alternate both;
-      }
-      @keyframes icon {
-        0% {
-          transform: translateY(0);
+@media (max-width: 900px) {
+  .header {
+    width: 100vw;
+    min-height: 100vh;
+
+    .container {
+      flex-direction: column-reverse;
+
+      .title {
+        width: 90vw;
+        font-family: $fuente4;
+        font-weight: 400;
+        font-size: 14px;
+        text-align: center;
+
+        span {
+          font-weight: 700;
         }
-        100% {
-          transform: translateY(10px);
+      }
+
+      .logo {
+        display: grid;
+        justify-items: center;
+
+        img {
+          height: 180px;
         }
       }
     }
   }
 
-  .seccion {
-    width: 100%;
-    display: grid;
-    justify-items: center;
-    align-items: center;
-    padding: 15px 0 15px 0;
+  .about {
+    .container {
+      width: 90vw;
+    }
+  }
 
-    h3 {
-      text-align: center;
-      font-size: 40px;
-      margin: 15px 0 15px 0;
-      color: $black-color;
+  .pasos {
+    min-height: 400px;
+    width: 95vw;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    margin: 100px 0 100px 0;
+
+    img {
+      width: 95vw;
+      height: 250px;
+      left: 0px;
+      filter: blur(1px);
+      margin-right: 0px;
     }
 
-    .seccion__items {
-      width: 100%;
+    .pasos__text {
+      position: relative;
+      width: 95vw;
       display: flex;
-      flex-wrap: wrap;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 15px;
+
+      h3 {
+        top: -200px;
+        left: 5vw;
+        width: 80vw;
+        position: absolute;
+        font-size: 28px;
+        margin-left: 0px;
+
+        text-shadow: 1px 2px 2px rgba(17, 17, 17, 0.685);
+        font-family: $fuente4;
+      }
+
+      p {
+        margin-left: 0px;
+        background-color: white;
+        border-radius: 15px;
+        padding: 15px;
+        font-weight: 600;
+        width: 85vw;
+      }
+    }
+  }
+
+  .precio {
+    width: 100%;
+    min-height: 60vh;
+    display: flex;
+    flex-direction: column;
+
+    .precio__precio {
+      width: 100%;
+      height: auto;
+      background-color: $nowhite-color;
+      display: flex;
       justify-content: center;
       align-items: center;
-      gap: 15px;
+      flex-direction: column;
+      text-align: left;
       padding: 25px 0 25px 0;
+
+      .conte {
+        width: 80%;
+
+        h3 {
+          font-family: $fuente1;
+          font-size: 100px;
+          font-weight: 400;
+          color: white;
+          margin: 0;
+        }
+
+        p {
+          text-align: left;
+          color: white;
+          font-size: 22px;
+        }
+
+        button {
+          background-color: white;
+          padding: 15px;
+          border-radius: 20px;
+          font-weight: 900;
+          border: none;
+          font-family: $fuente1;
+          cursor: pointer;
+          transition-duration: 0.3s;
+          font-size: 18px;
+
+          &:hover {
+            background-color: $white-color;
+          }
+        }
+      }
     }
-  }
 
-  .ofertas {
-    min-height: 200px;
-    width: 100%;
-    display: grid;
-    justify-items: center;
-    align-items: center;
-
-    h3 {
-      text-align: center;
-      font-family: $fuente3;
-      font-size: 40px;
-      margin: 15px 0 15px 0;
-    }
-
-    .items {
-      min-height: 200px;
+    .precio__benef {
       width: 100%;
-      min-width: 300px;
+      height: 100%;
+      background-color: $white-color;
       display: flex;
-      flex-wrap: wrap;
+      flex-direction: column;
       justify-content: center;
-      gap: 15px;
-    }
+      gap: 20px;
+      padding: 15px 0 15px 0;
 
-    .a {
-      background-color: $black-color;
-      color: $white-color;
-      padding: 8px 12px 8px 12px;
-      border-radius: 10px;
-      font-size: 16px;
-      font-family: $fuente2;
-      margin: 15px 0 15px 0;
-      cursor: pointer;
-      text-decoration: none;
+      .card {
+        display: flex;
+        flex-direction: column;
+        margin: 5px 0 5px 0px;
+        padding: 15px;
+        height: auto;
+        h4 {
+          margin: 0;
+          font-size: 18px;
+
+          span {
+            font-size: 28px;
+          }
+        }
+
+        p {
+          margin: 0;
+          font-size: 16px;
+        }
+      }
     }
   }
 }

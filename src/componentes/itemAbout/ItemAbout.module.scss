@@ -1,0 +1,29 @@
+@import "../../styles/Variables.module.scss";
+.card {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 15px;
+  background-color: $white-color;
+  width: fit-content;
+  border-radius: 15px;
+  width: 40%;
+
+  h4 {
+    margin: 0 !important;
+
+    span {
+      font-size: 28px;
+    }
+  }
+
+  p {
+    margin: 0 !important;
+  }
+}
+
+@media (max-width: 900px) {
+  .card {
+    width: 80vw;
+  }
+}

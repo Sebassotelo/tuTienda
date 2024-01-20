@@ -52,7 +52,7 @@ function ProductoNuevo({ setShowNuevoProducto }) {
     const consulta = await getDoc(docRef);
     const infoDocu = consulta.data();
 
-    //filtramos la propiedad .items y creamos un array nuevo
+    // Creamos el array que vamos a seter en db
 
     const newArray = [];
 
@@ -73,7 +73,7 @@ function ProductoNuevo({ setShowNuevoProducto }) {
       ...infoDocu.items
     );
 
-    console.log("new array", context.premium);
+    // Corroboramos el nivel de premium y vemos si no alcanzo la cantidad maxima de productos.
 
     if (context.premium.nivel == 1) {
       if (newArray.length < 30) {
@@ -111,11 +111,11 @@ function ProductoNuevo({ setShowNuevoProducto }) {
     } else if (context.premium.nivel == 0) {
       toast.error(`No tiene premium activo`);
     }
+
     //limpiar Form
     e.target.inputTitle.value = "";
     e.target.inputDesc.value = "";
     e.target.inputPrecio.value = "";
-    // e.target.inputImagen.value = "";
     e.target.inputStock.value = "";
     e.target.inputSeccion.value = "";
     e.target.inputCaracteristicas.value = "";
