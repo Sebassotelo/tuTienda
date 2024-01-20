@@ -143,9 +143,9 @@ export default function Home() {
             </div>
           </div>
           <div className={style.precio__benef}>
-            {arrayMostrarPrecio.map((item) => {
+            {arrayMostrarPrecio.map((item, i) => {
               return (
-                <div className={style.card}>
+                <div className={style.card} key={i}>
                   <h4>
                     {item.icon} {item.title}
                   </h4>
