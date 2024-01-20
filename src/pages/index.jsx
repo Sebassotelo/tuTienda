@@ -120,7 +120,7 @@ export default function Home() {
           <img src="https://i.imgur.com/QiTODWB.jpg" alt="" />
           <div className={style.pasos__text}>
             <div>
-              <h3>Hazlo, de una u otra forma.</h3>
+              <h3>Hazlo, de una u otra forma...</h3>
             </div>
             <div>
               <p>
