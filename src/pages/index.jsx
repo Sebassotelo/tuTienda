@@ -17,48 +17,63 @@ export default function Home() {
 
   const arrayAbout = [
     {
-      icon: "😁",
-      title: "Panel autoadministable",
-      desc: "Panel que te permite manejar todos tus productos",
+      icon: "🤓",
+      title: "Creación Intuitiva de Tiendas",
+      desc: "No se requieren habilidades técnicas; simplemente creá tu tienda con Google, carga tus productos y personaliza según tus preferencias.",
     },
     {
-      icon: "😁",
-      title: "Panel autoadministable",
-      desc: "Panel que te permite manejar todos tus productos",
+      icon: "🙋‍♂️",
+      title: "Autogestionable",
+      desc: "Administras tu tienda online sin ayuda de profesionales y desde cualquier dispositivo.",
     },
     {
-      icon: "😁",
-      title: "Panel autoadministable",
-      desc: "Panel que te permite manejar todos tus productos",
+      icon: "📋",
+      title: "Catálogo Online Atractivo:",
+      desc: "Destaca tus productos con un catálogo online atractivo y fácil de navegar. Carga imágenes de alta calidad, proporciona descripciones detalladas y organiza tus productos de manera lógica para que tus clientes encuentren lo que necesitan de manera rápida.",
     },
     {
-      icon: "😁",
-      title: "Panel autoadministable",
-      desc: "Panel que te permite manejar todos tus productos",
+      icon: "🌐",
+      title: "Pedidos a través de WhatsApp:",
+      desc: "Facilitamos la comunicación directa con tus clientes al integrar un sistema de pedidos a través de WhatsApp. Tus clientes pueden realizar pedidos fácilmente, y tú recibirás notificaciones instantáneas para procesarlos rápidamente.",
+    },
+    {
+      icon: "🧐",
+      title: "Soporte Personalizado:",
+      desc: "Ofrecemos un equipo de soporte dedicado para ayudarte en cada paso del camino, asegurándonos de que tu experiencia con EasyStore Pro sea excepcional.",
+    },
+    {
+      icon: "🥳",
+      title: "7 dias de prueba gratis:",
+      desc: "Sin configurar un medio de pago.",
     },
   ];
   const [arrayMostrar, setArrayMostrar] = useState(arrayAbout);
 
   const arrayPrecio = [
     {
-      icon: "😁",
-      title: "Panel autoadministable",
-      desc: "Panel que te permite manejar todos tus productos",
+      icon: "🛍️",
+      title: "Genera cupones de descuentos y ofertas",
+      desc: "Armá cupones de monto fijo o porcentual, descuentos individuales o por categorias.",
+    },
+    {
+      icon: "⚡",
+      title: "Recibe tus pedidos al WhatsApp",
+      desc: "Tus clientes tendran que entrar a la tienda, agregar al carrito y podran mandarte el pedido directamente a tu WhatsApp.",
+    },
+    {
+      icon: "🛒",
+      title: "Productos visibles segun Stock",
+      desc: "En el catalogo publico solamente se mostraran aquellos productos que cuenten con stock disponible.",
     },
     {
       icon: "😁",
-      title: "Panel autoadministable",
-      desc: "Panel que te permite manejar todos tus productos",
+      title: "Disponible en cualquier dispositivo",
+      desc: "La tienda para tus clientes tanto como para los emprendedores esta disponible en cualquier dispositivo.",
     },
     {
-      icon: "😁",
-      title: "Panel autoadministable",
-      desc: "Panel que te permite manejar todos tus productos",
-    },
-    {
-      icon: "😁",
-      title: "Panel autoadministable",
-      desc: "Panel que te permite manejar todos tus productos",
+      icon: "🎥",
+      title: "Videos explicativos",
+      desc: "Videos que te guian a como configurar tu perfil y subir los productos.",
     },
   ];
 
@@ -96,8 +111,10 @@ export default function Home() {
           <div className={style.container}>
             <h2>Que hacemos?</h2>
             <p>
-              Empretienda es una plataforma que te permite crear y administrar
-              tu propia tienda online de manera simple y completa.
+              EasyStore Pro es una innovadora aplicación diseñada para
+              simplificar la creación y gestión de tiendas online, ofreciendo a
+              emprendedores y pequeños negocios la oportunidad de llevar sus
+              productos al mundo digital de manera sencilla y efectiva.
             </p>
             <p> Creando tu cuenta automáticamente tenes acceso a:</p>
 
@@ -128,7 +145,7 @@ export default function Home() {
                 disponible.
               </p>
               <p>Cualquier duda te respondera una persona.</p>
-              <p>Todo feedback para mejorar sera bienvenido.</p>
+              <p>Todo feedback para mejorar será bienvenido.</p>
             </div>
           </div>
         </section>
@@ -146,10 +163,12 @@ export default function Home() {
             {arrayMostrarPrecio.map((item, i) => {
               return (
                 <div className={style.card} key={i}>
-                  <h4>
-                    {item.icon} {item.title}
-                  </h4>
-                  <p>{item.desc}</p>
+                  <div>
+                    <h4>
+                      {item.icon} {item.title}
+                    </h4>
+                    <p>{item.desc}</p>
+                  </div>
                 </div>
               );
             })}
