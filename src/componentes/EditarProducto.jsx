@@ -106,11 +106,6 @@ function EditarProducto({
 
   return (
     <div className={style.container}>
-      {image && (
-        <div className={style.container__img}>
-          <img src={image} alt="" />
-        </div>
-      )}
       <form action="" className={style.form} onSubmit={editarProducto}>
         <p>Titulo:</p>
         <input
@@ -155,9 +150,8 @@ function EditarProducto({
             />
           </div>
         </div>
-        <p>Url de Imagen:</p>
-        <SubirFoto setImage={setImage} setLoad={setLoadImg} />
-        <p>Seccion:</p>
+
+        <p>Categoría:</p>
         <select
           name=""
           id="inputSeccion"
@@ -177,6 +171,8 @@ function EditarProducto({
           id="inputCaracteristicas"
           defaultValue={caracteristicas2 ? caracteristicas2 : ""}
         />
+        <p>Url de Imagen:</p>
+        <SubirFoto setImage={setImage} setLoad={setLoadImg} />
 
         <div className={style.check__container}>
           <div className={style.checkbox}>
@@ -184,7 +180,7 @@ function EditarProducto({
             {descuentoActivo ? (
               <p
                 className={style.descuentoActivo}
-                style={{ backgroundColor: "green" }}
+                style={{ border: "2px solid green" }}
                 onClick={activarDescuento}
               >
                 ON
@@ -192,7 +188,7 @@ function EditarProducto({
             ) : (
               <p
                 className={style.descuentoActivo}
-                style={{ backgroundColor: "red" }}
+                style={{ border: "2px solid red" }}
                 onClick={activarDescuento}
               >
                 OFF
@@ -205,7 +201,7 @@ function EditarProducto({
               <p
                 onClick={activarDestacado}
                 className={style.descuentoActivo}
-                style={{ backgroundColor: "green" }}
+                style={{ border: "2px solid green" }}
               >
                 ON
               </p>
@@ -213,20 +209,27 @@ function EditarProducto({
               <p
                 onClick={activarDestacado}
                 className={style.descuentoActivo}
-                style={{ backgroundColor: "red" }}
+                style={{ border: "2px solid red" }}
               >
                 OFF
               </p>
             )}
           </div>
         </div>
-
-        {loadImg ? (
-          <button type="submit">Guardar</button>
-        ) : (
-          <button>Cargando Imagen...</button>
+        {image && (
+          <div className={style.container__img}>
+            <img src={image} alt="" />
+          </div>
         )}
-        <button onClick={setEditarProducto}>Cerrar</button>
+
+        <div className={style.container__botones}>
+          <button onClick={setEditarProducto}>Cerrar</button>
+          {loadImg ? (
+            <button type="submit">Guardar</button>
+          ) : (
+            <button>Cargando Imagen...</button>
+          )}
+        </div>
       </form>
     </div>
   );

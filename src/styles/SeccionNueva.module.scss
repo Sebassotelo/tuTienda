@@ -4,8 +4,9 @@
   width: 90%;
   background-color: rgb(255, 255, 255);
   padding: 10px;
-  border-radius: 10px;
+  border-radius: 5px;
   margin-top: 25px;
+  box-shadow: $sombra;
 
   h4 {
     margin: 10px 0 10px 0;
@@ -13,16 +14,21 @@
 
   form {
     width: 100%;
+
     p {
       margin: 0;
       font-weight: 900;
       margin-bottom: 5px;
     }
+    .lite {
+      font-size: 12px;
+      font-weight: 400;
+    }
     input {
       height: 30px;
       width: 300px;
-      border-bottom-left-radius: 15px;
-      border-top-left-radius: 15px;
+      border-bottom-left-radius: 5px;
+      border-top-left-radius: 5px;
       outline: none;
       border: 1px solid black;
       padding-left: 10px;
@@ -32,10 +38,10 @@
     button {
       height: 34px;
       border: none;
-      border-bottom-right-radius: 15px;
-      border-top-right-radius: 15px;
+      border-bottom-right-radius: 5px;
+      border-top-right-radius: 5px;
       background-color: $black-color;
-      color: $white-color;
+      color: white;
       cursor: pointer;
     }
   }
@@ -49,44 +55,42 @@
 
     .secciones__item {
       display: flex;
-      justify-content: center;
+      justify-content: space-between;
       align-items: center;
       gap: 5px;
       background-color: rgba(0, 0, 0, 0.116);
       padding: 5px;
-      border-radius: 15px;
+      border-radius: 5px;
+      width: 30%;
     }
 
     .secciones__p {
       margin: 0;
       cursor: pointer;
-      color: $white-color;
+      color: $black-color;
+      font-weight: 900;
       padding: 5px 12px 5px 12px;
-      background-color: $black-color;
-      border-radius: 15px;
+      border-radius: 5px;
       transition-duration: 0.3s;
       &:hover {
-        color: $primary-color;
+        color: $nowhite-color;
       }
     }
 
     .x {
       cursor: pointer;
-      color: white;
+      color: $black-color;
       text-align: center;
       height: 26px;
       width: 26px;
       display: grid;
       align-items: center;
       justify-items: center;
-      background-color: red;
-
+      font-size: 22px;
       border-radius: 50%;
 
-      p {
-        height: 24px;
-        font-weight: 900;
-        margin: 0;
+      &:hover {
+        color: $nowhite-color;
       }
     }
   }
@@ -117,8 +121,6 @@
       input {
         height: 30px;
         width: 200px;
-        border-bottom-left-radius: 15px;
-        border-top-left-radius: 15px;
         outline: none;
         border: 1px solid black;
         padding-left: 10px;
@@ -128,10 +130,6 @@
       button {
         height: 34px;
         border: none;
-        border-bottom-right-radius: 15px;
-        border-top-right-radius: 15px;
-        background-color: $black-color;
-        color: $white-color;
         cursor: pointer;
       }
     }
@@ -142,24 +140,21 @@
       align-items: center;
       flex-wrap: wrap;
       gap: 8px;
+      padding: 5px 0 5px 0;
 
       .secciones__item {
         display: flex;
-        justify-content: center;
         align-items: center;
         gap: 5px;
         background-color: rgba(0, 0, 0, 0.116);
         padding: 5px;
-        border-radius: 15px;
+        width: 90%;
       }
 
       .secciones__p {
         margin: 0;
         cursor: pointer;
-        color: $white-color;
         padding: 5px 12px 5px 12px;
-        background-color: $black-color;
-        border-radius: 15px;
         transition-duration: 0.3s;
         &:hover {
           color: $primary-color;
@@ -168,14 +163,12 @@
 
       .x {
         cursor: pointer;
-        color: white;
         text-align: center;
         height: 26px;
         width: 26px;
         display: grid;
         align-items: center;
         justify-items: center;
-        background-color: red;
 
         border-radius: 50%;
 

@@ -2,11 +2,12 @@ import React, { useContext, useEffect, useState } from "react";
 import style from "../styles/Navbar.module.scss";
 import Link from "next/link";
 import ContextGeneral from "@/servicios/contextPrincipal";
-import { signOut } from "firebase/auth";
+import { signInWithPopup, GoogleAuthProvider, signOut } from "firebase/auth";
 import {
   AiOutlineShoppingCart,
   AiOutlineHome,
   AiOutlineSearch,
+  AiOutlineGoogle,
 } from "react-icons/ai";
 import { MdOutlineDashboardCustomize, MdOutlineLogout } from "react-icons/md";
 
@@ -22,6 +23,8 @@ function Navbar({ showCarrito, show }) {
   const { setProductosPublicos } = useContext(ContextGeneral);
   const [contadorProductos, setContadorProductos] = useState(0);
   const [showBuscador, setShowBuscador] = useState(false);
+
+  const googleProvider = new GoogleAuthProvider();
 
   const router = useRouter();
   const currentPath = router.asPath;
@@ -45,7 +48,7 @@ function Navbar({ showCarrito, show }) {
   return (
     <div className={style.container}>
       <Link
-        href="/productos"
+        href="/"
         className={style.img}
         onClick={() => setProductosPublicos(context.productosPublicosCopia)}
       >
@@ -53,11 +56,7 @@ function Navbar({ showCarrito, show }) {
       </Link>
 
       <ul className={style.navbar}>
-        <Link href="/">
-          {" "}
-          <AiOutlineHome className={style.icon} />{" "}
-        </Link>
-        {currentPath.includes("panel-de-control") && (
+        {context.estadoUsuario == 1 && (
           <Link href={`/u/${context.nombreTienda}`}>
             <RiStore2Line className={style.icon} />{" "}
           </Link>
@@ -74,6 +73,12 @@ function Navbar({ showCarrito, show }) {
               <p style={{ color: show && "#f2ced1" }}>({contadorProductos})</p>
             )}
           </p>
+        )}
+        {context.estadoUsuario == 0 && !currentPath.includes("/u/") && (
+          <AiOutlineGoogle
+            className={style.icon}
+            onClick={() => signInWithPopup(context.auth, googleProvider)}
+          />
         )}
         {context.estadoUsuario == 1 && (
           <>

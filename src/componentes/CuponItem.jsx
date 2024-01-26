@@ -12,13 +12,20 @@ function CuponItem({ item, eliminarCupon }) {
       <div key={item.id} className={style.cupon__item}>
         <div className={style.desc}>
           <p>{item.cupon}</p>
-          <p>{item.monto}%</p>
+          {item.montoPesosActivo ? (
+            <p>${item.montoPesos}</p>
+          ) : (
+            <p>{item.monto}%</p>
+          )}
           {item.activo ? (
             <p className={style.icons__on}>ON</p>
           ) : (
             <p className={style.icons__off}>OFF</p>
           )}
         </div>
+        <p className={style.pesosActivo}>
+          {item.montoPesosActivo ? "En pesos" : "Porcentual"}
+        </p>
         <div className={style.icons}>
           <GrEdit
             className={style.icons__item}

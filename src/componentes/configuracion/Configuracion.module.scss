@@ -1,16 +1,22 @@
 @import "../../styles/Variables.module.scss";
 
 .container {
-  width: 100%;
-
-  border-radius: 15px;
-
+  width: 95%;
+  h2 {
+    margin-left: 10px;
+    color: $black-color;
+  }
+  .info {
+    font-size: 10px;
+    font-weight: 400 !important;
+  }
   .formUsuario {
     background-color: white;
     padding: 10px;
-    border-radius: 15px;
-    width: 400px;
-    margin-left: 10px;
+    border-radius: 5px;
+    margin: 10px 0 0 10px;
+    display: flex;
+    flex-direction: column;
 
     p {
       font-weight: 600;
@@ -20,40 +26,59 @@
     input {
       border: 1px solid rgba(0, 0, 0, 0.555);
       padding: 5px;
-      width: 80%;
-      border-bottom-left-radius: 10px;
-      border-top-left-radius: 10px;
       outline: none;
+      font-weight: 600;
     }
 
     button {
       background-color: $black-color;
-      color: $white-color;
+      color: white;
       border: none;
       padding: 6px;
-      border-bottom-right-radius: 10px;
-      border-top-right-radius: 10px;
       cursor: pointer;
       transition-duration: 0.3s;
-
-      &:hover {
-        background-color: $white-color;
-        color: $black-color;
-      }
+      width: auto;
     }
   }
-  .abrir__config {
-    background-color: $black-color;
-    color: $white-color;
-    border: none;
-    padding: 6px;
-    border-radius: 15px;
+
+  .formConfig {
+    background-color: white;
+    padding: 10px;
+    border-radius: 5px;
     margin: 10px 0 0 10px;
-    cursor: pointer;
-    transition-duration: 0.3s;
-    &:hover {
-      background-color: $white-color;
-      color: $black-color;
+    display: flex;
+    flex-direction: column;
+    input {
+      border: 1px solid rgba(0, 0, 0, 0.555);
+      padding: 5px;
+      width: auto;
+      border-radius: 5px;
+      outline: none;
+      font-weight: 600;
+    }
+
+    p {
+      margin: 0;
+      font-weight: 600;
+    }
+
+    img {
+      height: 80px;
+      width: 80px;
+      border-radius: 5px;
+      align-self: center;
+      object-fit: cover;
+    }
+
+    button {
+      background-color: $black-color;
+      border: none;
+      margin: 10px 0 10px 0;
+      padding: 5px;
+      border-radius: 5px;
+      color: white;
+      font-weight: 600;
+      cursor: pointer;
     }
   }
 }

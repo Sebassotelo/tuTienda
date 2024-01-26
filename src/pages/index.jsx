@@ -6,12 +6,14 @@ import LinkNext from "next/link";
 import { Link } from "react-scroll";
 
 import { color, motion } from "framer-motion";
+import { signInWithPopup, GoogleAuthProvider, signOut } from "firebase/auth";
 
 import ItemAbout from "../componentes/itemAbout/ItemAbout";
 
 export default function Home() {
   const context = useContext(ContextGeneral);
   const { verificarLogin } = useContext(ContextGeneral);
+  const googleProvider = new GoogleAuthProvider();
 
   const [itemsCategoria, setItemsCategoria] = useState([]);
 
@@ -37,9 +39,9 @@ export default function Home() {
       desc: "Facilitamos la comunicación directa con tus clientes al integrar un sistema de pedidos a través de WhatsApp. Tus clientes pueden realizar pedidos fácilmente, y tú recibirás notificaciones instantáneas para procesarlos rápidamente.",
     },
     {
-      icon: "🧐",
-      title: "Soporte Personalizado:",
-      desc: "Ofrecemos un equipo de soporte dedicado para ayudarte en cada paso del camino, asegurándonos de que tu experiencia con EasyStore Pro sea excepcional.",
+      icon: "🛍️",
+      title: "Gran cantidad de productos:",
+      desc: "Podes agregar hasta 100 productos.",
     },
     {
       icon: "🥳",
@@ -98,7 +100,20 @@ export default function Home() {
                   Creá tu tienda Y recibe los pedidos al{" "}
                   <span style={{ color: "rgb(48, 160, 20)" }}>Whatsapp!</span>{" "}
                 </h1>
-                <button>Creá tu Tienda con Google</button>
+
+                {context.user ? (
+                  <button onClick={() => signOut(context.auth)}>
+                    Cerrar Sesion
+                  </button>
+                ) : (
+                  <button
+                    onClick={() =>
+                      signInWithPopup(context.auth, googleProvider)
+                    }
+                  >
+                    Creá tu Tienda con Google
+                  </button>
+                )}
               </div>
               <div className={style.logo}>
                 <img src={context.urlLogo} alt="" />
@@ -111,8 +126,8 @@ export default function Home() {
           <div className={style.container}>
             <h2>Que hacemos?</h2>
             <p>
-              EasyStore Pro es una innovadora aplicación diseñada para
-              simplificar la creación y gestión de tiendas online, ofreciendo a
+              MyShop es una innovadora aplicación diseñada para simplificar la
+              creación y gestión de tiendas y catálogos online, ofreciendo a
               emprendedores y pequeños negocios la oportunidad de llevar sus
               productos al mundo digital de manera sencilla y efectiva.
             </p>
@@ -153,10 +168,28 @@ export default function Home() {
         <section className={style.precio} id="precio">
           <div className={style.precio__precio}>
             <div className={style.conte}>
-              <p>ÚNICO PRECIO</p>
-              <h3>$3990</h3>
+              <p>ÚNICO PRECIO.</p>
+              <h3>
+                $3990{" "}
+                <span style={{ textDecoration: "line-through" }}>$4999</span>
+              </h3>
               <p>Finales por mes.</p>
-              <button>Creá tu tienda con Google</button>
+              <p>Obtene la suscripcion de 1 año pagando solo 8 meses!</p>
+              <h3>
+                $31990{" "}
+                <span style={{ textDecoration: "line-through" }}>$59999</span>
+              </h3>
+              {context.user ? (
+                <button onClick={() => signOut(context.auth)}>
+                  Cerrar Sesion
+                </button>
+              ) : (
+                <button
+                  onClick={() => signInWithPopup(context.auth, googleProvider)}
+                >
+                  Creá tu Tienda con Google
+                </button>
+              )}
             </div>
           </div>
           <div className={style.precio__benef}>

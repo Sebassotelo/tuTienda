@@ -54,14 +54,12 @@ function Carrito({ showCarrito, show }) {
         let descuentoCantidad = "";
 
         if (cuponActivo && cuponActivo.activo) {
-          cuponDesc = `%0ACupon%20${cuponActivo.cupon}%20activo.%20Descuento%20de%20${cuponActivo.monto}%20porciento.`;
+          if (cuponActivo.montoPesosActivo) {
+            cuponDesc = `%0ACupon%20${cuponActivo.cupon}%20activo.%20Descuento%20de%20$${cuponActivo.montoPesos}.`;
+          } else {
+            cuponDesc = `%0ACupon%20${cuponActivo.cupon}%20activo.%20Descuento%20de%20${cuponActivo.monto}%20porciento.`;
+          }
         }
-
-        // if (cantidadFinal >= 4) {
-        //   descuentoCantidad = `%0ADescuento%20por%20Cantidad.%20Descuento%20de%20$${
-        //     cantidadFinal * 60
-        //   }%20.`;
-        // }
 
         setPedido(
           `Hola!%20Este%20es%20mi%20pedido:%0A%0A${pedidoCopy}%0ATotal:%20$${precioFinal}${
@@ -127,9 +125,15 @@ function Carrito({ showCarrito, show }) {
     );
 
     if (descuento[0] && descuento[0].activo) {
-      setPrecioFinal(precioFinal - precioTotal * (cuponActivo.monto / 100));
-      setCuponActivo(descuento[0]);
-      actualizacionCarrito();
+      if (descuento.montoPesosActivo) {
+        setPrecioFinal(precioFinal - montoPesos);
+        setCuponActivo(descuento[0]);
+        actualizacionCarrito();
+      } else {
+        setPrecioFinal(precioFinal - precioTotal * (cuponActivo.monto / 100));
+        setCuponActivo(descuento[0]);
+        actualizacionCarrito();
+      }
     } else {
       toast.error("El cupón ingresado ha expirado o es incorrecto");
       setCuponActivo(0);
@@ -150,16 +154,14 @@ function Carrito({ showCarrito, show }) {
     });
 
     if (cuponActivo && cuponActivo.activo) {
-      setPrecioFinal(precioTotal - precioTotal * (cuponActivo.monto / 100));
-      console.log("asfasdasd", precioTotal * (cuponActivo.monto / 100));
+      if (cuponActivo.montoPesosActivo) {
+        setPrecioFinal(precioTotal - cuponActivo.montoPesos);
+      } else {
+        setPrecioFinal(precioTotal - precioTotal * (cuponActivo.monto / 100));
+      }
     } else {
       setPrecioFinal(precioTotal);
     }
-
-    // if (cantidadTotal >= 4) {
-    //   precioTotal = precioTotal - cantidadTotal * 60;
-    //   setPrecioFinal(precioTotal);
-    // }
 
     setCantidadFinal(cantidadTotal);
     setEstadoPedido(0);
@@ -234,9 +236,17 @@ function Carrito({ showCarrito, show }) {
         {showCupon && (
           <>
             {cuponActivo && cuponActivo.activo ? (
-              <p className={style.cupon__aplicado}>
-                Cupon aplicado de {cuponActivo.monto}%
-              </p>
+              <>
+                {cuponActivo.montoPesosActivo ? (
+                  <p className={style.cupon__aplicado}>
+                    Cupon aplicado de ${cuponActivo.montoPesos}
+                  </p>
+                ) : (
+                  <p className={style.cupon__aplicado}>
+                    Cupon aplicado de {cuponActivo.monto}%
+                  </p>
+                )}
+              </>
             ) : (
               <form
                 action=""
@@ -256,15 +266,8 @@ function Carrito({ showCarrito, show }) {
         )}
         <div className={style.precio__final}>
           <p>Total:</p>
-          <p>${precioFinal}</p>
+          <p>${precioFinal < 0 ? "0" : precioFinal}</p>
         </div>
-
-        {/* {cantidadFinal >= 4 && (
-          <p>
-            Descuento aplicado de <span>$60</span> por par. Total:{" "}
-            <span>${cantidadFinal * 60}</span>
-          </p>
-        )} */}
 
         <div className={style.container__confirmacion}>
           {estadoPedido == 0 && (

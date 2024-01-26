@@ -8,3 +8,13 @@ body {
 span {
   font-weight: 900;
 }
+
+button{
+  font-family: "Quicksand",
+    sans-serif;
+}
+
+input{
+  font-family: "Quicksand",
+      sans-serif;
+}

@@ -1,8 +1,7 @@
 import React, { useContext, useState } from "react";
 import styles from "./Configuracion.module.scss";
-import Perfil from "../perfil/Perfil";
-import Form from "./form/Form";
 import ContextGeneral from "@/servicios/contextPrincipal";
+import SubirFoto from "../SubirFoto";
 
 import { toast } from "sonner";
 
@@ -16,10 +15,13 @@ import {
 } from "firebase/firestore";
 
 function Configuracion() {
-  const [showForm, setShowForm] = useState(false);
-
   const context = useContext(ContextGeneral);
-  const { llamadaDB } = useContext(ContextGeneral);
+  const { llamadaDB, setConfiguracion } = useContext(ContextGeneral);
+
+  const [load, setLoad] = useState(true);
+  const [image, setImage] = useState(() =>
+    context.configuracion.logo ? context.configuracion.logo : ""
+  );
 
   const setearUsuario = async (e) => {
     e.preventDefault(e);
@@ -54,31 +56,103 @@ function Configuracion() {
     }
   };
 
+  const aplicarConfiguracion = async (e) => {
+    e.preventDefault(e);
+
+    const instagram = e.target.inputInstagram.value;
+    const whatsapp = e.target.inputWhatsapp.value;
+    const slogan = e.target.inputSlogan.value;
+    const maps = e.target.inputMaps.value;
+
+    //traemos los datos de base de datos
+    const docRef = doc(context.firestore, `users/${context.user.email}`);
+
+    //filtramos la propiedad .items y creamos un array nuevo
+
+    const newObject = {
+      instagram: instagram,
+      whatsapp: whatsapp,
+      maps: maps,
+      logo: image,
+      slogan: slogan,
+    };
+
+    setConfiguracion(newObject);
+
+    //seteamos el estado y updateamos la base de datos
+    //   setArray(newArray);
+    updateDoc(docRef, { configuracion: newObject });
+
+    toast.success(`Perfil Configurado Correctamente`);
+
+    //limpiar Form
+    e.target.inputInstagram.value = "";
+    e.target.inputWhatsapp.value = "";
+    e.target.inputMaps.value = "";
+    e.target.inputSlogan.value = "";
+    setImage("");
+    llamadaDB();
+  };
+
   return (
     <div className={styles.container}>
-      <div>
-        <Perfil configuracion={context.configuracion} />
-      </div>
-
+      <h2>Configuracion General</h2>
       <form action="" onSubmit={setearUsuario} className={styles.formUsuario}>
-        <p>Nombre de Tienda:</p>
+        <p>Nombre de la Tienda:</p>
         <input
           type="text"
           name=""
           id="inputUsuario"
           defaultValue={context.nombreTienda}
         />
-        <button type="submit">Guardar</button>
+        <button type="submit">Guardar </button>
+        <p className={styles.info}>
+          {">"} Este nombre se colocara en el link a tu tienda.
+        </p>
       </form>
 
-      <button
-        onClick={() => setShowForm(true)}
-        className={styles.abrir__config}
-      >
-        Editar Configuracion
-      </button>
+      <form className={styles.formConfig} onSubmit={aplicarConfiguracion}>
+        {image && <img src={image} alt="" />}
+        <p>Instagram:</p>
+        <input
+          type="text"
+          id="inputInstagram"
+          defaultValue={
+            context.configuracion && context.configuracion.instagram
+          }
+        />
+        <p className={styles.info}>{">"} Solo ingresa el nombre de usuario.</p>
 
-      {showForm && <Form setShowForm={setShowForm} />}
+        <p>Numero de Whatsapp: {"(sin 0 ni 15. Ej: 3794250000)"}</p>
+        <input
+          type="number"
+          id="inputWhatsapp"
+          defaultValue={context.configuracion && context.configuracion.whatsapp}
+        />
+        <p className={styles.info}>
+          {">"} A este numero se enviaran los pedidos.
+        </p>
+        <p>Slogan:</p>
+        <input
+          type="text"
+          id="inputSlogan"
+          defaultValue={context.configuracion && context.configuracion.slogan}
+        />
+        <p>Link de Google Maps:</p>
+        <input
+          type="text"
+          id="inputMaps"
+          defaultValue={context.configuracion && context.configuracion.maps}
+        />
+        <p className={styles.info}>{">"} Link completo de Google Maps.</p>
+        <p>Subir Foto de perfil: </p>
+        <SubirFoto setImage={setImage} setLoad={setLoad} />
+        {load ? (
+          <button type="submit">Guardar</button>
+        ) : (
+          <button>Cargando imagen...</button>
+        )}
+      </form>
     </div>
   );
 }

@@ -76,34 +76,12 @@ function ProductoNuevo({ setShowNuevoProducto }) {
     // Corroboramos el nivel de premium y vemos si no alcanzo la cantidad maxima de productos.
 
     if (context.premium.nivel == 1) {
-      if (newArray.length < 30) {
-        setProductos(newArray);
-        setProductosCopia(newArray);
-        //seteamos el estado y updateamos la base de datos
-        updateDoc(docRef, { items: [...newArray] });
-        toast.success(`${title} Agregado con exito `);
-        llamadaDB();
-      } else {
-        toast.error(`Ha alcanzado el limite de productos`);
-      }
-    } else if (context.premium.nivel == 2) {
-      if (newArray.length < 60) {
-        setProductos(newArray);
-        setProductosCopia(newArray);
-        //seteamos el estado y updateamos la base de datos
-        updateDoc(docRef, { items: [...newArray] });
-        toast.success(`${title} Agregado con exito`);
-        llamadaDB();
-      } else {
-        toast.error(`Ha alcanzado el limite de productos`);
-      }
-    } else if (context.premium.nivel == 3) {
       if (newArray.length < 100) {
         setProductos(newArray);
         setProductosCopia(newArray);
         //seteamos el estado y updateamos la base de datos
         updateDoc(docRef, { items: [...newArray] });
-        toast.success(`${title} Agregado con exito`);
+        toast.success(`${title} Agregado con exito `);
         llamadaDB();
       } else {
         toast.error(`Ha alcanzado el limite de productos`);
@@ -134,11 +112,6 @@ function ProductoNuevo({ setShowNuevoProducto }) {
 
   return (
     <div className={style.container}>
-      {image && (
-        <div className={style.container__img}>
-          <img src={image} alt="" />
-        </div>
-      )}
       <form action="" className={style.form} onSubmit={agregarProducto}>
         <p>Nombre del Producto:</p>
         <input type="text" name="" id="inputTitle" />
@@ -158,9 +131,7 @@ function ProductoNuevo({ setShowNuevoProducto }) {
             <input type="number" name="" id="inputStock" />
           </div>
         </div>
-        <p>Subir Imagen:</p>
 
-        <SubirFoto setImage={setImage} setLoad={setLoadImg} />
         {/* <p>Url de Imagen:</p>
         <input type="text" name="" id="inputImagen" /> */}
         <p>Categoría del producto ​ :</p>
@@ -174,6 +145,9 @@ function ProductoNuevo({ setShowNuevoProducto }) {
           y las palabras{" "}
         </p>
         <input type="text" name="" id="inputCaracteristicas" />
+        <p>Subir Imagen:</p>
+
+        <SubirFoto setImage={setImage} setLoad={setLoadImg} />
         <div className={style.check__container}>
           <div className={style.checkbox}>
             <p>Descuento:</p>
@@ -181,7 +155,7 @@ function ProductoNuevo({ setShowNuevoProducto }) {
               <p
                 className={style.descuentoActivo}
                 onClick={activarDescuento}
-                style={{ backgroundColor: "green" }}
+                style={{ border: "2px solid green" }}
               >
                 ON
               </p>
@@ -189,7 +163,7 @@ function ProductoNuevo({ setShowNuevoProducto }) {
               <p
                 className={style.descuentoActivo}
                 onClick={activarDescuento}
-                style={{ backgroundColor: "red" }}
+                style={{ border: "2px solid red" }}
               >
                 OFF
               </p>
@@ -202,7 +176,7 @@ function ProductoNuevo({ setShowNuevoProducto }) {
               <p
                 className={style.descuentoActivo}
                 onClick={activarDestacado}
-                style={{ backgroundColor: "green" }}
+                style={{ border: "2px solid green" }}
               >
                 ON
               </p>
@@ -210,19 +184,27 @@ function ProductoNuevo({ setShowNuevoProducto }) {
               <p
                 className={style.descuentoActivo}
                 onClick={activarDestacado}
-                style={{ backgroundColor: "red" }}
+                style={{ border: "2px solid red" }}
               >
                 OFF
               </p>
             )}
           </div>
         </div>
-        {loadImg ? (
-          <button type="submit">Agregar Producto</button>
-        ) : (
-          <button>Cargando Imagen...</button>
+
+        {image && (
+          <div className={style.container__img}>
+            <img src={image} alt="" />
+          </div>
         )}
-        <button onClick={() => setShowNuevoProducto(false)}>Cerrar</button>
+        <div className={style.container__botones}>
+          <button onClick={() => setShowNuevoProducto(false)}>Cerrar</button>
+          {loadImg ? (
+            <button type="submit">Agregar Producto</button>
+          ) : (
+            <button>Cargando Imagen...</button>
+          )}
+        </div>
       </form>
     </div>
   );

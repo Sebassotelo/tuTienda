@@ -5,24 +5,42 @@
   min-height: 100vh;
   display: grid;
   justify-items: center;
-  grid-template-columns: 200px 1fr;
+  grid-template-columns: 250px 1fr;
 
   .menu {
     width: 100%;
     justify-self: start !important;
+    padding-top: 30px;
+    background-color: white;
 
-    background-color: $black-color;
+    p {
+      padding: 10px 15px 10px 15px;
+      color: $nowhite-color;
+      font-weight: 400;
+      font-size: 20px;
+      font-family: $fuente4;
+      margin: 0;
+      border-bottom: 2px solid $nowhite-color;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
 
     li {
       padding: 10px 15px 10px 15px;
       cursor: pointer;
-      color: $white-color;
+      color: $black-color;
       list-style: none;
-      font-weight: 900;
-      font-size: 22px;
+      font-weight: 400;
+      font-size: 18px;
+      font-family: $fuente4;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      transition-duration: 0.3s;
 
       &:hover {
-        color: $secondary-color;
+        color: $nowhite-color;
       }
     }
   }
@@ -40,15 +58,22 @@
     align-items: center;
     grid-gap: 15px;
 
+    .cabecera__productos {
+      width: 90%;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+    }
+
     .producto__nuevo__btn {
       height: 20px;
       cursor: pointer;
-      color: $white-color;
+      color: white;
       justify-self: center;
       text-align: center;
       width: 150px;
-      padding: 5px 10px 5px 10px;
-      border-radius: 15px;
+      padding: 8px 10px 8px 10px;
+      border-radius: 5px;
       background-color: $black-color;
       font-weight: 900;
     }
@@ -58,7 +83,7 @@
       text-align: center;
       width: 150px;
       padding: 5px 10px 5px 10px;
-      border-radius: 15px;
+      border-radius: 5px;
       background-color: $secondary-color;
       font-weight: 900;
       user-select: none;
@@ -66,7 +91,6 @@
   }
 
   .listaProducto {
-    background-color: white;
     padding: 10px;
     border-radius: 15px;
     display: flex;
@@ -112,14 +136,16 @@
     .secciones {
       width: 100%;
       padding: 15px 0 15px 0;
+
+      .cabecera__productos {
+        justify-content: center;
+      }
+
       .producto__nuevo__btn {
         cursor: pointer;
-        color: $white-color;
         justify-self: center;
         text-align: center;
         width: 150px;
-        padding: 5px 10px 5px 10px;
-        border-radius: 15px;
         background-color: $black-color;
         font-weight: 900;
       }
@@ -129,7 +155,6 @@
         text-align: center;
         width: 150px;
         padding: 5px 10px 5px 10px;
-        border-radius: 15px;
         background-color: $secondary-color;
         font-weight: 900;
         user-select: none;

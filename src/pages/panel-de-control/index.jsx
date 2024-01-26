@@ -14,6 +14,13 @@ import { push } from "next/router";
 import Loader from "@/componentes/Loader";
 import Configuracion from "@/componentes/configuracion/Configuracion";
 
+import {
+  MdOutlineDiscount,
+  MdOutlineShoppingBasket,
+  MdPerson,
+  MdOutlineSettings,
+} from "react-icons/md";
+
 function Index() {
   const context = useContext(ContextGeneral);
   const { llamadaDB, inspectorSesion, verificarLogin } =
@@ -54,9 +61,44 @@ function Index() {
           <>
             {/* menu pc */}
             <div className={style.menu}>
-              <li onClick={() => setShowSeccion(0)}>Configuracion</li>
-              <li onClick={() => setShowSeccion(1)}>Productos</li>
-              <li onClick={() => setShowSeccion(2)}>Descuentos</li>
+              {context.nombreTienda && (
+                <p>
+                  <MdPerson /> u/{context.nombreTienda}
+                </p>
+              )}
+              <li
+                onClick={() => setShowSeccion(0)}
+                style={{
+                  color: showSeccion == 0 && "hsla(0, 57%, 55%, 1)",
+                  marginLeft: showSeccion == 0 && "15px",
+                }}
+              >
+                {" "}
+                <MdOutlineSettings />
+                Configuracion
+              </li>
+              <li
+                onClick={() => setShowSeccion(1)}
+                style={{
+                  color: showSeccion == 1 && "hsla(0, 57%, 55%, 1)",
+                  marginLeft: showSeccion == 1 && "15px",
+                }}
+              >
+                {" "}
+                <MdOutlineShoppingBasket />
+                Productos
+              </li>
+              <li
+                onClick={() => setShowSeccion(2)}
+                style={{
+                  color: showSeccion == 2 && "hsla(0, 57%, 55%, 1)",
+                  marginLeft: showSeccion == 2 && "15px",
+                }}
+              >
+                {" "}
+                <MdOutlineDiscount />
+                Descuentos
+              </li>
             </div>
 
             {/* menu Movil */}
@@ -70,51 +112,51 @@ function Index() {
               {showSeccion == 1 && (
                 <>
                   <SeccionNueva />
+                  {context.secciones.length > 0 ? (
+                    <>
+                      <div className={style.cabecera__productos}>
+                        <BuscadorPanel />
+                        <p
+                          className={style.producto__nuevo__btn}
+                          onClick={mostrarVentana}
+                        >
+                          Nuevo Producto
+                        </p>
+                      </div>
 
-                  <div className={style.listaProducto}>
-                    {showNuevoProducto ? (
-                      <>
-                        <p
-                          className={style.producto__nuevo__btn}
-                          onClick={mostrarVentana}
-                        >
-                          Nuevo Producto
-                        </p>
-                        <ProductoNuevo setShowNuevoProducto={mostrarVentana} />
-                      </>
-                    ) : (
-                      <>
-                        <p
-                          className={style.producto__nuevo__btn}
-                          onClick={mostrarVentana}
-                        >
-                          Nuevo Producto
-                        </p>
-                      </>
-                    )}
-                    <BuscadorPanel />
-                    {context.productos &&
-                      context.productos.map((item) => {
-                        return (
-                          <>
-                            {" "}
-                            <ProductoPanel
-                              title={item.title}
-                              precio={item.precio}
-                              desc={item.desc}
-                              img={item.img}
-                              stock={item.stock}
-                              caracteristicas={item.caracteristicas}
-                              id={item.id}
-                              seccion={item.seccion}
-                              descuento={item.descuento}
-                              precioDescuento={item.precioDescuento}
-                              destacado={item.destacado}
-                            />
-                          </>
-                        );
-                      })}
-                  </div>
+                      <div className={style.listaProducto}>
+                        {showNuevoProducto && (
+                          <ProductoNuevo
+                            setShowNuevoProducto={mostrarVentana}
+                          />
+                        )}
+
+                        {context.productos &&
+                          context.productos.map((item) => {
+                            return (
+                              <>
+                                {" "}
+                                <ProductoPanel
+                                  title={item.title}
+                                  precio={item.precio}
+                                  desc={item.desc}
+                                  img={item.img}
+                                  stock={item.stock}
+                                  caracteristicas={item.caracteristicas}
+                                  id={item.id}
+                                  seccion={item.seccion}
+                                  descuento={item.descuento}
+                                  precioDescuento={item.precioDescuento}
+                                  destacado={item.destacado}
+                                />
+                              </>
+                            );
+                          })}
+                      </div>
+                    </>
+                  ) : (
+                    <p>Creá una categoria para poder agregar productos.</p>
+                  )}
                 </>
               )}
               {showSeccion == 2 && <Descuentos />}

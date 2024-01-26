@@ -62,16 +62,17 @@ function ProductoPanel({
         <div className={style.desc}>
           <div className={style.text}>
             <h3>{title}</h3>
-            <p>Stock: {stock}</p>
-            <p>Seccion: {seccion} </p>
+            <p>Categoría: {seccion} </p>
+
             <p>
-              Precio:
+              Precio:{" "}
               {descuento ? (
                 <span>${precioDescuento}</span>
               ) : (
                 <span>${precio}</span>
               )}
             </p>
+            <p>Stock: {stock}</p>
 
             <div className={style.check__container}>
               <div className={style.checkbox}>
@@ -79,15 +80,12 @@ function ProductoPanel({
                 {descuento ? (
                   <p
                     className={style.descuentoActivo}
-                    style={{ backgroundColor: "green" }}
+                    style={{ color: "green" }}
                   >
                     ON
                   </p>
                 ) : (
-                  <p
-                    className={style.descuentoActivo}
-                    style={{ backgroundColor: "red" }}
-                  >
+                  <p className={style.descuentoActivo} style={{ color: "red" }}>
                     OFF
                   </p>
                 )}
@@ -97,15 +95,12 @@ function ProductoPanel({
                 {destacado ? (
                   <p
                     className={style.descuentoActivo}
-                    style={{ backgroundColor: "green" }}
+                    style={{ color: "green" }}
                   >
                     ON
                   </p>
                 ) : (
-                  <p
-                    className={style.descuentoActivo}
-                    style={{ backgroundColor: "red" }}
-                  >
+                  <p className={style.descuentoActivo} style={{ color: "red" }}>
                     OFF
                   </p>
                 )}

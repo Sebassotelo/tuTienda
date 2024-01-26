@@ -20,16 +20,16 @@
   backdrop-filter: blur(3px);
 
   .container__img {
-    border-radius: 50%;
+    border-radius: 5px;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
     filter: opacity(0.7);
 
     img {
       height: 150px;
       width: 150px;
-      border-radius: 50%;
+      border-radius: 5px;
       object-fit: cover;
     }
   }
@@ -49,10 +49,10 @@
       padding: 0 0px 0 15px;
       width: 97%;
       height: 30px;
-      border-radius: 5px;
+      border-radius: 3px;
       border: none;
       outline: none;
-      border: 1px solid $black-color;
+      border: 1px solid rgba(0, 0, 0, 0.411);
       margin-bottom: 5px;
     }
 
@@ -77,23 +77,31 @@
       border: 1px solid $black-color;
     }
 
-    button {
-      margin-top: 15px;
-      justify-self: center;
-      border: none;
-      padding: 8px 12px 8px 12px;
-      border-radius: 15px;
-      cursor: pointer;
-      background-color: $black-color;
-      color: $white-color;
-      font-weight: 600;
+    .container__botones {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 15px;
+
+      button {
+        margin-top: 15px;
+        justify-self: center;
+        border: none;
+        padding: 8px 12px 8px 12px;
+        border-radius: 5px;
+        cursor: pointer;
+        background-color: $black-color;
+        color: white;
+        font-weight: 600;
+        font-family: $fuente1;
+      }
     }
   }
 }
 
 .check__container {
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   flex-wrap: wrap;
   gap: 25px;
@@ -103,11 +111,12 @@
   display: flex;
   justify-content: space-around;
   align-items: center;
-  border: 1px solid $black-color;
+  border: 1px solid rgba(0, 0, 0, 0.37);
   padding: 5px;
   border-radius: 5px;
   margin: 5px 0 5px 0;
   width: 180px;
+  background-color: white;
 
   p {
     width: 100%;
@@ -117,11 +126,12 @@
   .descuentoActivo {
     width: 60px;
     margin: 5px 5px 5px 5px !important;
-    color: $white-color;
-    padding: 5px;
-    border-radius: 15px;
+    color: $black-color;
+    padding: 3px;
+    border-radius: 5px;
     text-align: center;
     cursor: pointer;
+    user-select: none;
   }
 }
 

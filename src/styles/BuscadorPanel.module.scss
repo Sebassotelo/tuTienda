@@ -9,29 +9,31 @@
   input {
     height: 30px;
     width: 300px;
-    border-bottom-left-radius: 15px;
-    border-top-left-radius: 15px;
+    border-bottom-left-radius: 5px;
+    border-top-left-radius: 5px;
     outline: none;
     border: 1px solid black;
     padding-left: 10px;
     background-color: rgb(255, 255, 255);
+    font-family: $fuente1;
   }
 
   button {
     height: 34px;
     border: none;
-    border-bottom-right-radius: 15px;
-    border-top-right-radius: 15px;
+    border-bottom-right-radius: 5px;
+    border-top-right-radius: 5px;
     background-color: $black-color;
     color: white;
     cursor: pointer;
+    font-family: $fuente1;
   }
 
   p {
     margin: 0;
     width: 200px;
     padding: 8px 12px 8px 12px;
-    border-radius: 15px;
+    border-radius: 5px;
     text-align: center;
     background-color: $black-color;
     color: white;
@@ -52,8 +54,6 @@
     input {
       height: 30px;
       width: 280px;
-      border-bottom-left-radius: 15px;
-      border-top-left-radius: 15px;
       outline: none;
       border: 1px solid black;
       padding-left: 10px;
@@ -63,8 +63,6 @@
     button {
       height: 34px;
       border: none;
-      border-bottom-right-radius: 15px;
-      border-top-right-radius: 15px;
       background-color: $black-color;
       color: white;
       cursor: pointer;
@@ -73,7 +71,6 @@
     p {
       width: 200px;
       padding: 8px 12px 8px 12px;
-      border-radius: 15px;
       text-align: center;
       background-color: $black-color;
       color: white;

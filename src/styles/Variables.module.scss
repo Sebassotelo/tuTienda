@@ -1,21 +1,22 @@
 $primary-color: #fdfd96;
 $secondary-color: #d37c73;
 $third-color: #e4b43b;
-$white-color: hsla(304, 43%, 86%, 1);
-$nowhite-color: rgb(153, 105, 150);
+$white-color: rgb(255, 224, 198);
+$nowhite-color: hsla(0, 57%, 55%, 1);
 $black-color: #413f46;
 $fuente1: "Quicksand", sans-serif;
 $fuente2: "Kanit", sans-serif;
 $fuente3: "Bebas Neue", cursive;
 $fuente4: "Poppins", sans-serif;
+$sombra: 0 0.07em 0.125em 0 rgba(0, 0, 0, 0.15);
 
 $fondoGradiente: radial-gradient(
-    at 83% 94%,
-    hsla(240, 36%, 60%, 0.67) 0px,
+    at 80% 100%,
+    hsla(0, 57%, 55%, 1) 0px,
     transparent 50%
   ),
-  radial-gradient(at 0% 0%, hsla(311, 84%, 63%, 1) 0px, transparent 50%);
-$fondoColor: hsla(304, 43%, 86%, 1);
+  radial-gradient(at 4% 10%, hsla(10, 96%, 80%, 1) 0px, transparent 50%);
+$fondoColor: hsla(0, 100%, 95%, 1);
 
 @export "primary-color";
 @export "secondary-color";
@@ -28,3 +29,4 @@ $fondoColor: hsla(304, 43%, 86%, 1);
 @export "fuente4";
 @export "fondoGradiente";
 @export "fondoColor";
+@export "sombra";

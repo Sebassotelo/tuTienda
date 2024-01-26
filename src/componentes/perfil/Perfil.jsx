@@ -18,7 +18,9 @@ function Perfil({ configuracion }) {
       )}
 
       <h3 className={styles.titulo}>{context.nombreTienda}</h3>
-      {context.configuracion.slogan && <p>{context.configuracion.slogan}</p>}
+      {context.configuracion && context.configuracion.slogan && (
+        <p>{context.configuracion.slogan}</p>
+      )}
 
       <div className={styles.redes}>
         {context.configuracion.instagram && (

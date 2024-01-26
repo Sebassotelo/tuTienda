@@ -62,7 +62,7 @@ function BuscadorTienda({ setShow }) {
       <form action="" onSubmit={buscador}>
         <input
           type="text"
-          placeholder="Ingrese un producto/seccion/caracteristica"
+          placeholder="Ingrese un producto/categoria/caracteristica"
           id="inputBusca"
         />
         <button type="submit">

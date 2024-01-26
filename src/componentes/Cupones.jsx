@@ -14,6 +14,7 @@ function Cupones() {
   const docRef = doc(context.firestore, `users/${context.user.email}`);
 
   const [showCupon, setShowCupon] = useState(false);
+  const [porcentajePesos, setPorcentajePesos] = useState(true);
 
   const crearCupon = async (e) => {
     e.preventDefault();
@@ -22,6 +23,7 @@ function Cupones() {
 
     const cupon = e.target.inputCupon.value;
     const monto = e.target.inputMonto.value;
+    const montoPesos = e.target.inputMontoPesos.value;
 
     let arr = [];
     arr = context.cupones.find(
@@ -38,6 +40,8 @@ function Cupones() {
         {
           cupon: cupon,
           monto: monto,
+          montoPesos: montoPesos,
+          montoPesosActivo: porcentajePesos,
           id: new Date().getTime(),
           activo: true,
         },
@@ -59,12 +63,16 @@ function Cupones() {
   const eliminarCupon = async (id) => {
     if (confirm(`Seguro que desea eliminar este cupon?`) === true) {
       const nuevoArray = context.cupones.filter((item) => item.id != id);
-      setCupones(nuevoArray);
 
       await updateDoc(docRef, { cupones: [...nuevoArray] });
       llamadaDB();
+
       toast.success(`Cupon Eliminado`);
     }
+  };
+
+  const handleSwitch = () => {
+    setPorcentajePesos(!porcentajePesos);
   };
 
   return (
@@ -73,19 +81,36 @@ function Cupones() {
         <form action="" onSubmit={crearCupon} className={style.form}>
           <p>Nombre de Cupon:</p>
           <input type="text" id="inputCupon" required />
+
           <p>Monto de Descuento %</p>
-          <input type="text" id="inputMonto" required />
+          <input type="text" id="inputMonto" defaultValue={""} />
+
+          <p>Monto de Descuento en $</p>
+          <input type="text" id="inputMontoPesos" defaultValue={""} />
+          {!porcentajePesos ? (
+            <button type="button" onClick={handleSwitch}>
+              Cambiar a %
+            </button>
+          ) : (
+            <button type="button" onClick={handleSwitch}>
+              Cambiar a $
+            </button>
+          )}
+          <p>Activo: {porcentajePesos ? "Porcentual" : "En $"}</p>
           <div>
-            <button type="submit" onClick={() => setShowCupon(false)}>
+            <button type="button" onClick={() => setShowCupon(false)}>
               Cerrar
             </button>
             <button type="submit">Crear Cupon</button>
           </div>
         </form>
       ) : (
-        <p className={style.crear__cupon} onClick={() => setShowCupon(true)}>
-          Crear cupon Nuevo
-        </p>
+        <button
+          className={style.crear__cupon}
+          onClick={() => setShowCupon(true)}
+        >
+          Crear cupon
+        </button>
       )}
 
       <div className={style.cupon}>

@@ -2,36 +2,45 @@
 
 .form {
   margin-top: 10px;
-  display: grid;
-  justify-items: center;
-  background-color: $white-color;
+  display: flex;
+  flex-direction: column;
+
   padding: 10px !important;
   border-radius: 15px;
   border: none;
+  width: 200px !important;
 
   input {
     outline: none;
     border-radius: 5px;
-    width: 100%;
+    width: auto;
     border: 1px solid $black-color;
+  }
+
+  .cambiar {
+    margin-top: 10px;
   }
 }
 
 .icons__on {
+  align-self: center;
+  color: white;
   margin: 0;
   background-color: rgb(12, 194, 12);
   padding: 5px;
   text-align: center;
-  border-radius: 15px;
+  border-radius: 5px;
   width: 50px;
   cursor: pointer;
 }
 .icons__off {
+  align-self: center;
   margin: 0;
+  color: white;
   background-color: rgb(218, 14, 14);
   padding: 5px;
   text-align: center;
-  border-radius: 15px;
+  border-radius: 5px;
   width: 50px;
   cursor: pointer;
 }

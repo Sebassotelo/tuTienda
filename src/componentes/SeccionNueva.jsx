@@ -9,6 +9,7 @@ import {
   updateDoc,
 } from "firebase/firestore";
 import { MdOutlineDeleteOutline } from "react-icons/md";
+import { toast } from "sonner";
 function SeccionNueva() {
   const context = useContext(ContextGeneral);
   const { setProductos, setProductosCopia, setSecciones } =
@@ -24,8 +25,6 @@ function SeccionNueva() {
     const consulta = await getDoc(docRef);
     const infoDocu = consulta.data();
 
-    console.log("secc", context.user.email);
-
     const newArray = [];
 
     while (seccion.charAt(seccion.length - 1) === " ") {
@@ -35,17 +34,18 @@ function SeccionNueva() {
 
     await updateDoc(docRef, { secciones: [...newArray] });
     setSecciones(newArray);
+    toast.success(`Se agrego correctamente la categoría ${seccion}`);
     e.target.inputSeccion.value = "";
   };
 
   const eliminarSeccion = async (id) => {
-    if (confirm(`Seguro que desea eliminarla seccion ${id} ?`) === true) {
+    if (confirm(`Seguro que desea eliminar la categoría ${id} ?`) === true) {
       const nuevoArray = context.secciones.filter((item) => item != id);
-
-      setSecciones(nuevoArray);
 
       const docRef = doc(context.firestore, `users/${context.user.email}`);
       await updateDoc(docRef, { secciones: [...nuevoArray] });
+      setSecciones(nuevoArray);
+      toast.success(`Se elimino correctamente la categoría ${id}`);
     }
   };
 
@@ -59,15 +59,24 @@ function SeccionNueva() {
   return (
     <div className={style.container}>
       <form action="" onSubmit={nuevaSeccion}>
-        <p>Nombre de seccion nueva:</p>
+        <p className={style.lite}>
+          {">"} En ésta sección podrás agregar las categorías para luego subir
+          los productos en tu tienda online.
+        </p>
+        <p className={style.lite}>
+          {">"} Recomendamos que los nombres de las categorías sean
+          representativos y concisos para que tus clientes encuentren más rápido
+          lo que necesitan.
+        </p>
+        <p>Nombre de la categoría nueva:</p>
         <input
           type="text"
           id="inputSeccion"
-          placeholder="Ingrese el nombre de una seccion nueva"
+          placeholder="Ingrese el nombre de una categoría nueva"
         />
-        <button type="submit">Agregar Seccion</button>
+        <button type="submit">Agregar</button>
       </form>
-      <h4>Secciones Existentes:</h4>
+      {context.secciones.length > 0 && <h4>Categorías Existentes:</h4>}
       <div className={style.secciones}>
         {context.secciones.map((item, i) => {
           return (
