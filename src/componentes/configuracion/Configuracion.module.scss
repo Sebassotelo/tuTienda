@@ -92,7 +92,7 @@
     .formUsuario {
       background-color: white;
       padding: 10px;
-      border-radius: 15px;
+      border-radius: 5px;
       width: 95vw;
       margin-left: 0;
 
@@ -104,9 +104,6 @@
       input {
         border: 1px solid rgba(0, 0, 0, 0.555);
         padding: 5px;
-        width: 70%;
-        border-bottom-left-radius: 10px;
-        border-top-left-radius: 10px;
         outline: none;
       }
 
@@ -115,8 +112,6 @@
         color: $white-color;
         border: none;
         padding: 6px;
-        border-bottom-right-radius: 10px;
-        border-top-right-radius: 10px;
         cursor: pointer;
         transition-duration: 0.3s;
 

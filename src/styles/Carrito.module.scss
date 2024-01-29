@@ -48,7 +48,8 @@
   .carrito__item {
     margin: 15px 0 15px 0;
     display: grid;
-    grid-template-columns: 70px 1fr 80px;
+    grid-template-columns: 70px 1fr 0.5fr;
+    align-items: center;
 
     .img {
       height: 70px;
@@ -101,7 +102,7 @@
           background-color: $black-color;
           color: $white-color;
           border-radius: 5px;
-          border-radius: 15px;
+
           cursor: pointer;
         }
 
@@ -109,7 +110,7 @@
           background-color: $white-color;
           border: 1px solid $black-color;
           color: $black-color;
-          border-radius: 15px;
+          border-radius: 5px;
         }
       }
     }
@@ -118,7 +119,7 @@
   .carrito__precio {
     display: flex;
 
-    justify-content: space-between;
+    justify-content: flex-end;
     align-items: center;
     gap: 5px;
 

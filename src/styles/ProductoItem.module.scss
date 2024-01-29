@@ -2,12 +2,12 @@
 
 .container {
   width: 250px;
-  border-radius: 15px;
+  border-radius: 5px;
   display: grid;
   grid-template-rows: 200px 0.5fr;
 
   .img {
-    border-radius: 15px;
+    border-radius: 5px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -55,7 +55,7 @@
     .imgg {
       height: 200px;
       width: 100%;
-      border-radius: 15px;
+      border-radius: 5px;
       object-fit: cover;
       transition-duration: 0.3s;
 

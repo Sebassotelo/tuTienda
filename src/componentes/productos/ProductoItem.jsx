@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import style from "../../styles/ProductoItem.module.scss";
 import ContextGeneral from "@/servicios/contextPrincipal";
 import Link from "next/link";
@@ -58,6 +58,14 @@ function ProductoItem({ item }) {
   const handlePopUp = () => {
     setShowPopUp(!showPopUp);
   };
+
+  useEffect(() => {
+    if (!showPopUp === true) {
+      document.body.style.overflow = "";
+    } else {
+      document.body.style.overflow = "hidden";
+    }
+  }, [showPopUp]);
 
   return (
     <>

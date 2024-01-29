@@ -143,11 +143,14 @@
     .container__descuentos {
       width: 90%;
       justify-content: center;
+
+      .container__descuentos__item {
+        width: 100%;
+      }
     }
     .cupones__container {
       background-color: white;
       padding: 15px;
-      border-radius: 15px;
       width: 90%;
       justify-content: center;
 
@@ -161,15 +164,13 @@
   .productos_descuentos {
     background-color: white;
     padding: 5px;
-    border-radius: 15px;
-    width: 90%;
+    width: 95%;
     .p__productos {
       margin: 15px 0 15px 0;
       font-weight: 400;
       font-size: 18px;
       padding: 9px;
       background-color: rgba(0, 0, 0, 0.103);
-      border-radius: 15px;
     }
   }
 }

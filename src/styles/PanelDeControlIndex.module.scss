@@ -41,6 +41,8 @@
 
       &:hover {
         color: $nowhite-color;
+        background-color: rgba(0, 0, 0, 0.075);
+        border-radius: 5px;
       }
     }
   }

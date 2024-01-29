@@ -68,11 +68,11 @@ function Popup({ setShow, item, agregarCarrito }) {
           >
             Agregar al Carrito
           </button>
+          <button type="button" className={styles.cerrar} onClick={setShow}>
+            Cerrar
+          </button>
         </div>
       </div>
-      <button className={styles.cerrar} onClick={setShow}>
-        Cerrar
-      </button>
     </div>
   );
 }
