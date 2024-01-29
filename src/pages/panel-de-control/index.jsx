@@ -20,6 +20,7 @@ import {
   MdPerson,
   MdOutlineSettings,
 } from "react-icons/md";
+import Tutorial from "@/componentes/tutorial/Tutorial";
 
 function Index() {
   const context = useContext(ContextGeneral);
@@ -34,6 +35,8 @@ function Index() {
   // 4 = Seccion Usuario
 
   const [showNuevoProducto, setShowNuevoProducto] = useState(false);
+
+  const [showTutorial, setShowTutorial] = useState(false);
 
   const mostrarVentana = () => {
     setShowNuevoProducto(!showNuevoProducto);
@@ -111,6 +114,16 @@ function Index() {
               {showSeccion == 0 && <Configuracion />}
               {showSeccion == 1 && (
                 <>
+                  <div className={style.head}>
+                    <h2>Productos</h2>
+                    <button
+                      className={style.btn__tutorial}
+                      onClick={() => setShowTutorial(true)}
+                    >
+                      Ver Tutorial
+                    </button>
+                  </div>
+
                   <SeccionNueva />
                   {context.secciones.length > 0 ? (
                     <>
@@ -153,6 +166,14 @@ function Index() {
                             );
                           })}
                       </div>
+                      {showTutorial && (
+                        <Tutorial
+                          url={
+                            "https://www.youtube.com/embed/Cz0zipb9Ivw?si=R3nOA1yv1lW-te7O"
+                          }
+                          setShow={setShowTutorial}
+                        />
+                      )}
                     </>
                   ) : (
                     <p>Creá una categoria para poder agregar productos.</p>

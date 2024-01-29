@@ -4,6 +4,7 @@ import ContextGeneral from "@/servicios/contextPrincipal";
 import { doc, getDoc, updateDoc } from "firebase/firestore";
 import ProductoPanel from "./ProductoPanel";
 import Cupones from "./Cupones";
+import Tutorial from "./tutorial/Tutorial";
 
 function Descuentos() {
   const context = useContext(ContextGeneral);
@@ -11,6 +12,7 @@ function Descuentos() {
     useContext(ContextGeneral);
 
   const [contadorProductos, setContadorProductos] = useState(0);
+  const [showTutorial, setShowTutorial] = useState(false);
 
   const descuentoSeccion = async (e) => {
     e.preventDefault();
@@ -119,7 +121,16 @@ function Descuentos() {
 
   return (
     <div className={style.container}>
-      <h2>Descuentos</h2>
+      <div className={style.head}>
+        <h2>Descuentos</h2>
+        <button
+          className={style.btn__tutorial}
+          onClick={() => setShowTutorial(true)}
+        >
+          Ver Tutorial
+        </button>
+      </div>
+
       <p className={style.info}>
         {">"} Desde esta sección podras configurar los descuentos y cupones de
         tu tienda.
@@ -231,6 +242,12 @@ function Descuentos() {
             })}
         </div>
       </div>
+      {showTutorial && (
+        <Tutorial
+          url={"https://www.youtube.com/embed/XvV2jO_uI6U?si=JHnIdM2AMZcitfFD"}
+          setShow={setShowTutorial}
+        />
+      )}
     </div>
   );
 }

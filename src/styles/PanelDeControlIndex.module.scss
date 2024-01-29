@@ -60,6 +60,29 @@
     align-items: center;
     grid-gap: 15px;
 
+    .head {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 10px;
+      width: 91%;
+
+      h2 {
+        margin: 0;
+        font-size: 32px;
+        color: $black-color;
+      }
+      .btn__tutorial {
+        background-color: $black-color;
+        border: none;
+        padding: 5px;
+        border-radius: 5px;
+        color: white;
+        font-weight: 600;
+        cursor: pointer;
+      }
+    }
+
     .cabecera__productos {
       width: 90%;
       display: flex;

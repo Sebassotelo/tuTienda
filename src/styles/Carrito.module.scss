@@ -226,6 +226,7 @@
 }
 
 .toast {
+  z-index: 2000 !important;
   display: grid;
 }
 .toast__movil {

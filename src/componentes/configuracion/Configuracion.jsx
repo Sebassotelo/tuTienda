@@ -13,6 +13,7 @@ import {
   where,
   getDocs,
 } from "firebase/firestore";
+import Tutorial from "../tutorial/Tutorial";
 
 function Configuracion() {
   const context = useContext(ContextGeneral);
@@ -22,6 +23,8 @@ function Configuracion() {
   const [image, setImage] = useState(() =>
     context.configuracion.logo ? context.configuracion.logo : ""
   );
+
+  const [showTutorial, setShowTutorial] = useState(false);
 
   const setearUsuario = async (e) => {
     e.preventDefault(e);
@@ -96,7 +99,16 @@ function Configuracion() {
 
   return (
     <div className={styles.container}>
-      <h2>Configuracion General</h2>
+      <div className={styles.head}>
+        <h2>Configuracion General</h2>
+        <button
+          className={styles.btn__tutorial}
+          onClick={() => setShowTutorial(true)}
+        >
+          Ver Tutorial
+        </button>
+      </div>
+
       <form action="" onSubmit={setearUsuario} className={styles.formUsuario}>
         <p>Nombre de la Tienda:</p>
         <input
@@ -153,6 +165,13 @@ function Configuracion() {
           <button>Cargando imagen...</button>
         )}
       </form>
+
+      {showTutorial && (
+        <Tutorial
+          setShow={setShowTutorial}
+          url="https://www.youtube.com/embed/cuxXi3QJ0ZE?si=qIAYehoUcAEn3Jw_"
+        />
+      )}
     </div>
   );
 }

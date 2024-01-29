@@ -2,9 +2,24 @@
 
 .container {
   width: 95%;
+
+  .head {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
   h2 {
     margin-left: 10px;
     color: $black-color;
+  }
+  .btn__tutorial {
+    background-color: $black-color;
+    border: none;
+    padding: 5px;
+    border-radius: 5px;
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
   }
   .info {
     font-size: 10px;

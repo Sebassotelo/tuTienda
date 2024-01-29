@@ -114,21 +114,21 @@ function ProductoNuevo({ setShowNuevoProducto }) {
     <div className={style.container}>
       <form action="" className={style.form} onSubmit={agregarProducto}>
         <p>Nombre del Producto:</p>
-        <input type="text" name="" id="inputTitle" />
+        <input type="text" name="" required id="inputTitle" />
         <p>Descripcion:</p>
         <input type="text" name="" id="inputDesc" />
         <div className={style.precios}>
           <div className={style.precios__item}>
             <p>Precio:</p>
-            <input type="number" name="" id="inputPrecio" />
+            <input type="number" name="" required id="inputPrecio" />
           </div>
           <div className={style.precios__item}>
             <p>Precio oferta:</p>
-            <input type="number" name="" id="inputPrecioDescuento" />
+            <input type="number" name="" required id="inputPrecioDescuento" />
           </div>
           <div className={style.precios__item}>
             <p>Stock:</p>
-            <input type="number" name="" id="inputStock" />
+            <input type="number" name="" required id="inputStock" />
           </div>
         </div>
 
