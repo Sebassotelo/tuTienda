@@ -107,6 +107,7 @@ export default function Home() {
                   </LinkNext>
                 ) : (
                   <button
+                    className={style.btn}
                     onClick={() =>
                       signInWithPopup(context.auth, googleProvider)
                     }
