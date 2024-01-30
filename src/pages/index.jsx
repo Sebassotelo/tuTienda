@@ -102,9 +102,9 @@ export default function Home() {
                 </h1>
 
                 {context.user ? (
-                  <button onClick={() => signOut(context.auth)}>
-                    Cerrar Sesion
-                  </button>
+                  <LinkNext href={"/panel-de-control"} className={style.btn}>
+                    Ir a panel de control
+                  </LinkNext>
                 ) : (
                   <button
                     onClick={() =>

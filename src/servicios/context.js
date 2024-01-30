@@ -69,7 +69,7 @@ function Context(props) {
         usuario: [],
         configuracion: {},
         fechaDeRegistro: fechaDeRegistro,
-        premium: { nivel: 1, activo: true },
+        premium: { nivel: 0, activo: true },
       });
       llamadaDB();
     }

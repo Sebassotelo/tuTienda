@@ -14,6 +14,7 @@ import {
   getDocs,
 } from "firebase/firestore";
 import Tutorial from "../tutorial/Tutorial";
+import Suscripcion from "../suscripcion/Suscripcion";
 
 function Configuracion() {
   const context = useContext(ContextGeneral);
@@ -123,48 +124,56 @@ function Configuracion() {
         </p>
       </form>
 
-      <form className={styles.formConfig} onSubmit={aplicarConfiguracion}>
-        {image && <img src={image} alt="" />}
-        <p>Instagram:</p>
-        <input
-          type="text"
-          id="inputInstagram"
-          defaultValue={
-            context.configuracion && context.configuracion.instagram
-          }
-        />
-        <p className={styles.info}>{">"} Solo ingresa el nombre de usuario.</p>
+      {context.nombreTienda != "" && (
+        <form className={styles.formConfig} onSubmit={aplicarConfiguracion}>
+          {image && <img src={image} alt="" />}
+          <p>Instagram:</p>
+          <input
+            type="text"
+            id="inputInstagram"
+            defaultValue={
+              context.configuracion && context.configuracion.instagram
+            }
+          />
+          <p className={styles.info}>
+            {">"} Solo ingresa el nombre de usuario.
+          </p>
 
-        <p>Numero de Whatsapp: {"(sin 0 ni 15. Ej: 3794250000)"}</p>
-        <input
-          type="number"
-          id="inputWhatsapp"
-          defaultValue={context.configuracion && context.configuracion.whatsapp}
-        />
-        <p className={styles.info}>
-          {">"} A este numero se enviaran los pedidos.
-        </p>
-        <p>Slogan:</p>
-        <input
-          type="text"
-          id="inputSlogan"
-          defaultValue={context.configuracion && context.configuracion.slogan}
-        />
-        <p>Link de Google Maps:</p>
-        <input
-          type="text"
-          id="inputMaps"
-          defaultValue={context.configuracion && context.configuracion.maps}
-        />
-        <p className={styles.info}>{">"} Link completo de Google Maps.</p>
-        <p>Subir Foto de perfil: </p>
-        <SubirFoto setImage={setImage} setLoad={setLoad} />
-        {load ? (
-          <button type="submit">Guardar</button>
-        ) : (
-          <button>Cargando imagen...</button>
-        )}
-      </form>
+          <p>Numero de Whatsapp: {"(sin 0 ni 15. Ej: 3794250000)"}</p>
+          <input
+            type="number"
+            id="inputWhatsapp"
+            defaultValue={
+              context.configuracion && context.configuracion.whatsapp
+            }
+          />
+          <p className={styles.info}>
+            {">"} A este numero se enviaran los pedidos.
+          </p>
+          <p>Slogan:</p>
+          <input
+            type="text"
+            id="inputSlogan"
+            defaultValue={context.configuracion && context.configuracion.slogan}
+          />
+          <p>Link de Google Maps:</p>
+          <input
+            type="text"
+            id="inputMaps"
+            defaultValue={context.configuracion && context.configuracion.maps}
+          />
+          <p className={styles.info}>{">"} Link completo de Google Maps.</p>
+          <p>Subir Foto de perfil: </p>
+          <SubirFoto setImage={setImage} setLoad={setLoad} />
+          {load ? (
+            <button type="submit">Guardar</button>
+          ) : (
+            <button>Cargando imagen...</button>
+          )}
+        </form>
+      )}
+
+      <Suscripcion />
 
       {showTutorial && (
         <Tutorial

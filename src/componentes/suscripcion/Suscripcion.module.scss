@@ -1,0 +1,45 @@
+@import "../../styles/Variables.module.scss";
+
+.main {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+
+  .container {
+    width: 100%;
+    background-color: white;
+    border-radius: 5px;
+    box-shadow: $sombra;
+    min-height: fit-content;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+
+    p {
+      margin: 0;
+    }
+
+    .info {
+      font-size: 12px;
+      margin: 0;
+    }
+    a {
+      margin-top: 15px;
+      text-decoration: none;
+      background-color: rgb(58, 187, 219);
+      color: white;
+      font-weight: 600;
+      padding: 10px;
+      border-radius: 5px;
+      width: fit-content;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 5px;
+
+      &:hover {
+        background-color: rgb(94, 207, 235);
+      }
+    }
+  }
+}

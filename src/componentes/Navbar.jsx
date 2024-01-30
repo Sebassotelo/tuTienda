@@ -56,7 +56,7 @@ function Navbar({ showCarrito, show }) {
       </Link>
 
       <ul className={style.navbar}>
-        {context.estadoUsuario == 1 && (
+        {context.estadoUsuario == 1 && context.nombreTienda != "" && (
           <Link href={`/u/${context.nombreTienda}`}>
             <RiStore2Line className={style.icon} />{" "}
           </Link>

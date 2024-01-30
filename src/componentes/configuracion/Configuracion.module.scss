@@ -2,7 +2,9 @@
 
 .container {
   width: 95%;
-
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
   .head {
     display: flex;
     align-items: center;
@@ -29,7 +31,6 @@
     background-color: white;
     padding: 10px;
     border-radius: 5px;
-    margin: 10px 0 0 10px;
     display: flex;
     flex-direction: column;
 
@@ -53,6 +54,7 @@
       cursor: pointer;
       transition-duration: 0.3s;
       width: auto;
+      font-weight: 600;
     }
   }
 
@@ -60,7 +62,6 @@
     background-color: white;
     padding: 10px;
     border-radius: 5px;
-    margin: 10px 0 0 10px;
     display: flex;
     flex-direction: column;
     input {
@@ -89,7 +90,7 @@
       background-color: $black-color;
       border: none;
       margin: 10px 0 10px 0;
-      padding: 5px;
+      padding: 6px;
       border-radius: 5px;
       color: white;
       font-weight: 600;

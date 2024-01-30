@@ -73,21 +73,17 @@ function ProductoNuevo({ setShowNuevoProducto }) {
       ...infoDocu.items
     );
 
-    // Corroboramos el nivel de premium y vemos si no alcanzo la cantidad maxima de productos.
+    //Vemos si no alcanzo la cantidad maxima de productos.
 
-    if (context.premium.nivel == 1) {
-      if (newArray.length < 100) {
-        setProductos(newArray);
-        setProductosCopia(newArray);
-        //seteamos el estado y updateamos la base de datos
-        updateDoc(docRef, { items: [...newArray] });
-        toast.success(`${title} Agregado con exito `);
-        llamadaDB();
-      } else {
-        toast.error(`Ha alcanzado el limite de productos`);
-      }
-    } else if (context.premium.nivel == 0) {
-      toast.error(`No tiene premium activo`);
+    if (newArray.length < 100) {
+      setProductos(newArray);
+      setProductosCopia(newArray);
+      //seteamos el estado y updateamos la base de datos
+      updateDoc(docRef, { items: [...newArray] });
+      toast.success(`${title} Agregado con exito `);
+      llamadaDB();
+    } else {
+      toast.error(`Ha alcanzado el limite de productos`);
     }
 
     //limpiar Form
@@ -140,10 +136,7 @@ function ProductoNuevo({ setShowNuevoProducto }) {
             return <option key={i}>{item}</option>;
           })}
         </select>
-        <p>
-          Caracteristicas: separar con comas y no dejar espacios entre las comas
-          y las palabras{" "}
-        </p>
+        <p>Caracteristicas: separar con comas. Ej: Estampada,verde,XL.</p>
         <input type="text" name="" id="inputCaracteristicas" />
         <p>Subir Imagen:</p>
 

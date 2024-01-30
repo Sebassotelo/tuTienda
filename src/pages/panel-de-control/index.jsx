@@ -127,14 +127,18 @@ function Index() {
                   <SeccionNueva />
                   {context.secciones.length > 0 ? (
                     <>
+                      <p className={style.info}>
+                        {">"} Los productos que tengan STOCK = 0 no se mostraran
+                        en el catalogo publico {"<"}
+                      </p>
                       <div className={style.cabecera__productos}>
-                        <BuscadorPanel />
                         <p
                           className={style.producto__nuevo__btn}
                           onClick={mostrarVentana}
                         >
                           Nuevo Producto
                         </p>
+                        {context.productos.length > 0 && <BuscadorPanel />}
                       </div>
 
                       <div className={style.listaProducto}>
