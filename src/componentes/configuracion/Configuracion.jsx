@@ -162,7 +162,7 @@ function Configuracion() {
             defaultValue={context.configuracion && context.configuracion.maps}
           />
           <p className={styles.info}>{">"} Link completo de Google Maps.</p>
-          <p>Subir Foto de perfil: </p>
+          <p>Subir Logo: </p>
           <SubirFoto setImage={setImage} setLoad={setLoad} />
           {load ? (
             <button type="submit">Guardar</button>
