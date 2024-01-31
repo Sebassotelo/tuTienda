@@ -173,7 +173,7 @@ function Index() {
                       {showTutorial && (
                         <Tutorial
                           url={
-                            "https://www.youtube.com/embed/Cz0zipb9Ivw?si=R3nOA1yv1lW-te7O"
+                            "https://www.youtube.com/embed/TKU37UBW5Io?si=Zo-mTJd3qJf-oH1I"
                           }
                           setShow={setShowTutorial}
                         />

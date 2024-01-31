@@ -11,8 +11,7 @@ function Tutorial({ setShow, url }) {
           src={url}
           title="YouTube video player"
           frameborder="0"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-          allowfullscreen
+          allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
         ></iframe>
         <button onClick={() => setShow(false)}>Cerrar</button>
       </div>

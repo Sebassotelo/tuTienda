@@ -177,7 +177,7 @@ function Configuracion() {
       {showTutorial && (
         <Tutorial
           setShow={setShowTutorial}
-          url="https://www.youtube.com/embed/cuxXi3QJ0ZE?si=qIAYehoUcAEn3Jw_"
+          url="https://www.youtube.com/embed/ex2jtR_GPnY?si=V5UkFWW5xSe-0YK6"
         />
       )}
     </div>

@@ -24,8 +24,8 @@
     gap: 15px;
 
     iframe {
-      height: 350px;
-      width: 500px;
+      height: 60vh;
+      width: 60vw;
       border-radius: 5px;
     }
 
@@ -46,8 +46,17 @@
     .container {
       iframe {
         height: 300px;
-        width: 90vw;
+        width: 95vw;
         border-radius: 5px;
+      }
+      button {
+        background-color: $black-color;
+        border: none;
+        padding: 10px;
+        border-radius: 5px;
+        color: white;
+        font-weight: 600;
+        cursor: pointer;
       }
     }
   }

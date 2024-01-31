@@ -244,7 +244,7 @@ function Descuentos() {
       </div>
       {showTutorial && (
         <Tutorial
-          url={"https://www.youtube.com/embed/XvV2jO_uI6U?si=JHnIdM2AMZcitfFD"}
+          url={"https://www.youtube.com/embed/XTjFmHw9xiU?si=o5OCwa985aqs8hBW"}
           setShow={setShowTutorial}
         />
       )}

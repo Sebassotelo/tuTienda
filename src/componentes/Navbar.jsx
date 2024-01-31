@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import style from "../styles/Navbar.module.scss";
 import Link from "next/link";
+import { push } from "next/router";
 import ContextGeneral from "@/servicios/contextPrincipal";
 import { signInWithPopup, GoogleAuthProvider, signOut } from "firebase/auth";
 import {
@@ -88,7 +89,10 @@ function Navbar({ showCarrito, show }) {
             </Link>
             {context.user && (
               <MdOutlineLogout
-                onClick={() => signOut(context.auth)}
+                onClick={() => {
+                  signOut(context.auth);
+                  push(`/u/${context.nombreTienda}`);
+                }}
                 className={style.icon}
               />
             )}
