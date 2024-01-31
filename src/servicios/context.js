@@ -77,7 +77,6 @@ function Context(props) {
 
   const llamadaDB = async () => {
     setLoader(false);
-    console.log("CORREO", user1.email);
     const docRef = doc(
       firestore,
       `users/${user1.email ? user1.email : user.email}`

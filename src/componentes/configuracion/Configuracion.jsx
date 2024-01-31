@@ -49,11 +49,10 @@ function Configuracion() {
 
         updateDoc(docRef, { usuario: usuario });
 
-        toast.success(`Nombre de tienda asignada correctamente`);
-
         //limpiar Form
         e.target.inputUsuario.value = "";
         llamadaDB();
+        toast.success(`Nombre de tienda asignada correctamente`);
       } else {
         toast.success(`El nombre de la tienda no se encuentra disponible`);
       }
