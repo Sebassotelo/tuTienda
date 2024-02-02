@@ -221,8 +221,8 @@ export default function Home() {
         <section className={style.clientes}>
           <h2>Conocé quien está usando MyShop</h2>
           <div className={style.container}>
-            {arrayClientes.map((item) => {
-              return <Clientes url={item.url} logo={item.logo} />;
+            {arrayClientes.map((item, i) => {
+              return <Clientes key={i} url={item.url} logo={item.logo} />;
             })}
           </div>
         </section>
