@@ -104,7 +104,6 @@ function User() {
     if (router.query.user) {
       llamada();
     }
-    verificarLogin();
   }, [router.query.user]);
 
   return (

@@ -82,7 +82,7 @@ export default function Home() {
 
   const arrayClientes = [
     {
-      url: "https://www.myshop.com.ar/u/susi.moda",
+      url: "susi.moda",
       nombre: "Susi Moda",
       logo: "https://i.ibb.co/Ny16hJ3/zy1-Xa6q-png.png",
     },

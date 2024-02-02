@@ -1,11 +1,12 @@
 import React from "react";
 import style from "./clientes.module.scss";
+import Link from "next/link";
 function Clientes({ url, logo, nombre }) {
   return (
     <div className={style.container}>
-      <a href={url} target="_blank">
+      <Link href={`/u/${url}`}>
         <img src={logo} alt="" />
-      </a>
+      </Link>
     </div>
   );
 }
