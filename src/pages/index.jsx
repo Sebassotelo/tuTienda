@@ -9,6 +9,7 @@ import { color, motion } from "framer-motion";
 import { signInWithPopup, GoogleAuthProvider, signOut } from "firebase/auth";
 
 import ItemAbout from "../componentes/itemAbout/ItemAbout";
+import Clientes from "../componentes/clientes/Clientes";
 
 export default function Home() {
   const context = useContext(ContextGeneral);
@@ -76,6 +77,14 @@ export default function Home() {
       icon: "🎥",
       title: "Videos explicativos",
       desc: "Videos que te guian a como configurar tu perfil y subir los productos.",
+    },
+  ];
+
+  const arrayClientes = [
+    {
+      url: "https://www.myshop.com.ar/u/susi.moda",
+      nombre: "Susi Moda",
+      logo: "https://i.ibb.co/Ny16hJ3/zy1-Xa6q-png.png",
     },
   ];
 
@@ -205,6 +214,15 @@ export default function Home() {
                   </div>
                 </div>
               );
+            })}
+          </div>
+        </section>
+
+        <section className={style.clientes}>
+          <h2>Conocé quien está usando MyShop</h2>
+          <div className={style.container}>
+            {arrayClientes.map((item) => {
+              return <Clientes url={item.url} logo={item.logo} />;
             })}
           </div>
         </section>
