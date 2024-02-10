@@ -86,7 +86,7 @@ function ProductosTienda({ productos }) {
 
       <div className={style.container__items}>
         {context.productosPublicos &&
-          context.productosPublicos
+          productosMostrar
             .sort((a, b) => b.destacado - a.destacado)
             .map((item) => {
               return <ProductoItem key={item.id} item={item} />;

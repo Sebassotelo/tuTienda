@@ -84,9 +84,11 @@
       display: flex;
       justify-items: center;
       align-items: center;
-      height: 35px;
+      min-height: 35px;
+
       h4 {
         margin: 0;
+        font-size: 14px;
       }
     }
 
