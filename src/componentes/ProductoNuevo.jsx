@@ -75,16 +75,23 @@ function ProductoNuevo({ setShowNuevoProducto }) {
 
     //Vemos si no alcanzo la cantidad maxima de productos.
 
-    if (newArray.length < 100) {
-      setProductos(newArray);
-      setProductosCopia(newArray);
-      //seteamos el estado y updateamos la base de datos
-      updateDoc(docRef, { items: [...newArray] });
-      toast.success(`${title} Agregado con exito `);
-      llamadaDB();
-    } else {
-      toast.error(`Ha alcanzado el limite de productos`);
-    }
+    // if (newArray.length < 100) {
+    //   setProductos(newArray);
+    //   setProductosCopia(newArray);
+    //   //seteamos el estado y updateamos la base de datos
+    //   updateDoc(docRef, { items: [...newArray] });
+    //   toast.success(`${title} Agregado con exito `);
+    //   llamadaDB();
+    // } else {
+    //   toast.error(`Ha alcanzado el limite de productos`);
+    // }
+
+    setProductos(newArray);
+    setProductosCopia(newArray);
+    //seteamos el estado y updateamos la base de datos
+    updateDoc(docRef, { items: [...newArray] });
+    toast.success(`${title} Agregado con exito `);
+    llamadaDB();
 
     //limpiar Form
     e.target.inputTitle.value = "";
