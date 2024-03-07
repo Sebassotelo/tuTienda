@@ -47,6 +47,7 @@ function ProductoItem({ item }) {
         img: item.img,
         stock: item.stock,
         cantidad: 1,
+        seccion: item.seccion,
       };
       setCarrito((prev) => [...prev, itemCarrito]);
 

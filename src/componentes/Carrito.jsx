@@ -35,7 +35,7 @@ function Carrito({ showCarrito, show }) {
   let pedidoCopy = "";
   const confirmarPedido = () => {
     let notFoundArray = context.carrito.filter(
-      (obj) => !context.productosPublicos.some((o) => o.id === obj.id)
+      (obj) => !context.productosPublicosCopia.some((o) => o.id === obj.id)
     );
     notFoundArray.length === 0 ? true : notFoundArray;
 
@@ -46,7 +46,7 @@ function Carrito({ showCarrito, show }) {
           (e) =>
             (pedidoCopy =
               pedidoCopy +
-              `${e.cantidad}X%20${e.title}%20-----%20$${
+              `${e.cantidad}X%20${e.seccion}%20/%20${e.title}%20-----%20$${
                 e.precio * e.cantidad
               }%20%0A`)
         );
