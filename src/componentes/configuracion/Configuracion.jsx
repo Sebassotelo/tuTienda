@@ -36,7 +36,11 @@ function Configuracion() {
       ) === true
     ) {
       const usuario = e.target.inputUsuario.value.toLowerCase();
-
+      if (usuario.includes(" ")) {
+        return toast.error(
+          "El nombre de la tienda no puede contener espacios vacios"
+        );
+      }
       let productosArrayOriginal;
       const docRefQuery = collection(context.firestore, `users`);
       const q = query(docRefQuery, where("usuario", "==", usuario));
