@@ -84,7 +84,7 @@ export default function Home() {
     {
       url: "minime.byvalerie",
       nombre: "Minime By Valerie",
-      logo: "https://i.ibb.co/n7KvnJ6/Banner-de-You-Tube-gamer-gato-lindo-rosa-png.png",
+      logo: "https://i.ibb.co/yhHmSzv/IMG-20240415-WA0001-jpg.jpg",
     },
     {
       url: "susi.moda",
