@@ -82,8 +82,8 @@ export default function Home() {
 
   const arrayClientes = [
     {
-      url: "mommy's.piggy",
-      nombre: "Mommy's Piggy",
+      url: "minime.byvalerie",
+      nombre: "Minime By Valerie",
       logo: "https://i.ibb.co/n7KvnJ6/Banner-de-You-Tube-gamer-gato-lindo-rosa-png.png",
     },
     {
