@@ -46,7 +46,7 @@ export default function Home() {
     },
     {
       icon: "🥳",
-      title: "7 dias de prueba gratis:",
+      title: "30 dias de prueba gratis:",
       desc: "Sin configurar un medio de pago.",
     },
   ];
