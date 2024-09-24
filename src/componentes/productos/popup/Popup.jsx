@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState, useRef } from "react";
 import styles from "./Popup.module.scss";
 import ContextGeneral from "@/servicios/contextPrincipal";
 
@@ -13,9 +13,24 @@ function Popup({ setShow, item, agregarCarrito }) {
     setProductosPublicos(nuevoArray);
   };
 
+  const divRef = useRef(null);
+
+  const handleClickOutside = (event) => {
+    if (divRef.current && !divRef.current.contains(event.target)) {
+      setShow();
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
   return (
     <div className={styles.container}>
-      <div className={styles.container__item}>
+      <div className={styles.container__item} ref={divRef}>
         <div className={styles.img}>
           <img src={item.img} loading="lazy" alt="" />
         </div>
