@@ -17,7 +17,7 @@ function Popup({ setShow, item, agregarCarrito }) {
     <div className={styles.container}>
       <div className={styles.container__item}>
         <div className={styles.img}>
-          <img src={item.img} alt="" />
+          <img src={item.img} loading="lazy" alt="" />
         </div>
 
         <div className={styles.descripcion}>

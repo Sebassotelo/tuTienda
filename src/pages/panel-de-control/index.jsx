@@ -22,6 +22,10 @@ import {
 } from "react-icons/md";
 import Tutorial from "@/componentes/tutorial/Tutorial";
 
+import ImageKit from "imagekit";
+import imageCompression from "browser-image-compression";
+import { doc, updateDoc } from "firebase/firestore";
+
 function Index() {
   const context = useContext(ContextGeneral);
   const { llamadaDB, inspectorSesion, verificarLogin } =
@@ -46,6 +50,99 @@ function Index() {
       document.body.style.overflow = "hidden";
     }
   };
+
+  // const handleUploadImagesForProducts = async () => {
+  //   const updatedProducts = await Promise.all(
+  //     context.productos.map(async (product) => {
+  //       try {
+  //         // Verificar si la imagen proviene de i.ibb.co
+  //         if (product.img.includes("i.ibb.co")) {
+  //           // Hacer fetch a la imagen original
+  //           const response = await fetch(product.img);
+  //           const blob = await response.blob();
+
+  //           // Convertir PNG a JPG si es necesario
+  //           const jpgBlob = await convertToJpgIfNecessary(blob);
+
+  //           // Comprimir la imagen
+  //           const options = {
+  //             maxSizeMB: 0.04, // Cambiar a 0.06 para 60KB
+  //             maxWidthOrHeight: 1920,
+  //             useWebWorker: true,
+  //             initialQuality: 0.5, // Ajusta la calidad inicial si es necesario
+  //           };
+  //           const compressedFile = await imageCompression(jpgBlob, options);
+
+  //           // Subir la imagen comprimida a ImageKit
+  //           const imagekit = new ImageKit({
+  //             publicKey: process.env.NEXT_PUBLIC_PUBLICKEY,
+  //             privateKey: process.env.NEXT_PUBLIC_PRIVATEKEY,
+  //             urlEndpoint: "https://ik.imagekit.io/myShop",
+  //           });
+
+  //           const uploadResponse = await imagekit.upload({
+  //             file: compressedFile,
+  //             fileName: product.title + ".jpg", // Nombre de archivo
+  //             tags: ["tag1"],
+  //           });
+
+  //           console.log("PROD", `${product.title} Actualizado correctamente`);
+
+  //           // Reemplazar la URL de la imagen en el producto
+  //           return {
+  //             ...product,
+  //             img: uploadResponse.url, // Nueva URL de la imagen
+  //           };
+  //         } else {
+  //           // Si no es de i.ibb.co, devolver el producto sin cambios
+  //           return product;
+  //         }
+  //       } catch (error) {
+  //         console.error(
+  //           `Error procesando el producto: ${product.title}`,
+  //           error
+  //         );
+  //         return product; // Devolver el producto sin cambios en caso de error
+  //       }
+  //     })
+  //   );
+
+  //   const docRef = doc(
+  //     context.firestore,
+  //     `users/valeriegissellevignau@gmail.com`
+  //   );
+  //   await updateDoc(docRef, { items: [...updatedProducts] });
+
+  //   return updatedProducts; // Array de productos con las URLs actualizadas
+  // };
+
+  // const convertToJpgIfNecessary = async (blob) => {
+  //   const imageType = blob.type;
+
+  //   if (imageType === "image/png") {
+  //     const img = new Image();
+  //     img.src = URL.createObjectURL(blob);
+
+  //     return new Promise((resolve) => {
+  //       img.onload = () => {
+  //         const canvas = document.createElement("canvas");
+  //         canvas.width = img.width;
+  //         canvas.height = img.height;
+
+  //         const ctx = canvas.getContext("2d");
+  //         ctx.drawImage(img, 0, 0);
+
+  //         // Convertir a JPG y obtener el blob
+  //         canvas.toBlob((jpgBlob) => {
+  //           resolve(jpgBlob);
+  //         }, "image/jpeg");
+  //       };
+  //     });
+  //   } else {
+  //     // Si ya es JPG o un tipo diferente, simplemente devuelve el blob original
+  //     return blob;
+  //   }
+  // };
 
   useEffect(() => {
     verificarLogin();
@@ -123,6 +220,10 @@ function Index() {
                       Ver Tutorial
                     </button>
                   </div>
+
+                  {/* <button onClick={handleUploadImagesForProducts}>
+                    ACTUALIZAR {context.productos.length} IMAGENES
+                  </button> */}
 
                   <SeccionNueva />
                   {context.secciones.length > 0 ? (

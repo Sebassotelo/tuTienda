@@ -81,6 +81,7 @@ function Context(props) {
       firestore,
       `users/${user1.email ? user1.email : user.email}`
     );
+
     const consulta = await getDoc(docRef);
     const infoDocu = consulta.data();
     console.log("LLAMDA DB", infoDocu);

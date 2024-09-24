@@ -72,7 +72,7 @@ function ProductoItem({ item }) {
     <>
       <div className={style.container}>
         <div className={style.img} onClick={handlePopUp}>
-          <img className={style.imgg} src={item.img} alt="" />
+          <img className={style.imgg} src={item.img} loading="lazy" alt="" />
           {item.descuento && (
             <div className={style.descuentoIcon}>
               <MdOutlineLocalOffer />
