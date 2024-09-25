@@ -2,6 +2,8 @@ import React, { useContext, useEffect, useState, useRef } from "react";
 import styles from "./Popup.module.scss";
 import ContextGeneral from "@/servicios/contextPrincipal";
 
+import { AiOutlineShoppingCart } from "react-icons/ai";
+
 function Popup({ setShow, item, agregarCarrito }) {
   const context = useContext(ContextGeneral);
   const { setBusqueda, setProductosPublicos } = useContext(ContextGeneral);
@@ -81,6 +83,7 @@ function Popup({ setShow, item, agregarCarrito }) {
               setShow();
             }}
           >
+            <AiOutlineShoppingCart className={styles.icon} />
             Agregar al Carrito
           </button>
           <button type="button" className={styles.cerrar} onClick={setShow}>

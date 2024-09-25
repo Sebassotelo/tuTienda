@@ -56,7 +56,7 @@ function Footer() {
 
        */}
       <p className={style.p}>
-        Hecho por{" "}
+        Desarrollado por{" "}
         <a href="https://www.sebassotelo.com.ar/" target={"_blank"}>
           Sebas Sotelo
         </a>{" "}

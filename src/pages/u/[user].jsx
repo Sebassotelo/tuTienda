@@ -176,9 +176,9 @@ function User() {
                       >
                         Todo {`(${context.productosPublicosCopia.length})`}
                       </li>
-                      {context.productosPublicosCopia.filter(
+                      {context.productosPublicosCopia.find(
                         (item) => item.descuento
-                      ) > 0 && (
+                      ) && (
                         <li
                           onClick={() => {
                             filtrarSeccionOfertas();

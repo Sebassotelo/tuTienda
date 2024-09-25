@@ -18,6 +18,7 @@
     position: relative;
     min-height: 400px;
     min-width: 800px;
+    max-width: 80vw;
     background-color: white;
     border-radius: 5px;
     display: flex;
@@ -48,6 +49,7 @@
 
       .text {
         display: flex;
+        flex-wrap: wrap;
 
         p {
           margin: 0;
@@ -96,6 +98,15 @@
       background-color: $black-color;
       color: $white-color;
       padding: 8px 0 8px 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+
+      .icon {
+        font-size: 22px;
+        font-weight: 900;
+      }
     }
   }
   .cerrar {
@@ -115,23 +126,24 @@
 
 @media (max-width: 900px) {
   .container {
-    justify-content: flex-start;
-    margin-top: 20px;
+    justify-content: center;
+
     .container__item {
       position: relative;
       min-height: 400px;
       max-height: 85vh;
       min-width: 300px;
-      width: 95vw;
+      max-width: 95vw;
+      width: 90vw;
       flex-direction: column;
-
-      padding: 5px;
+      padding: 5px 5px 15px 5px;
+      overflow-y: scroll;
 
       .img {
         display: flex;
         justify-content: center;
         align-items: center;
-        padding: 15px;
+        padding: 5px;
         width: 95%;
 
         img {

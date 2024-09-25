@@ -3,7 +3,6 @@ import style from "../../styles/ProductosIndex.module.scss";
 import ContextGeneral from "@/servicios/contextPrincipal";
 import ItemMenuProductos from "@/componentes/ItemMenuProductos";
 import ProductosTienda from "@/componentes/productos/ProductosTienda";
-import Head from "next/head";
 import { BiMenu } from "react-icons/bi";
 import Loader from "@/componentes/Loader";
 import { motion } from "framer-motion";
@@ -49,10 +48,6 @@ function Index() {
     <>
       {context.loader ? (
         <>
-          <Head>
-            <title>SAGI Lencería | Productos</title>
-          </Head>
-
           <div className={style.container}>
             <div className={style.container__productos}>
               {/* menu PC */}
