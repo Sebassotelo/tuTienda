@@ -21,13 +21,13 @@ export default function Home() {
   const arrayAbout = [
     {
       icon: "🤓",
-      title: "Creación Intuitiva de Tiendas",
-      desc: "No se requieren habilidades técnicas; simplemente creá tu tienda con Google, carga tus productos y personaliza según tus preferencias.",
+      title: "Creación Intuitiva de Catalogos",
+      desc: "No se requieren habilidades técnicas; simplemente creá tu catalogo con Google, carga tus productos y personaliza según tus preferencias.",
     },
     {
       icon: "🙋‍♂️",
       title: "Autogestionable",
-      desc: "Administras tu tienda online sin ayuda de profesionales y desde cualquier dispositivo.",
+      desc: "Administras tu catalogo online sin ayuda de profesionales y desde cualquier dispositivo.",
     },
     {
       icon: "📋",
@@ -42,7 +42,7 @@ export default function Home() {
     {
       icon: "🛍️",
       title: "Gran cantidad de productos:",
-      desc: "Podes agregar hasta 100 productos.",
+      desc: "Podes agregar hasta 300 productos.",
     },
     {
       icon: "🥳",
@@ -93,6 +93,20 @@ export default function Home() {
     },
   ];
 
+  const iniciarSesion = async () => {
+    try {
+      const result = await signInWithPopup(context.auth, googleProvider);
+      // El usuario completó el inicio de sesión exitosamente
+    } catch (error) {
+      if (error.code === "auth/popup-closed-by-user") {
+        console.log("El usuario cerró el popup antes de iniciar sesión.");
+        // Aquí puedes mostrar un mensaje al usuario o manejar el error de otra manera
+      } else {
+        console.error("Error de autenticación:", error);
+      }
+    }
+  };
+
   const [arrayMostrarPrecio, setArrayMostrarPrecio] = useState(arrayPrecio);
   useEffect(() => {
     verificarLogin();
@@ -111,7 +125,7 @@ export default function Home() {
             <div className={style.container}>
               <div className={style.title}>
                 <h1>
-                  Creá tu tienda Y recibe los pedidos al{" "}
+                  Creá tu Catalogo Y recibe los pedidos al{" "}
                   <span style={{ color: "rgb(48, 160, 20)" }}>Whatsapp!</span>{" "}
                 </h1>
 
@@ -120,13 +134,8 @@ export default function Home() {
                     Ir a panel de control
                   </LinkNext>
                 ) : (
-                  <button
-                    className={style.btn}
-                    onClick={() =>
-                      signInWithPopup(context.auth, googleProvider)
-                    }
-                  >
-                    Creá tu Tienda con Google
+                  <button className={style.btn} onClick={iniciarSesion}>
+                    Creá tu Catalogo con Google
                   </button>
                 )}
               </div>
@@ -185,24 +194,22 @@ export default function Home() {
             <div className={style.conte}>
               <p>ÚNICO PRECIO.</p>
               <h3>
-                $3990{" "}
-                <span style={{ textDecoration: "line-through" }}>$4999</span>
+                $5990{" "}
+                <span style={{ textDecoration: "line-through" }}>$7999</span>
               </h3>
               <p>Finales por mes.</p>
               <p>Obtene la suscripcion de 1 año pagando solo 8 meses!</p>
               <h3>
-                $31990{" "}
-                <span style={{ textDecoration: "line-through" }}>$59999</span>
+                $47990{" "}
+                <span style={{ textDecoration: "line-through" }}>$95999</span>
               </h3>
               {context.user ? (
                 <button onClick={() => signOut(context.auth)}>
                   Cerrar Sesion
                 </button>
               ) : (
-                <button
-                  onClick={() => signInWithPopup(context.auth, googleProvider)}
-                >
-                  Creá tu Tienda con Google
+                <button onClick={iniciarSesion}>
+                  Creá tu Catalogo con Google
                 </button>
               )}
             </div>

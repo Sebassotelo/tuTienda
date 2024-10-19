@@ -9,6 +9,7 @@
     font-size: 12px;
     font-weight: 400;
     margin: 0;
+    padding: 15px;
   }
 
   .head {
@@ -152,17 +153,21 @@
 
 @media (max-width: 900px) {
   .container {
-    width: 100%;
+    width: 100vw;
     display: grid;
     justify-items: center;
     grid-gap: 15px;
     .container__descuentos {
-      width: 90%;
+      width: 95vw;
+      padding: 0;
       justify-content: center;
 
       .container__descuentos__item {
-        width: 100%;
+        width: 90%;
       }
+    }
+    form {
+      width: 90%;
     }
     .cupones__container {
       background-color: white;
@@ -187,6 +192,21 @@
       font-size: 18px;
       padding: 9px;
       background-color: rgba(0, 0, 0, 0.103);
+    }
+  }
+
+  .descuento__seccion {
+    width: 80%;
+    color: $black-color;
+    padding: 7px;
+    border-radius: 5px;
+    text-align: center;
+    cursor: pointer;
+    transition-duration: 0.3s;
+    margin: 10px 0 5px 0 !important;
+    transition-duration: 0.3s;
+    &:hover {
+      transform: scale(0.99);
     }
   }
 }

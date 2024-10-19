@@ -69,11 +69,20 @@ function EditarProducto({
 
     console.log("producto actu", nuevoProducto);
 
+    // Aca copiamos el array original
     const productosCopia = [...context.productosCopia];
     const index = productosCopia.findIndex((item) => item.id === id2);
 
+    // Aca copiamos el array mostrado
+    const prodMostradosCopia = [...context.productos];
+    const indexProdMostrados = prodMostradosCopia.findIndex(
+      (item) => item.id === id2
+    );
+
     // Actualizar la noticia en el array copiado
     productosCopia[index] = nuevoProducto;
+
+    prodMostradosCopia[indexProdMostrados] = nuevoProducto;
 
     console.log("producto actu", productosCopia[index]);
 
@@ -81,6 +90,12 @@ function EditarProducto({
 
     const docRef = doc(context.firestore, `users/${context.user.email}`);
     await updateDoc(docRef, { items: [...productosCopia] });
+
+    // Seteamos los prod mostrados
+    setProductos(prodMostradosCopia);
+
+    // Seteamos el array original
+    setProductosCopia(productosCopia);
 
     //limpiar Form
     e.target.inputTitle.value = "";
@@ -90,7 +105,7 @@ function EditarProducto({
     e.target.inputSeccion.value = "";
     e.target.inputCaracteristicas.value = "";
     setImage("");
-    llamadaDB();
+    // llamadaDB();
     toast.success("Cambio Guardado");
     setEditarProducto(false);
   };

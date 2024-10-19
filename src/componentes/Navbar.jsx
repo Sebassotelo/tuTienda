@@ -42,6 +42,20 @@ function Navbar({ showCarrito, show }) {
     setShowBuscador(!showBuscador);
   };
 
+  const iniciarSesion = async () => {
+    try {
+      const result = await signInWithPopup(context.auth, googleProvider);
+      // El usuario completó el inicio de sesión exitosamente
+    } catch (error) {
+      if (error.code === "auth/popup-closed-by-user") {
+        console.log("El usuario cerró el popup antes de iniciar sesión.");
+        // Aquí puedes mostrar un mensaje al usuario o manejar el error de otra manera
+      } else {
+        console.error("Error de autenticación:", error);
+      }
+    }
+  };
+
   useEffect(() => {
     cantidadProductos();
   }, [context.actuCarrito]);
@@ -76,10 +90,7 @@ function Navbar({ showCarrito, show }) {
           </p>
         )}
         {context.estadoUsuario == 0 && !currentPath.includes("/u/") && (
-          <AiOutlineGoogle
-            className={style.icon}
-            onClick={() => signInWithPopup(context.auth, googleProvider)}
-          />
+          <AiOutlineGoogle className={style.icon} onClick={iniciarSesion} />
         )}
         {context.estadoUsuario == 1 && (
           <>
