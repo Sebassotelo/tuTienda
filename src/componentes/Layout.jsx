@@ -22,7 +22,9 @@ function Layout({ children, title }) {
   return (
     <div style={{ display: "grid" }}>
       <Head>
-        <title>MyShop | Home</title>
+        <title>
+          MyShop | Creá tu Catalogo Online Y recibe los pedidos al Whatsapp
+        </title>
         <meta
           name="description"
           content="MyShop te permite mostrar tus productos de manera fácil y recibir pedidos directamente en tu WhatsApp"

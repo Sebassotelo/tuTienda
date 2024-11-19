@@ -46,7 +46,7 @@ function BuscadorTienda({ setShow }) {
 
     if (objetosFiltrados.length === 0) {
       toast.error(
-        "Lo siento, no se encontraron productos que coincidan con tu búsqueda. "
+        "Lo siento, no se encontraron productos que coincidan con tu búsqueda."
       );
       e.target.inputBusca.value = "";
     } else {

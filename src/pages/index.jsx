@@ -150,10 +150,10 @@ export default function Home() {
           <div className={style.container}>
             <h2>Que hacemos?</h2>
             <p>
-              MyShop es una innovadora aplicación diseñada para simplificar la
-              creación y gestión de tiendas y catálogos online, ofreciendo a
-              emprendedores y pequeños negocios la oportunidad de llevar sus
-              productos al mundo digital de manera sencilla y efectiva.
+              MyShop te permite mostrar tus productos de manera fácil y recibir
+              pedidos directamente en tu WhatsApp, ofreciendo a emprendedores y
+              pequeños negocios la oportunidad de llevar sus productos al mundo
+              digital de manera sencilla y efectiva.
             </p>
             <p> Creando tu cuenta automáticamente tenes acceso a:</p>
 
