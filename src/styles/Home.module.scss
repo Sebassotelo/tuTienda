@@ -79,9 +79,14 @@
     height: 100%;
 
     h2 {
+      text-align: center;
       font-size: 28px;
       font-family: $fuente4;
       border-bottom: 2px solid black;
+    }
+
+    .p {
+      text-align: center;
     }
 
     .about__icons {

@@ -146,16 +146,28 @@ export default function Home() {
           </header>
         </motion.div>
 
+        <section className={style.clientes}>
+          <h2>Conocé quien está usando MyShop</h2>
+          <div className={style.container}>
+            {arrayClientes.map((item, i) => {
+              return <Clientes key={i} url={item.url} logo={item.logo} />;
+            })}
+          </div>
+        </section>
+
         <section className={style.about} id="about">
           <div className={style.container}>
             <h2>Que hacemos?</h2>
-            <p>
+            <p className={style.p}>
               MyShop te permite mostrar tus productos de manera fácil y recibir
               pedidos directamente en tu WhatsApp, ofreciendo a emprendedores y
               pequeños negocios la oportunidad de llevar sus productos al mundo
               digital de manera sencilla y efectiva.
             </p>
-            <p> Creando tu cuenta automáticamente tenes acceso a:</p>
+            <p className={style.p}>
+              {" "}
+              Creando tu cuenta automáticamente tenes acceso a:
+            </p>
 
             <div className={style.about__icons}>
               {arrayMostrar.map((item, i) => {
@@ -226,15 +238,6 @@ export default function Home() {
                   </div>
                 </div>
               );
-            })}
-          </div>
-        </section>
-
-        <section className={style.clientes}>
-          <h2>Conocé quien está usando MyShop</h2>
-          <div className={style.container}>
-            {arrayClientes.map((item, i) => {
-              return <Clientes key={i} url={item.url} logo={item.logo} />;
             })}
           </div>
         </section>
