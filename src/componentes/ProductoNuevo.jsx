@@ -75,7 +75,7 @@ function ProductoNuevo({ setShowNuevoProducto }) {
 
     //Vemos si no alcanzo la cantidad maxima de productos.
 
-    if (newArray.length < 300) {
+    if (newArray.length < 1000) {
       setProductos(newArray);
       setProductosCopia(newArray);
       //seteamos el estado y updateamos la base de datos
