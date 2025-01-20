@@ -73,9 +73,10 @@ function ProductoNuevo({ setShowNuevoProducto }) {
       ...infoDocu.items
     );
 
-    //Vemos si no alcanzo la cantidad maxima de productos.
+    // Vemos si no alcanzo la cantidad maxima de productos.
+    // Si el premium es Nivel == 1 Significa que no tiene cantidad max de productos
 
-    if (newArray.length < 1000) {
+    if (newArray.length <= 300 || context.premium?.nivel == 1) {
       setProductos(newArray);
       setProductosCopia(newArray);
       //seteamos el estado y updateamos la base de datos
