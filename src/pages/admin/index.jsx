@@ -77,6 +77,21 @@ function toDateInputValue(value) {
   return date.toISOString().slice(0, 10);
 }
 
+async function readAdminApiResponse(response) {
+  const contentType = response.headers.get("content-type") || "";
+
+  if (contentType.includes("application/json")) {
+    return response.json();
+  }
+
+  const text = await response.text();
+  const preview = text.replace(/\s+/g, " ").slice(0, 160);
+  const message = `La API admin devolvio ${response.status} ${response.statusText || ""} en formato no JSON.`;
+  const error = new Error(preview ? `${message} Respuesta: ${preview}` : message);
+  error.statusCode = response.status;
+  throw error;
+}
+
 function getSubscriptionStatus(premium = {}) {
   const nivel = Number(premium?.nivel || 0);
   const vencida = premium?.vencida === true;
@@ -262,7 +277,7 @@ function AdminPage() {
           Authorization: `Bearer ${token}`,
         },
       });
-      const data = await response.json();
+      const data = await readAdminApiResponse(response);
 
       if (!response.ok) {
         throw new Error(data.error || "No se pudo cargar administracion.");
@@ -365,7 +380,7 @@ function AdminPage() {
         },
         body: JSON.stringify({ email, ...patch }),
       });
-      const data = await response.json();
+      const data = await readAdminApiResponse(response);
 
       if (!response.ok) {
         throw new Error(data.error || "No se pudo actualizar la cuenta.");
@@ -430,7 +445,7 @@ function AdminPage() {
           },
         }),
       });
-      const data = await response.json();
+      const data = await readAdminApiResponse(response);
 
       if (!response.ok) {
         throw new Error(data.error || "No se pudo actualizar suscripciones.");
@@ -491,7 +506,7 @@ function AdminPage() {
         },
       }),
     });
-    const data = await response.json();
+    const data = await readAdminApiResponse(response);
 
     if (!response.ok) {
       throw new Error(data.error || `No se pudo guardar el recontacto de ${accountPayload.email}.`);
@@ -681,7 +696,7 @@ function AdminPage() {
         },
         body: JSON.stringify({ scope, email }),
       });
-      const data = await response.json();
+      const data = await readAdminApiResponse(response);
 
       if (!response.ok) {
         throw new Error(data.error || "No se pudo duplicar productos legacy.");
@@ -2265,6 +2280,7 @@ Inicia sesion con una cuenta administradora para entrar.
 }
 
 export default AdminPage;
+
 
 
 

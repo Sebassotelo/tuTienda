@@ -477,12 +477,14 @@ export default async function handler(req, res) {
     const status = error.statusCode || 500;
     return res.status(status).json({
       error:
-        status === 500
+        error.publicMessage ||
+        (status === 500
           ? "No se pudo procesar la solicitud de administracion."
-          : error.message,
+          : error.message),
     });
   }
 }
+
 
 
 
