@@ -1,17 +1,31 @@
-import React, { useContext, useEffect, useState } from "react";
+﻿import React, { useContext, useState } from "react";
 import ContextGeneral from "@/servicios/contextPrincipal";
-import style from "../styles/ProductoNuevo.module.scss";
 import { toast } from "sonner";
-
-import {
-  getFirestore,
-  doc,
-  getDoc,
-  setDoc,
-  updateDoc,
-} from "firebase/firestore";
-import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
+import { doc, getDoc } from "firebase/firestore";
+import { saveProductsForAccount, getMaxProducts, getProductBatchStateByAccount } from "@/servicios/productosBatch";
 import SubirFoto from "./SubirFoto";
+
+const inputClass =
+  "min-h-[44px] w-full rounded-xl border border-zinc-300 bg-white px-3 text-sm font-semibold text-zinc-900 outline-none transition placeholder:text-zinc-400 hover:border-zinc-400 focus:border-zinc-950 focus:ring-4 focus:ring-zinc-950/10";
+const labelClass = "text-sm font-extrabold text-zinc-800";
+const helperClass = "m-0 text-xs font-semibold leading-5 text-zinc-700";
+
+function TogglePill({ active, onClick, label }) {
+  return (
+    <div className="flex items-center justify-between gap-3 rounded-xl border border-zinc-200/80 bg-slate-50 p-3">
+      <span className="text-sm font-extrabold text-zinc-700">{label}</span>
+      <button
+        type="button"
+        onClick={onClick}
+        className={`rounded-full px-3 py-1.5 text-xs font-extrabold transition ${
+          active ? "bg-emerald-100 text-emerald-700" : "bg-red-100 text-red-700"
+        }`}
+      >
+        {active ? "ON" : "OFF"}
+      </button>
+    </div>
+  );
+}
 
 function ProductoNuevo({ setShowNuevoProducto }) {
   const [image, setImage] = useState("");
@@ -20,8 +34,7 @@ function ProductoNuevo({ setShowNuevoProducto }) {
   const [loadImg, setLoadImg] = useState(true);
 
   const context = useContext(ContextGeneral);
-  const { setProductos, setProductosCopia, llamadaDB } =
-    useContext(ContextGeneral);
+  const { setProductos, setProductosCopia } = useContext(ContextGeneral);
 
   const agregarProducto = async (e) => {
     e.preventDefault(e);
@@ -34,7 +47,6 @@ function ProductoNuevo({ setShowNuevoProducto }) {
     let caracteristicas = e.target.inputCaracteristicas.value;
     const precioDescuento = e.target.inputPrecioDescuento.value;
 
-    // Corroboramos que en los textos no haya & para no tener error al enviar mensaje por wpp
     if (
       title.includes("&") ||
       desc.includes("&") ||
@@ -47,12 +59,17 @@ function ProductoNuevo({ setShowNuevoProducto }) {
       caracteristicas = caracteristicas.replace(/&/g, "y");
     }
 
-    //traemos los datos de base de datos
     const docRef = doc(context.firestore, `users/${context.user.email}`);
     const consulta = await getDoc(docRef);
     const infoDocu = consulta.data();
 
-    // Creamos el array que vamos a seter en db
+    const productosBatchState = await getProductBatchStateByAccount(
+      context.firestore,
+      context.user.email
+    );
+    const productosActuales = productosBatchState.exists
+      ? productosBatchState.products
+      : infoDocu.items || [];
 
     const newArray = [];
 
@@ -70,31 +87,26 @@ function ProductoNuevo({ setShowNuevoProducto }) {
         precioDescuento: precioDescuento,
         destacado: destacadoActivo,
       },
-      ...infoDocu.items
+      ...productosActuales
     );
 
-    // Vemos si no alcanzo la cantidad maxima de productos.
-    // Si el premium es Nivel == 1 Significa que no tiene cantidad max de productos
+    const maxProducts = getMaxProducts(context.premium);
 
-    if (newArray.length <= 300 || context.premium?.nivel == 1) {
+    if (newArray.length <= maxProducts) {
+      await saveProductsForAccount({
+        firestore: context.firestore,
+        email: context.user.email,
+        usuario: context.nombreTienda,
+        products: newArray,
+        premium: context.premium,
+      });
       setProductos(newArray);
       setProductosCopia(newArray);
-      //seteamos el estado y updateamos la base de datos
-      updateDoc(docRef, { items: [...newArray] });
       toast.success(`${title} Agregado con exito `);
-      // llamadaDB();
     } else {
-      toast.error(`Ha alcanzado el limite de productos`);
+      toast.error(`Ha alcanzado el limite de productos de su plan`);
     }
 
-    // setProductos(newArray);
-    // setProductosCopia(newArray);
-    // //seteamos el estado y updateamos la base de datos
-    // updateDoc(docRef, { items: [...newArray] });
-    // toast.success(`${title} Agregado con exito `);
-    // llamadaDB();
-
-    //limpiar Form
     e.target.inputTitle.value = "";
     e.target.inputDesc.value = "";
     e.target.inputPrecio.value = "";
@@ -102,108 +114,127 @@ function ProductoNuevo({ setShowNuevoProducto }) {
     e.target.inputSeccion.value = "";
     e.target.inputCaracteristicas.value = "";
     setImage("");
-
-    // setShow(false);
     setShowNuevoProducto(false);
   };
 
-  const activarDescuento = () => {
-    setDescuentoActivo(!descuentoActivo);
-  };
-  const activarDestacado = () => {
-    setDestacadoActivo(!destacadoActivo);
-  };
-
   return (
-    <div className={style.container}>
-      <form action="" className={style.form} onSubmit={agregarProducto}>
-        <p>Nombre del Producto:</p>
-        <input type="text" name="" required id="inputTitle" />
-        <p>Descripcion:</p>
-        <input type="text" name="" id="inputDesc" />
-        <div className={style.precios}>
-          <div className={style.precios__item}>
-            <p>Precio:</p>
-            <input type="number" name="" required id="inputPrecio" />
+    <div className="fixed inset-0 z-[500] flex items-start justify-center overflow-y-auto bg-zinc-900/60 px-4 py-6 backdrop-blur-sm sm:py-10">
+      <form
+        action=""
+        className="grid w-full max-w-3xl gap-5 rounded-2xl bg-white p-5 shadow-2xl shadow-zinc-950/25 sm:p-7"
+        onSubmit={agregarProducto}
+      >
+        <div className="flex flex-col gap-3 border-b border-zinc-100 pb-5 sm:flex-row sm:items-start sm:justify-between">
+          <div>
+            <span className="text-[11px] font-extrabold uppercase tracking-[0.08em] text-brand-coral">
+              Nuevo producto
+            </span>
+            <h2 className="m-0 mt-2 font-display text-2xl font-extrabold text-zinc-950">
+              Cargar producto
+            </h2>
+            <p className="m-0 mt-1 text-sm font-medium leading-6 text-zinc-700">
+              Completa los datos visibles en el catalogo publico.
+            </p>
           </div>
-          <div className={style.precios__item}>
-            <p>Precio oferta:</p>
-            <input type="number" name="" required id="inputPrecioDescuento" />
-          </div>
-          <div className={style.precios__item}>
-            <p>Stock:</p>
-            <input type="number" name="" required id="inputStock" />
-          </div>
+          <button
+            type="button"
+            onClick={() => setShowNuevoProducto(false)}
+            className="inline-flex min-h-[40px] items-center justify-center rounded-xl border border-zinc-300 bg-white px-4 text-sm font-extrabold text-zinc-700 transition hover:bg-slate-50"
+          >
+            Cerrar
+          </button>
         </div>
 
-        {/* <p>Url de Imagen:</p>
-        <input type="text" name="" id="inputImagen" /> */}
-        <p>Categoría del producto ​ :</p>
-        <select name="" id="inputSeccion">
-          {context.secciones.map((item, i) => {
-            return <option key={i}>{item}</option>;
-          })}
-        </select>
-        <p>Caracteristicas: separar con comas. Ej: Estampada,verde,XL.</p>
-        <input type="text" name="" id="inputCaracteristicas" />
-        <p>Subir Imagen:</p>
+        <div className="grid gap-4 sm:grid-cols-2">
+          <label className="grid gap-2 sm:col-span-2">
+            <span className={labelClass}>Nombre del producto</span>
+            <input className={inputClass} type="text" required id="inputTitle" />
+          </label>
 
-        <SubirFoto setImage={setImage} setLoad={setLoadImg} />
-        <div className={style.check__container}>
-          <div className={style.checkbox}>
-            <p>Descuento:</p>
-            {descuentoActivo ? (
-              <p
-                className={style.descuentoActivo}
-                onClick={activarDescuento}
-                style={{ border: "2px solid green" }}
-              >
-                ON
-              </p>
-            ) : (
-              <p
-                className={style.descuentoActivo}
-                onClick={activarDescuento}
-                style={{ border: "2px solid red" }}
-              >
-                OFF
-              </p>
-            )}
-          </div>
+          <label className="grid gap-2 sm:col-span-2">
+            <span className={labelClass}>Descripcion</span>
+            <input className={inputClass} type="text" id="inputDesc" />
+          </label>
 
-          <div className={style.checkbox}>
-            <p>Desctacado:</p>
-            {destacadoActivo ? (
-              <p
-                className={style.descuentoActivo}
-                onClick={activarDestacado}
-                style={{ border: "2px solid green" }}
-              >
-                ON
-              </p>
-            ) : (
-              <p
-                className={style.descuentoActivo}
-                onClick={activarDestacado}
-                style={{ border: "2px solid red" }}
-              >
-                OFF
-              </p>
-            )}
-          </div>
+          <label className="grid gap-2">
+            <span className={labelClass}>Precio</span>
+            <input className={inputClass} type="number" required id="inputPrecio" />
+          </label>
+
+          <label className="grid gap-2">
+            <span className={labelClass}>Precio oferta</span>
+            <input className={inputClass} type="number" required id="inputPrecioDescuento" />
+          </label>
+
+          <label className="grid gap-2">
+            <span className={labelClass}>Stock</span>
+            <input className={inputClass} type="number" required id="inputStock" />
+          </label>
+
+          <label className="grid gap-2">
+            <span className={labelClass}>Categoria</span>
+            <select className={inputClass} id="inputSeccion">
+              {context.secciones.map((item, i) => (
+                <option key={i}>{item}</option>
+              ))}
+            </select>
+          </label>
+
+          <label className="grid gap-2 sm:col-span-2">
+            <span className={labelClass}>Caracteristicas</span>
+            <input className={inputClass} type="text" id="inputCaracteristicas" />
+            <p className={helperClass}>Separar con comas. Ej: Estampada,verde,XL.</p>
+          </label>
         </div>
 
-        {image && (
-          <div className={style.container__img}>
-            <img src={image} alt="" />
-          </div>
-        )}
-        <div className={style.container__botones}>
-          <button onClick={() => setShowNuevoProducto(false)}>Cerrar</button>
+        <div className="grid gap-4 sm:grid-cols-2">
+          <TogglePill
+            label="Descuento"
+            active={descuentoActivo}
+            onClick={() => setDescuentoActivo(!descuentoActivo)}
+          />
+          <TogglePill
+            label="Destacado"
+            active={destacadoActivo}
+            onClick={() => setDestacadoActivo(!destacadoActivo)}
+          />
+        </div>
+
+        <div className="grid gap-3 rounded-xl border border-dashed border-zinc-300 bg-slate-50 p-4">
+          <span className={labelClass}>Imagen del producto</span>
+          <SubirFoto setImage={setImage} setLoad={setLoadImg} />
+          {image && (
+            <img
+              src={image}
+              alt="Vista previa"
+              className="h-40 w-full rounded-xl object-cover ring-1 ring-zinc-200"
+            />
+          )}
+        </div>
+
+        <div className="flex flex-col-reverse gap-3 border-t border-zinc-100 pt-5 sm:flex-row sm:justify-end">
+          <button
+            type="button"
+            onClick={() => setShowNuevoProducto(false)}
+            className="inline-flex min-h-[44px] items-center justify-center rounded-xl border border-zinc-300 bg-white px-5 text-sm font-extrabold text-zinc-700 transition hover:bg-slate-50"
+          >
+            Cancelar
+          </button>
           {loadImg ? (
-            <button type="submit">Agregar Producto</button>
+            <button
+              type="submit"
+              className="inline-flex min-h-[44px] items-center justify-center rounded-xl bg-zinc-900 px-5 text-sm font-extrabold text-white transition hover:bg-zinc-800"
+            >
+              Agregar producto
+            </button>
           ) : (
-            <button>Cargando Imagen...</button>
+            <button
+              type="button"
+              disabled
+              className="inline-flex min-h-[44px] items-center justify-center rounded-xl bg-zinc-900 px-5 text-sm font-extrabold text-white opacity-60"
+            >
+              Cargando imagen...
+            </button>
           )}
         </div>
       </form>
@@ -212,3 +243,10 @@ function ProductoNuevo({ setShowNuevoProducto }) {
 }
 
 export default ProductoNuevo;
+
+
+
+
+
+
+

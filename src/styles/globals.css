@@ -1,20 +1,59 @@
-html,
-body {
-  padding: 0;
-  margin: 0;
-  font-family: "Quicksand", sans-serif;
-}
+﻿@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-span {
-  font-weight: 900;
-}
+@layer base {
+  *,
+  ::before,
+  ::after {
+    box-sizing: border-box;
+  }
 
-button{
-  font-family: "Quicksand",
-    sans-serif;
-}
+  html,
+  body,
+  #__next {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+  }
 
-input{
-  font-family: "Quicksand",
-      sans-serif;
+  html,
+  body {
+    @apply m-0 p-0 text-zinc-950 antialiased;
+  }
+
+  body {
+    font-feature-settings: "liga" 1, "kern" 1;
+  }
+
+  img {
+    display: block;
+    max-width: 100%;
+  }
+
+  a {
+    color: inherit;
+  }
+
+  *,
+  button,
+  input,
+  textarea,
+  select {
+    font-family: theme("fontFamily.sans") !important;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  .font-display {
+    font-family: theme("fontFamily.display") !important;
+  }
+
+  span {
+    font-weight: inherit;
+  }
 }

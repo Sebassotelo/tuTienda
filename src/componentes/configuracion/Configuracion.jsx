@@ -1,10 +1,7 @@
-import React, { useContext, useState } from "react";
-import styles from "./Configuracion.module.scss";
+﻿import React, { useContext, useState } from "react";
 import ContextGeneral from "@/servicios/contextPrincipal";
 import SubirFoto from "../SubirFoto";
-
 import { toast } from "sonner";
-
 import {
   doc,
   updateDoc,
@@ -14,7 +11,17 @@ import {
   getDocs,
 } from "firebase/firestore";
 import Tutorial from "../tutorial/Tutorial";
+import { updateProductsUsuarioForAccount } from "@/servicios/productosBatch";
 import Suscripcion from "../suscripcion/Suscripcion";
+
+const inputClass =
+  "min-h-[46px] w-full rounded-xl border border-zinc-300 bg-slate-100 px-4 text-sm font-bold text-zinc-950 shadow-inner shadow-zinc-950/[0.04] outline-none transition placeholder:text-zinc-400 hover:border-zinc-400 hover:bg-white focus:border-brand-coral focus:bg-white focus:ring-4 focus:ring-brand-coral/10";
+const labelClass = "text-sm font-extrabold text-zinc-900";
+const helperClass = "m-0 text-xs font-bold leading-5 text-zinc-500";
+const primaryButton =
+  "inline-flex min-h-[46px] w-full items-center justify-center rounded-xl bg-zinc-900 px-6 text-sm font-extrabold text-white shadow-lg shadow-zinc-950/15 transition hover:-translate-y-0.5 hover:bg-zinc-800 disabled:cursor-not-allowed disabled:opacity-60 sm:w-fit";
+const secondaryButton =
+  "inline-flex min-h-[46px] items-center justify-center rounded-xl border border-zinc-300 bg-white px-5 text-sm font-extrabold text-zinc-800 shadow-sm transition hover:-translate-y-0.5 hover:border-zinc-400 hover:bg-slate-50";
 
 function Configuracion() {
   const context = useContext(ContextGeneral);
@@ -48,12 +55,14 @@ function Configuracion() {
       fetchUsuarios.forEach((doc) => (productosArrayOriginal = doc.data()));
 
       if (!productosArrayOriginal) {
-        //traemos los datos de base de datos
         const docRef = doc(context.firestore, `users/${context.user.email}`);
 
-        updateDoc(docRef, { usuario: usuario });
-
-        //limpiar Form
+        await updateDoc(docRef, { usuario: usuario });
+        await updateProductsUsuarioForAccount(
+          context.firestore,
+          context.user.email,
+          usuario
+        );
         e.target.inputUsuario.value = "";
         llamadaDB();
         toast.success(`Nombre de tienda asignada correctamente`);
@@ -71,10 +80,7 @@ function Configuracion() {
     const slogan = e.target.inputSlogan.value;
     const maps = e.target.inputMaps.value;
 
-    //traemos los datos de base de datos
     const docRef = doc(context.firestore, `users/${context.user.email}`);
-
-    //filtramos la propiedad .items y creamos un array nuevo
 
     const newObject = {
       instagram: instagram,
@@ -85,14 +91,10 @@ function Configuracion() {
     };
 
     setConfiguracion(newObject);
-
-    //seteamos el estado y updateamos la base de datos
-    //   setArray(newArray);
     updateDoc(docRef, { configuracion: newObject });
 
     toast.success(`Perfil Configurado Correctamente`);
 
-    //limpiar Form
     e.target.inputInstagram.value = "";
     e.target.inputWhatsapp.value = "";
     e.target.inputMaps.value = "";
@@ -102,76 +104,140 @@ function Configuracion() {
   };
 
   return (
-    <div className={styles.container}>
-      <div className={styles.head}>
-        <h2>Configuracion General</h2>
+    <div className="mx-auto grid w-full max-w-6xl gap-7">
+      <div className="rounded-2xl border border-zinc-200/80 bg-[linear-gradient(135deg,#ffffff_0%,#f8fafc_100%)] p-5 shadow-[0_14px_42px_rgba(15,23,42,0.045)] sm:p-6 lg:p-7 flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+        <div>
+          <span className="text-[11px] font-extrabold uppercase tracking-[0.08em] text-brand-coral">
+            Perfil publico
+          </span>
+          <h2 className="m-0 mt-2 font-display text-3xl font-extrabold leading-tight text-zinc-950">
+            Configuracion general
+          </h2>
+          <p className="m-0 mt-2 max-w-2xl text-sm font-medium leading-6 text-zinc-600">
+            Define el link de tu tienda, canales de contacto y datos visibles para tus clientes.
+          </p>
+        </div>
         <button
-          className={styles.btn__tutorial}
+          type="button"
+          className={secondaryButton}
           onClick={() => setShowTutorial(true)}
         >
-          Ver Tutorial
+          Ver tutorial
         </button>
       </div>
 
-      <form action="" onSubmit={setearUsuario} className={styles.formUsuario}>
-        <p>Nombre de la Tienda:</p>
-        <input
-          type="text"
-          name=""
-          id="inputUsuario"
-          defaultValue={context.nombreTienda}
-        />
-        <button type="submit">Guardar </button>
-        <p className={styles.info}>
-          {">"} Este nombre se colocara en el link a tu tienda.
-        </p>
+      <form
+        action=""
+        onSubmit={setearUsuario}
+        className="rounded-2xl border border-zinc-200/80 bg-white p-5 shadow-[0_14px_42px_rgba(15,23,42,0.045)] ring-1 ring-zinc-950/[0.02] sm:p-6"
+      >
+        <div className="grid gap-2">
+          <span className={labelClass}>Nombre de la tienda</span>
+          <div className="grid gap-3 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-center">
+            <input
+              className={inputClass}
+              type="text"
+              id="inputUsuario"
+              defaultValue={context.nombreTienda}
+              placeholder="mi-tienda"
+            />
+            <button className={primaryButton} type="submit">
+              Guardar link
+            </button>
+          </div>
+          <p className={helperClass}>Este nombre se colocara en el link publico de tu tienda.</p>
+        </div>
       </form>
 
       {context.nombreTienda != "" && (
-        <form className={styles.formConfig} onSubmit={aplicarConfiguracion}>
-          {image && <img src={image} alt="" />}
-          <p>Instagram:</p>
-          <input
-            type="text"
-            id="inputInstagram"
-            defaultValue={
-              context.configuracion && context.configuracion.instagram
-            }
-          />
-          <p className={styles.info}>
-            {">"} Solo ingresa el nombre de usuario.
-          </p>
+        <form
+          className="grid gap-6 rounded-2xl border border-zinc-200/80 bg-white p-5 shadow-[0_18px_55px_rgba(15,23,42,0.06)] ring-1 ring-zinc-950/[0.02] sm:p-7"
+          onSubmit={aplicarConfiguracion}
+        >
+          <div>
+            <h3 className="m-0 font-display text-xl font-extrabold text-zinc-950">
+              Datos de contacto
+            </h3>
+            <p className="m-0 mt-1 text-sm font-medium leading-6 text-zinc-600">
+              Estos datos aparecen en la tienda publica y ayudan a recibir pedidos claros.
+            </p>
+          </div>
 
-          <p>Numero de Whatsapp: {"(sin 0 ni 15. Ej: 3794250000)"}</p>
-          <input
-            type="number"
-            id="inputWhatsapp"
-            defaultValue={
-              context.configuracion && context.configuracion.whatsapp
-            }
-          />
-          <p className={styles.info}>
-            {">"} A este numero se enviaran los pedidos.
-          </p>
-          <p>Slogan:</p>
-          <input
-            type="text"
-            id="inputSlogan"
-            defaultValue={context.configuracion && context.configuracion.slogan}
-          />
-          <p>Link de Google Maps:</p>
-          <input
-            type="text"
-            id="inputMaps"
-            defaultValue={context.configuracion && context.configuracion.maps}
-          />
-          <p className={styles.info}>{">"} Link completo de Google Maps.</p>
-          <p>Subir Logo: </p>
-          <SubirFoto setImage={setImage} setLoad={setLoad} />
+          {image && (
+            <div className="flex items-center gap-4 rounded-2xl border border-zinc-200/80 bg-slate-50 p-4">
+              <img
+                src={image}
+                alt="Logo de tienda"
+                className="h-16 w-16 rounded-xl object-cover ring-1 ring-zinc-200"
+              />
+              <p className="m-0 text-sm font-bold text-zinc-600">Logo listo para guardar.</p>
+            </div>
+          )}
+
+          <div className="grid gap-4 md:grid-cols-2">
+            <label className="grid gap-2">
+              <span className={labelClass}>Instagram</span>
+              <input
+                className={inputClass}
+                type="text"
+                id="inputInstagram"
+                defaultValue={context.configuracion && context.configuracion.instagram}
+                placeholder="usuario"
+              />
+              <p className={helperClass}>Solo ingresa el nombre de usuario.</p>
+            </label>
+
+            <label className="grid gap-2">
+              <span className={labelClass}>Numero de WhatsApp</span>
+              <input
+                className={inputClass}
+                type="number"
+                id="inputWhatsapp"
+                defaultValue={context.configuracion && context.configuracion.whatsapp}
+                placeholder="3794250000"
+              />
+              <p className={helperClass}>Sin 0 ni 15. A este numero se enviaran los pedidos.</p>
+            </label>
+          </div>
+
+          <label className="grid gap-2">
+            <span className={labelClass}>Slogan</span>
+            <input
+              className={inputClass}
+              type="text"
+              id="inputSlogan"
+              defaultValue={context.configuracion && context.configuracion.slogan}
+              placeholder="Una frase corta para tu tienda"
+            />
+          </label>
+
+          <label className="grid gap-2">
+            <span className={labelClass}>Link de Google Maps</span>
+            <input
+              className={inputClass}
+              type="text"
+              id="inputMaps"
+              defaultValue={context.configuracion && context.configuracion.maps}
+              placeholder="https://maps.google.com/..."
+            />
+            <p className={helperClass}>Pega el link completo de Google Maps.</p>
+          </label>
+
+          <div className="grid gap-2">
+            <span className={labelClass}>Logo de la tienda</span>
+            <div className="rounded-2xl border border-dashed border-zinc-300 bg-slate-50 p-5 text-sm font-bold text-zinc-600 transition hover:border-zinc-400 hover:bg-white">
+              <SubirFoto setImage={setImage} setLoad={setLoad} />
+            </div>
+          </div>
+
           {load ? (
-            <button type="submit">Guardar</button>
+            <button className={primaryButton} type="submit">
+              Guardar configuracion
+            </button>
           ) : (
-            <button>Cargando imagen...</button>
+            <button className={primaryButton} type="button" disabled>
+              Cargando imagen...
+            </button>
           )}
         </form>
       )}
@@ -189,3 +255,11 @@ function Configuracion() {
 }
 
 export default Configuracion;
+
+
+
+
+
+
+
+

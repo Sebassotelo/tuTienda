@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from "react";
+﻿import React, { useEffect, useState } from "react";
 import ContextPrincipal from "./contextPrincipal";
 import firebaseApp from "./firebase";
 
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { getFirestore, doc, getDoc, setDoc } from "firebase/firestore";
+import { getProductBatchStateByAccount } from "./productosBatch";
 
 function Context(props) {
   const [productos, setProductos] = useState([]);
@@ -17,6 +18,7 @@ function Context(props) {
   const [secciones, setSecciones] = useState([]);
   const [estadoUsuario, setEstadoUsuario] = useState(0);
   const [premium, setPremium] = useState({});
+  const [admin, setAdmin] = useState(false);
 
   // 0 = No logueado
   // 1 = Logueado
@@ -29,7 +31,7 @@ function Context(props) {
   const [carrito, setCarrito] = useState([]);
   const [actuCarrito, setActuCarrito] = useState(false);
   const [loader, setLoader] = useState(false);
-  const urlLogo = "https://i.imgur.com/ZQ7yfOm.png";
+  const urlLogo = "/logo.png";
 
   const auth = getAuth(firebaseApp);
   const firestore = getFirestore(firebaseApp);
@@ -45,6 +47,7 @@ function Context(props) {
       //en caso de que haya seison iniciada
       setUser(null);
       setEstadoUsuario(0);
+      setAdmin(false);
     }
   };
   const verificarLogin = () => {
@@ -64,6 +67,9 @@ function Context(props) {
       await setDoc(docRef, {
         cupones: [],
         idCuenta: new Date().getTime().toString(),
+        email: user1.email,
+        authUid: user1.uid,
+        admin: false,
         items: [],
         secciones: [],
         usuario: [],
@@ -85,14 +91,23 @@ function Context(props) {
     const consulta = await getDoc(docRef);
     const infoDocu = consulta.data();
     console.log("LLAMDA DB", infoDocu);
-    setProductos(infoDocu.items);
-    setProductosCopia(infoDocu.items);
+    const productosBatchState = await getProductBatchStateByAccount(
+      firestore,
+      user1.email ? user1.email : user.email
+    );
+    const productosCuenta = productosBatchState.exists
+      ? productosBatchState.products
+      : infoDocu.items || [];
+
+    setProductos(productosCuenta);
+    setProductosCopia(productosCuenta);
     setCupones(infoDocu.cupones);
     setConfiguracion(infoDocu.configuracion);
     setNombreTienda(infoDocu.usuario);
     setPremium(infoDocu.premium);
+    setAdmin(infoDocu.admin === true);
 
-    const array = infoDocu.items.filter((item) => item.stock > 0);
+    const array = productosCuenta.filter((item) => item.stock > 0);
 
     setProductosPublicos(array);
     setProductosPublicosCopia(array);
@@ -132,6 +147,7 @@ function Context(props) {
         configuracion: configuracion,
         nombreTienda: nombreTienda,
         premium: premium,
+        admin: admin,
         setSecciones,
         setProductos,
         setProductosCopia,
@@ -151,6 +167,7 @@ function Context(props) {
         setContadorOfert,
         setNombreTienda,
         setPremium,
+        setAdmin,
       }}
     >
       {props.children}
@@ -159,3 +176,12 @@ function Context(props) {
 }
 
 export default Context;
+
+
+
+
+
+
+
+
+

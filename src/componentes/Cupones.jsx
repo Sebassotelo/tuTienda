@@ -1,12 +1,11 @@
-import ContextGeneral from "@/servicios/contextPrincipal";
+﻿import ContextGeneral from "@/servicios/contextPrincipal";
 import { updateDoc, doc } from "firebase/firestore";
 import React, { useContext, useState } from "react";
-
-import style from "../styles/Cupones.module.scss";
-
-import EditarCupon from "./EditarCupon";
 import CuponItem from "./CuponItem";
 import { toast } from "sonner";
+
+const inputClass =
+  "min-h-[44px] w-full rounded-xl border border-zinc-300 bg-white px-3 text-sm font-semibold text-zinc-900 outline-none transition placeholder:text-zinc-400 hover:border-zinc-400 focus:border-zinc-950 focus:ring-4 focus:ring-zinc-950/10";
 
 function Cupones() {
   const context = useContext(ContextGeneral);
@@ -30,8 +29,6 @@ function Cupones() {
       (item) => item.cupon.toLowerCase() == cupon.toLowerCase()
     );
 
-    console.log(arr);
-
     if (arr) {
       alert("Ya existe un cupon con este nombre");
     } else {
@@ -52,7 +49,7 @@ function Cupones() {
 
       await updateDoc(docRef, { cupones: [...nuevoArray] });
       llamadaDB();
-      toast.success(`Cupon ${cupon} de %${monto} creado Correctamente`);
+      toast.success(`Cupon ${cupon} creado correctamente`);
     }
 
     e.target.inputCupon.value = "";
@@ -76,57 +73,80 @@ function Cupones() {
   };
 
   return (
-    <div className={style.container}>
+    <div className="grid gap-5">
       {showCupon ? (
-        <form action="" onSubmit={crearCupon} className={style.form}>
-          <p>Nombre de Cupon:</p>
-          <input type="text" id="inputCupon" required />
+        <form
+          action=""
+          onSubmit={crearCupon}
+          className="grid gap-4 rounded-2xl border border-zinc-200/80 bg-slate-50 p-5"
+        >
+          <div className="grid gap-4 md:grid-cols-3">
+            <label className="grid gap-2">
+              <span className="text-sm font-extrabold text-zinc-800">Nombre de cupon</span>
+              <input className={inputClass} type="text" id="inputCupon" required />
+            </label>
+            <label className="grid gap-2">
+              <span className="text-sm font-extrabold text-zinc-800">Descuento %</span>
+              <input className={inputClass} type="text" id="inputMonto" defaultValue="" />
+            </label>
+            <label className="grid gap-2">
+              <span className="text-sm font-extrabold text-zinc-800">Descuento $</span>
+              <input className={inputClass} type="text" id="inputMontoPesos" defaultValue="" />
+            </label>
+          </div>
 
-          <p>Monto de Descuento %</p>
-          <input type="text" id="inputMonto" defaultValue={""} />
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+            <button
+              type="button"
+              onClick={handleSwitch}
+              className="inline-flex min-h-[40px] items-center justify-center rounded-xl border border-zinc-300 bg-white px-4 text-sm font-extrabold text-zinc-700 transition hover:bg-slate-50"
+            >
+              Cambiar a {porcentajePesos ? "$" : "%"}
+            </button>
+            <span className="rounded-full bg-white px-3 py-2 text-sm font-extrabold text-zinc-700 ring-1 ring-zinc-200">
+              Activo: {porcentajePesos ? "Porcentual" : "En $"}
+            </span>
+          </div>
 
-          <p>Monto de Descuento en $</p>
-          <input type="text" id="inputMontoPesos" defaultValue={""} />
-          {!porcentajePesos ? (
-            <button type="button" onClick={handleSwitch}>
-              Cambiar a %
-            </button>
-          ) : (
-            <button type="button" onClick={handleSwitch}>
-              Cambiar a $
-            </button>
-          )}
-          <p>Activo: {porcentajePesos ? "Porcentual" : "En $"}</p>
-          <div>
-            <button type="button" onClick={() => setShowCupon(false)}>
+          <div className="flex flex-col-reverse gap-3 sm:flex-row sm:justify-end">
+            <button
+              type="button"
+              onClick={() => setShowCupon(false)}
+              className="inline-flex min-h-[44px] items-center justify-center rounded-xl border border-zinc-300 bg-white px-5 text-sm font-extrabold text-zinc-700 transition hover:bg-slate-50"
+            >
               Cerrar
             </button>
-            <button type="submit">Crear Cupon</button>
+            <button
+              type="submit"
+              className="inline-flex min-h-[44px] items-center justify-center rounded-xl bg-zinc-900 px-5 text-sm font-extrabold text-white transition hover:bg-zinc-800"
+            >
+              Crear cupon
+            </button>
           </div>
         </form>
       ) : (
         <button
-          className={style.crear__cupon}
+          className="inline-flex min-h-[44px] w-full items-center justify-center rounded-xl bg-zinc-900 px-5 text-sm font-extrabold text-white transition hover:bg-zinc-800 sm:w-fit"
           onClick={() => setShowCupon(true)}
+          type="button"
         >
           Crear cupon
         </button>
       )}
 
-      <div className={style.cupon}>
+      <div className="grid gap-3">
         {context.cupones &&
-          context.cupones.map((item) => {
-            return (
-              <CuponItem
-                key={item.id}
-                item={item}
-                eliminarCupon={eliminarCupon}
-              />
-            );
-          })}
+          context.cupones.map((item) => (
+            <CuponItem key={item.id} item={item} eliminarCupon={eliminarCupon} />
+          ))}
       </div>
     </div>
   );
 }
 
 export default Cupones;
+
+
+
+
+

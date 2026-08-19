@@ -1,15 +1,20 @@
-import React, { useState, useContext, useEffect } from "react";
-import style from "../styles/Descuentos.module.scss";
+﻿import React, { useState, useContext, useEffect } from "react";
 import ContextGeneral from "@/servicios/contextPrincipal";
-import { doc, getDoc, updateDoc } from "firebase/firestore";
+import { saveProductsForAccount } from "@/servicios/productosBatch";
 import ProductoPanel from "./ProductoPanel";
 import Cupones from "./Cupones";
 import Tutorial from "./tutorial/Tutorial";
 
+const selectClass =
+  "min-h-[44px] w-full rounded-xl border border-zinc-300 bg-white px-3 text-sm font-semibold text-zinc-900 outline-none transition hover:border-zinc-400 focus:border-zinc-950 focus:ring-4 focus:ring-zinc-950/10";
+const primaryButton =
+  "inline-flex min-h-[44px] items-center justify-center rounded-xl bg-zinc-900 px-5 text-sm font-extrabold text-white transition hover:bg-zinc-800";
+const secondaryButton =
+  "inline-flex min-h-[44px] items-center justify-center rounded-xl border border-zinc-300 bg-white px-5 text-sm font-extrabold text-zinc-700 transition hover:bg-slate-50";
+
 function Descuentos() {
   const context = useContext(ContextGeneral);
-  const { setProductos, setProductosCopia, setLoader, setCupones, llamadaDB } =
-    useContext(ContextGeneral);
+  const { setLoader, llamadaDB } = useContext(ContextGeneral);
 
   const [contadorProductos, setContadorProductos] = useState(0);
   const [showTutorial, setShowTutorial] = useState(false);
@@ -18,15 +23,12 @@ function Descuentos() {
     e.preventDefault();
     const seccion = e.target.inputSeccion.value;
     if (
-      confirm(
-        `Seguro que desea activar el descuento a la seccion ${seccion}?`
-      ) === true
+      confirm(`Seguro que desea activar el descuento a la seccion ${seccion}?`) ===
+      true
     ) {
       setLoader(false);
-      //traemos los datos de base de datos
-      const docRef = doc(context.firestore, `users/${context.user.email}`);
 
-      let nuevoArray = context.productosCopia;
+      let nuevoArray = context.productosCopia.map((item) => ({ ...item }));
 
       for (let i = 0; i < nuevoArray.length; i++) {
         if (nuevoArray[i].seccion == seccion) {
@@ -34,10 +36,16 @@ function Descuentos() {
         }
       }
 
-      await updateDoc(docRef, { items: [...nuevoArray] });
+      await saveProductsForAccount({
+        firestore: context.firestore,
+        email: context.user.email,
+        usuario: context.nombreTienda,
+        products: nuevoArray,
+        premium: context.premium,
+      });
 
-      llamadaDB();
-      contadorProductosDescuento();
+      await llamadaDB();
+      setContadorProductos(nuevoArray.filter((item) => item.descuento).length);
     }
   };
 
@@ -51,43 +59,51 @@ function Descuentos() {
       ) === true
     ) {
       setLoader(false);
-      //traemos los datos de base de datos
-      const docRef = doc(context.firestore, `users/${context.user.email}`);
 
-      let nuevoArray = context.productosCopia;
+      let nuevoArray = context.productosCopia.map((item) => ({ ...item }));
       for (let i = 0; i < nuevoArray.length; i++) {
         if (nuevoArray[i].seccion == seccion) {
           nuevoArray[i].descuento = false;
         }
       }
 
-      await updateDoc(docRef, { items: [...nuevoArray] });
-      llamadaDB();
-      contadorProductosDescuento();
+      await saveProductsForAccount({
+        firestore: context.firestore,
+        email: context.user.email,
+        usuario: context.nombreTienda,
+        products: nuevoArray,
+        premium: context.premium,
+      });
+      await llamadaDB();
+      setContadorProductos(nuevoArray.filter((item) => item.descuento).length);
     }
   };
 
   const descuentoTotal = async () => {
     if (
-      confirm(
-        `Seguro que desea activar el descuento de todos los productos?`
-      ) === true
+      confirm(`Seguro que desea activar el descuento de todos los productos?`) ===
+      true
     ) {
       setLoader(false);
-      //traemos los datos de base de datos
-      const docRef = doc(context.firestore, `users/${context.user.email}`);
 
-      let nuevoArray = context.productosCopia;
+      let nuevoArray = context.productosCopia.map((item) => ({ ...item }));
 
       for (let i = 0; i < nuevoArray.length; i++) {
         nuevoArray[i].descuento = true;
       }
 
-      await updateDoc(docRef, { items: [...nuevoArray] });
-      llamadaDB();
-      contadorProductosDescuento();
+      await saveProductsForAccount({
+        firestore: context.firestore,
+        email: context.user.email,
+        usuario: context.nombreTienda,
+        products: nuevoArray,
+        premium: context.premium,
+      });
+      await llamadaDB();
+      setContadorProductos(nuevoArray.filter((item) => item.descuento).length);
     }
   };
+
   const quitarDescuentoTotal = async () => {
     if (
       confirm(
@@ -95,18 +111,22 @@ function Descuentos() {
       ) === true
     ) {
       setLoader(false);
-      //traemos los datos de base de datos
-      const docRef = doc(context.firestore, `users/${context.user.email}`);
 
-      let nuevoArray = context.productosCopia;
+      let nuevoArray = context.productosCopia.map((item) => ({ ...item }));
 
       for (let i = 0; i < nuevoArray.length; i++) {
         nuevoArray[i].descuento = false;
       }
 
-      await updateDoc(docRef, { items: [...nuevoArray] });
-      llamadaDB();
-      contadorProductosDescuento();
+      await saveProductsForAccount({
+        firestore: context.firestore,
+        email: context.user.email,
+        usuario: context.nombreTienda,
+        products: nuevoArray,
+        premium: context.premium,
+      });
+      await llamadaDB();
+      setContadorProductos(nuevoArray.filter((item) => item.descuento).length);
     }
   };
 
@@ -120,131 +140,132 @@ function Descuentos() {
   }, []);
 
   return (
-    <div className={style.container}>
-      <div className={style.head}>
-        <h2>Descuentos</h2>
-        <button
-          className={style.btn__tutorial}
-          onClick={() => setShowTutorial(true)}
-        >
-          Ver Tutorial
+    <div className="grid gap-6">
+      <div className="flex flex-col gap-4 border-b border-zinc-100 pb-6 sm:flex-row sm:items-start sm:justify-between">
+        <div>
+          <span className="text-[11px] font-extrabold uppercase tracking-[0.08em] text-brand-coral">
+            Promociones
+          </span>
+          <h2 className="m-0 mt-2 font-display text-3xl font-extrabold leading-tight text-zinc-950">
+            Descuentos y cupones
+          </h2>
+          <p className="m-0 mt-2 max-w-2xl text-sm font-medium leading-6 text-zinc-700">
+            Configura promociones por categoria, descuentos generales y cupones para impulsar ventas.
+          </p>
+        </div>
+        <button type="button" className={secondaryButton} onClick={() => setShowTutorial(true)}>
+          Ver tutorial
         </button>
       </div>
 
-      <p className={style.info}>
-        {">"} Desde esta sección podras configurar los descuentos y cupones de
-        tu tienda.
-      </p>
       {context.secciones.length > 0 && (
-        <div className={style.container__descuentos}>
-          <div className={style.container__descuentos__item}>
-            <form action="" onSubmit={descuentoSeccion}>
-              <p className={style.title}>
-                Aplicar descuento a categoría completa.
-              </p>
-              <p>Elige la categoría:</p>
-              <select name="" id="inputSeccion">
-                {context.secciones.map((item, i) => {
-                  return <option key={i}>{item}</option>;
-                })}
-              </select>
-
-              <button type="submit">Aplicar descuento</button>
-              <p className={style.info}>
-                {">"} Con ésta función podrás activar el descuento de una sola
-                categoría.
-              </p>
+        <div className="grid gap-4 lg:grid-cols-2">
+          <div className="rounded-2xl border border-emerald-200 bg-emerald-50 p-4 sm:p-5">
+            <form action="" onSubmit={descuentoSeccion} className="grid gap-3">
+              <h3 className="m-0 font-display text-xl font-extrabold text-zinc-950">
+                Activar descuento por categoria
+              </h3>
+              <label className="grid gap-2">
+                <span className="text-sm font-extrabold text-zinc-800">Categoria</span>
+                <select className={selectClass} id="inputSeccion">
+                  {context.secciones.map((item, i) => (
+                    <option key={i}>{item}</option>
+                  ))}
+                </select>
+              </label>
+              <button className={primaryButton} type="submit">
+                Aplicar descuento
+              </button>
             </form>
-            <p
-              className={style.descuento__seccion}
+            <button
+              type="button"
               onClick={descuentoTotal}
-              style={{ border: "2px solid green" }}
+              className="mt-4 inline-flex min-h-[44px] w-full items-center justify-center rounded-lg border border-emerald-300 bg-white px-5 text-sm font-extrabold text-emerald-700 transition hover:bg-emerald-50"
             >
-              Activar descuento a todos los productos
-            </p>
-            <p className={style.info}>
-              {">"} Con ésta función podrás activar el descuento de todos los
-              productos de la tienda.
-            </p>
+              Activar en todos los productos
+            </button>
           </div>
 
-          <div className={style.container__descuentos__item}>
-            <form action="" onSubmit={quitarDescuentoSeccion}>
-              <p className={style.title}>
-                Quitar descuento a categoría completa.
-              </p>
-              <p>Elige la categoría:</p>
-              <select name="" id="inputSeccion">
-                {context.secciones.map((item, i) => {
-                  return <option key={i}>{item}</option>;
-                })}
-              </select>
-
-              <button type="submit">Quitar descuento</button>
-              <p className={style.info}>
-                {">"} Con ésta función podrás desactivar el descuento de una
-                sola categoría.
-              </p>
+          <div className="rounded-2xl border border-red-200 bg-red-50 p-4 sm:p-5">
+            <form action="" onSubmit={quitarDescuentoSeccion} className="grid gap-3">
+              <h3 className="m-0 font-display text-xl font-extrabold text-zinc-950">
+                Quitar descuento por categoria
+              </h3>
+              <label className="grid gap-2">
+                <span className="text-sm font-extrabold text-zinc-800">Categoria</span>
+                <select className={selectClass} id="inputSeccion">
+                  {context.secciones.map((item, i) => (
+                    <option key={i}>{item}</option>
+                  ))}
+                </select>
+              </label>
+              <button className={primaryButton} type="submit">
+                Quitar descuento
+              </button>
             </form>
-
-            <p
-              className={style.descuento__seccion}
+            <button
+              type="button"
               onClick={quitarDescuentoTotal}
-              style={{
-                border: "2px solid red",
-              }}
+              className="mt-4 inline-flex min-h-[44px] w-full items-center justify-center rounded-lg border border-red-300 bg-white px-5 text-sm font-extrabold text-red-700 transition hover:bg-red-50"
             >
-              Desactivar descuento a todos los productos
-            </p>
-            <p className={style.info}>
-              {">"} Con ésta función podrás desactivar el descuento de todos los
-              productos de la tienda.
-            </p>
+              Desactivar en todos los productos
+            </button>
           </div>
         </div>
       )}
 
-      <div className={style.cupones__container}>
-        <p className={style.title}>Cupones</p>
-        <p className={style.info}>
-          {">"} Con ésta función podrás generar diferentes tipos de cupones de
-          descuento.
-        </p>
-
+      <section className="rounded-2xl border border-zinc-200/80 bg-white p-5 shadow-[0_18px_55px_rgba(15,23,42,0.055)] ring-1 ring-zinc-950/[0.02] sm:p-6">
+        <div className="mb-5">
+          <h3 className="m-0 font-display text-xl font-extrabold text-zinc-950">
+            Cupones
+          </h3>
+          <p className="m-0 mt-2 text-sm font-medium leading-6 text-zinc-700">
+            Genera descuentos porcentuales o de monto fijo para compartir con tus clientes.
+          </p>
+        </div>
         <Cupones />
-      </div>
+      </section>
 
-      <div className={style.productos_descuentos}>
-        <p>Productos en Descuento:</p>
-        <p className={style.p__productos}>
-          Hay en descuento <span>{contadorProductos}</span> productos{" "}
-        </p>
-        <div className={style.listaProducto}>
+      <section className="grid gap-4">
+        <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
+          <div>
+            <span className="text-[11px] font-extrabold uppercase tracking-[0.08em] text-brand-coral">
+              Productos activos
+            </span>
+            <h3 className="m-0 mt-2 font-display text-xl font-extrabold text-zinc-950">
+              Productos en descuento
+            </h3>
+          </div>
+          <p className="m-0 rounded-full bg-[#fff7f0] px-4 py-2 text-sm font-extrabold text-brand-coral">
+            {contadorProductos} productos
+          </p>
+        </div>
+
+        <div className="grid gap-4">
           {context.productosCopia
             .filter((item) => item.descuento)
-            .map((item) => {
-              return (
-                <ProductoPanel
-                  key={item.id}
-                  title={item.title}
-                  precio={item.precio}
-                  desc={item.desc}
-                  img={item.img}
-                  stock={item.stock}
-                  caracteristicas={item.caracteristicas}
-                  id={item.id}
-                  seccion={item.seccion}
-                  descuento={item.descuento}
-                  destacado={item.destacado}
-                  precioDescuento={item.precioDescuento}
-                />
-              );
-            })}
+            .map((item) => (
+              <ProductoPanel
+                key={item.id}
+                title={item.title}
+                precio={item.precio}
+                desc={item.desc}
+                img={item.img}
+                stock={item.stock}
+                caracteristicas={item.caracteristicas}
+                id={item.id}
+                seccion={item.seccion}
+                descuento={item.descuento}
+                destacado={item.destacado}
+                precioDescuento={item.precioDescuento}
+              />
+            ))}
         </div>
-      </div>
+      </section>
+
       {showTutorial && (
         <Tutorial
-          url={"https://www.youtube.com/embed/XTjFmHw9xiU?si=o5OCwa985aqs8hBW"}
+          url="https://www.youtube.com/embed/XTjFmHw9xiU?si=o5OCwa985aqs8hBW"
           setShow={setShowTutorial}
         />
       )}
@@ -253,3 +274,12 @@ function Descuentos() {
 }
 
 export default Descuentos;
+
+
+
+
+
+
+
+
+
