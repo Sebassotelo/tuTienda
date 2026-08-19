@@ -3,15 +3,19 @@ import { push } from "next/router";
 import React, { useContext, useEffect, useMemo, useState } from "react";
 import {
   MdAdminPanelSettings,
+  MdAnalytics,
   MdBlock,
   MdCheckCircle,
   MdClose,
   MdInventory2,
   MdEmail,
+  MdLogin,
   MdOutlineRefresh,
   MdOutlineSettings,
   MdSearch,
   MdStorefront,
+  MdTrendingUp,
+  MdVisibility,
   MdWorkspacePremium,
 } from "react-icons/md";
 import { toast } from "sonner";
@@ -23,6 +27,13 @@ const adminTabs = [
     label: "Cuentas",
     description: "Usuarios, permisos y actividad",
     icon: MdAdminPanelSettings,
+  },
+  {
+    id: "analytics",
+    label: "Analytics",
+    description: "Ingresos, visitas y actividad",
+    icon: MdAnalytics,
+    disabled: false,
   },
   {
     id: "billing",
@@ -165,6 +176,17 @@ function getFallbackPaidMonths(premium = {}) {
   if (premium?.duracion === "1 mes") return 1;
   return 0;
 }
+
+function getSafeTime(value) {
+  if (!value) return 0;
+  const time = new Date(value).getTime();
+  return Number.isNaN(time) ? 0 : time;
+}
+
+function formatMetric(value) {
+  return new Intl.NumberFormat("es-AR").format(Number(value || 0));
+}
+
 function Badge({ children, tone = "slate" }) {
   const tones = {
     slate: "bg-slate-100 text-zinc-600 ring-zinc-200",
@@ -204,6 +226,9 @@ function AdminPage() {
   const [registrationFrom, setRegistrationFrom] = useState("");
   const [registrationTo, setRegistrationTo] = useState("");
   const [sortBy, setSortBy] = useState("created-desc");
+  const [analyticsSearch, setAnalyticsSearch] = useState("");
+  const [analyticsPlanFilter, setAnalyticsPlanFilter] = useState("all");
+  const [analyticsSortBy, setAnalyticsSortBy] = useState("visits-desc");
   const [selectedSubscriptionEmails, setSelectedSubscriptionEmails] = useState([]);
   const [subscriptionPlan, setSubscriptionPlan] = useState("1");
   const [subscriptionDuration, setSubscriptionDuration] = useState("month");
@@ -908,6 +933,77 @@ function AdminPage() {
     subscriptionStatusFilter,
   ]);
 
+  const filteredAnalyticsAccounts = useMemo(() => {
+    const term = analyticsSearch.trim().toLowerCase();
+
+    const result = accounts.filter((account) => {
+      const values = [
+        account.email,
+        account.displayName,
+        account.usuario,
+        account.configuracion?.instagram,
+        account.configuracion?.whatsapp,
+      ];
+      const planNivel = Number(account.premium?.nivel || 0);
+      const matchesSearch =
+        !term ||
+        values.some((value) => String(value || "").toLowerCase().includes(term));
+
+      return (
+        matchesSearch &&
+        (analyticsPlanFilter === "all" ||
+          (analyticsPlanFilter === "premium" && planNivel === 1) ||
+          (analyticsPlanFilter === "pro" && planNivel >= 2) ||
+          (analyticsPlanFilter === "free" && planNivel <= 0))
+      );
+    });
+
+    return [...result].sort((a, b) => {
+      const visitsA = Number(a.metricasPublicas?.visitasTienda || 0);
+      const visitsB = Number(b.metricasPublicas?.visitasTienda || 0);
+      const lastVisitA = getSafeTime(a.metricasPublicas?.ultimaVisitaTienda);
+      const lastVisitB = getSafeTime(b.metricasPublicas?.ultimaVisitaTienda);
+      const lastLoginA = getSafeTime(a.lastSignInTime);
+      const lastLoginB = getSafeTime(b.lastSignInTime);
+      const productsA = Number(a.metricas?.productos || 0);
+      const productsB = Number(b.metricas?.productos || 0);
+
+      if (analyticsSortBy === "visits-asc") return visitsA - visitsB;
+      if (analyticsSortBy === "last-visit-desc") return lastVisitB - lastVisitA;
+      if (analyticsSortBy === "last-login-desc") return lastLoginB - lastLoginA;
+      if (analyticsSortBy === "products-desc") return productsB - productsA;
+      if (analyticsSortBy === "store-asc") {
+        return String(a.usuario || "").localeCompare(String(b.usuario || ""));
+      }
+
+      return visitsB - visitsA;
+    });
+  }, [accounts, analyticsPlanFilter, analyticsSearch, analyticsSortBy]);
+
+  const analyticsTotals = useMemo(() => {
+    const totalVisits = accounts.reduce(
+      (total, account) => total + Number(account.metricasPublicas?.visitasTienda || 0),
+      0
+    );
+    const storesWithVisits = accounts.filter(
+      (account) => Number(account.metricasPublicas?.visitasTienda || 0) > 0
+    ).length;
+    const now = Date.now();
+    const sevenDaysMs = 7 * 24 * 60 * 60 * 1000;
+    const recentLogins = accounts.filter(
+      (account) => getSafeTime(account.lastSignInTime) >= now - sevenDaysMs
+    ).length;
+    const recentStoreVisits = accounts.filter(
+      (account) => getSafeTime(account.metricasPublicas?.ultimaVisitaTienda) >= now - sevenDaysMs
+    ).length;
+
+    return {
+      totalVisits,
+      storesWithVisits,
+      recentLogins,
+      recentStoreVisits,
+    };
+  }, [accounts]);
   const hasActiveSubscriptionFilters =
     subscriptionSearch.trim() ||
     subscriptionPlanFilter !== "all" ||
@@ -957,6 +1053,232 @@ function AdminPage() {
   ];
 
 
+  const renderAnalytics = () => {
+    const hasAnalyticsFilters =
+      analyticsSearch.trim() || analyticsPlanFilter !== "all" || analyticsSortBy !== "visits-desc";
+    const analyticsCards = [
+      {
+        label: "Visitas totales",
+        value: analyticsTotals.totalVisits,
+        detail: "A tiendas publicas",
+        icon: MdVisibility,
+      },
+      {
+        label: "Tiendas vistas",
+        value: analyticsTotals.storesWithVisits,
+        detail: "Con al menos 1 visita",
+        icon: MdStorefront,
+      },
+      {
+        label: "Visitas 7 dias",
+        value: analyticsTotals.recentStoreVisits,
+        detail: "Tiendas con actividad reciente",
+        icon: MdTrendingUp,
+      },
+      {
+        label: "Logins 7 dias",
+        value: analyticsTotals.recentLogins,
+        detail: "Cuentas activas por Auth",
+        icon: MdLogin,
+      },
+    ];
+
+    return (
+      <div className="grid gap-4">
+        <div className="rounded-2xl border border-zinc-200/80 bg-white p-4 shadow-[0_18px_50px_rgba(15,23,42,0.055)] sm:p-5">
+          <div className="flex flex-col gap-4 xl:flex-row xl:items-start xl:justify-between">
+            <div>
+              <span className="text-[11px] font-extrabold uppercase tracking-[0.08em] text-brand-coral">
+                Analytics
+              </span>
+              <h2 className="m-0 mt-1 font-display text-2xl font-extrabold text-zinc-950">
+                Estadisticas de cuentas y tiendas
+              </h2>
+              <p className="m-0 mt-1 text-sm font-semibold text-zinc-600">
+                Ultimos ingresos, visitas publicas, catalogo y actividad disponible por cuenta.
+              </p>
+            </div>
+            <button
+              type="button"
+              onClick={fetchAccounts}
+              disabled={loading}
+              className="inline-flex min-h-[42px] items-center justify-center gap-2 rounded-xl bg-zinc-900 px-4 text-sm font-extrabold text-white shadow-lg shadow-zinc-950/15 transition hover:bg-zinc-800 disabled:cursor-not-allowed disabled:opacity-50"
+            >
+              <MdOutlineRefresh /> Actualizar
+            </button>
+          </div>
+
+          <div className="mt-5 grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
+            {analyticsCards.map((card) => {
+              const Icon = card.icon;
+              return (
+                <div key={card.label} className="rounded-2xl bg-slate-50 p-4 ring-1 ring-zinc-100">
+                  <div className="flex items-center gap-2 text-[11px] font-extrabold uppercase tracking-[0.08em] text-zinc-500">
+                    <Icon className="text-lg text-brand-coral" />
+                    {card.label}
+                  </div>
+                  <strong className="mt-2 block font-display text-2xl font-extrabold text-zinc-950">
+                    {formatMetric(card.value)}
+                  </strong>
+                  <p className="m-0 mt-1 text-xs font-bold text-zinc-500">{card.detail}</p>
+                </div>
+              );
+            })}
+          </div>
+
+          <div className="mt-5 grid gap-3 xl:grid-cols-[minmax(280px,1fr)_180px_220px_auto]">
+            <label className="relative block">
+              <MdSearch className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-xl text-zinc-400" />
+              <input
+                value={analyticsSearch}
+                onChange={(event) => setAnalyticsSearch(event.target.value)}
+                placeholder="Buscar cuenta, tienda, Instagram o WhatsApp"
+                className="h-12 w-full rounded-xl border border-zinc-200 bg-slate-100 pl-12 pr-4 text-sm font-bold text-zinc-800 outline-none transition placeholder:text-zinc-400 focus:border-zinc-400 focus:bg-white focus:ring-4 focus:ring-zinc-200/70"
+              />
+            </label>
+            <select
+              value={analyticsPlanFilter}
+              onChange={(event) => setAnalyticsPlanFilter(event.target.value)}
+              className="h-12 rounded-xl border border-zinc-200 bg-slate-100 px-4 text-sm font-extrabold text-zinc-700 outline-none focus:border-zinc-400 focus:bg-white focus:ring-4 focus:ring-zinc-200/70"
+            >
+              <option value="all">Todos los planes</option>
+              <option value="premium">Premium</option>
+              <option value="pro">Pro</option>
+              <option value="free">Free</option>
+            </select>
+            <select
+              value={analyticsSortBy}
+              onChange={(event) => setAnalyticsSortBy(event.target.value)}
+              className="h-12 rounded-xl border border-zinc-200 bg-slate-100 px-4 text-sm font-extrabold text-zinc-700 outline-none focus:border-zinc-400 focus:bg-white focus:ring-4 focus:ring-zinc-200/70"
+            >
+              <option value="visits-desc">Mas visitas</option>
+              <option value="visits-asc">Menos visitas</option>
+              <option value="last-visit-desc">Ultima visita</option>
+              <option value="last-login-desc">Ultimo ingreso</option>
+              <option value="products-desc">Mas productos</option>
+              <option value="store-asc">Tienda A-Z</option>
+            </select>
+            <button
+              type="button"
+              disabled={!hasAnalyticsFilters}
+              onClick={() => {
+                setAnalyticsSearch("");
+                setAnalyticsPlanFilter("all");
+                setAnalyticsSortBy("visits-desc");
+              }}
+              className="h-12 rounded-xl border border-zinc-200 bg-white px-4 text-sm font-extrabold text-zinc-600 transition hover:bg-slate-50 disabled:cursor-not-allowed disabled:opacity-45"
+            >
+              Limpiar
+            </button>
+          </div>
+        </div>
+
+        <div className="overflow-hidden rounded-2xl border border-zinc-200/80 bg-white shadow-[0_18px_50px_rgba(15,23,42,0.055)]">
+          <div className="flex flex-col gap-1 border-b border-zinc-100 bg-slate-50 px-4 py-3 sm:flex-row sm:items-end sm:justify-between">
+            <div>
+              <span className="text-[11px] font-extrabold uppercase tracking-[0.08em] text-zinc-500">
+                Directorio analytics
+              </span>
+              <h3 className="m-0 mt-1 font-display text-xl font-extrabold text-zinc-950">
+                {filteredAnalyticsAccounts.length} cuentas visibles
+              </h3>
+            </div>
+            <p className="m-0 text-xs font-bold text-zinc-500">
+              Las visitas empiezan a medirse desde este cambio.
+            </p>
+          </div>
+
+          {filteredAnalyticsAccounts.length === 0 ? (
+            <div className="grid min-h-[180px] place-items-center bg-white px-4 text-center text-sm font-bold text-zinc-500">
+              No hay cuentas para mostrar.
+            </div>
+          ) : (
+            <div className="overflow-x-auto">
+              <table className="min-w-[1180px] w-full border-collapse text-left text-sm">
+                <thead className="bg-slate-50 text-[11px] font-extrabold uppercase tracking-[0.08em] text-zinc-500">
+                  <tr>
+                    <th className="px-4 py-3">Cuenta</th>
+                    <th className="px-4 py-3">Tienda</th>
+                    <th className="px-4 py-3">Visitas</th>
+                    <th className="px-4 py-3">Ultima visita</th>
+                    <th className="px-4 py-3">Ultimo ingreso</th>
+                    <th className="px-4 py-3">Catalogo</th>
+                    <th className="px-4 py-3">Plan</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-zinc-100">
+                  {filteredAnalyticsAccounts.map((account) => {
+                    const visits = Number(account.metricasPublicas?.visitasTienda || 0);
+                    const planNivel = Number(account.premium?.nivel || 0);
+                    const firstVisit = account.metricasPublicas?.primeraVisitaTienda;
+
+                    return (
+                      <tr key={account.email} className="bg-white transition hover:bg-slate-50/80">
+                        <td className="max-w-[280px] px-4 py-3">
+                          <div className="flex min-w-0 items-center gap-3">
+                            {account.photoURL ? (
+                              <img
+                                src={account.photoURL}
+                                alt={account.displayName}
+                                className="h-9 w-9 rounded-xl object-cover ring-1 ring-zinc-200"
+                              />
+                            ) : (
+                              <span className="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-slate-100 text-sm font-extrabold text-brand-coral ring-1 ring-zinc-200">
+                                {account.email?.charAt(0)?.toUpperCase() || "U"}
+                              </span>
+                            )}
+                            <div className="min-w-0">
+                              <p className="m-0 truncate text-sm font-extrabold text-zinc-950">
+                                {account.displayName || "Sin nombre"}
+                              </p>
+                              <p className="m-0 mt-0.5 truncate text-xs font-bold text-zinc-500">
+                                {account.email}
+                              </p>
+                            </div>
+                          </div>
+                        </td>
+                        <td className="px-4 py-3">
+                          <p className="m-0 max-w-[170px] truncate text-sm font-extrabold text-zinc-950">
+                            {account.usuario || "Sin link"}
+                          </p>
+                          <p className="m-0 mt-0.5 text-xs font-bold text-zinc-500">
+                            Primera visita: {formatDate(firstVisit)}
+                          </p>
+                        </td>
+                        <td className="px-4 py-3">
+                          <span className="inline-flex min-w-[82px] items-center justify-center rounded-xl bg-zinc-950 px-3 py-2 font-display text-lg font-extrabold text-white">
+                            {formatMetric(visits)}
+                          </span>
+                        </td>
+                        <td className="px-4 py-3 whitespace-nowrap text-xs font-bold text-zinc-700">
+                          {formatDate(account.metricasPublicas?.ultimaVisitaTienda)}
+                        </td>
+                        <td className="px-4 py-3 whitespace-nowrap text-xs font-bold text-zinc-700">
+                          {formatDate(account.lastSignInTime)}
+                        </td>
+                        <td className="px-4 py-3">
+                          <div className="flex flex-wrap gap-1.5">
+                            <Badge tone="slate">{account.metricas?.productos || 0} prod</Badge>
+                            <Badge tone="slate">{account.metricas?.categorias || 0} cat</Badge>
+                            <Badge tone="slate">{account.metricas?.cupones || 0} cup</Badge>
+                          </div>
+                        </td>
+                        <td className="px-4 py-3">
+                          <Badge tone={planNivel >= 2 ? "coral" : planNivel === 1 ? "amber" : "slate"}>
+                            {getPlanLabel(account.premium)}
+                          </Badge>
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </div>
+          )}
+        </div>
+      </div>
+    );
+  };
   const renderSubscriptions = () => {
     const activeSubscriptionCount = filteredSubscriptionAccounts.filter(
       (account) => Number(account.premium?.nivel || 0) > 0 && account.premium?.activo !== false
@@ -2098,7 +2420,7 @@ Inicia sesion con una cuenta administradora para entrar.
                   Panel
                 </button>
               </div>
-              <div className="mt-5 grid grid-cols-3 gap-2">
+              <div className="mt-5 grid grid-cols-2 gap-2">
                 {adminTabs.map((tab) => {
                   const Icon = tab.icon;
                   const active = activeTab === tab.id;
@@ -2144,6 +2466,8 @@ Inicia sesion con una cuenta administradora para entrar.
 
             {activeTab === "accounts" ? (
               renderAccounts()
+            ) : activeTab === "analytics" ? (
+              renderAnalytics()
             ) : activeTab === "billing" ? (
               renderSubscriptions()
             ) : (
@@ -2280,6 +2604,14 @@ Inicia sesion con una cuenta administradora para entrar.
 }
 
 export default AdminPage;
+
+
+
+
+
+
+
+
 
 
 

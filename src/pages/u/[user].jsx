@@ -88,6 +88,14 @@ function User() {
       setSecciones(tiendaData.secciones || []);
       setContadorOfert(productosConStock.filter((item) => item.descuento).length);
       setActiveFilter("all");
+
+      if (canPublishStore(tiendaData.premium || {})) {
+        fetch("/api/analytics/visit", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ usuario: user }),
+        }).catch(() => {});
+      }
     }
 
     setLoader(true);
@@ -260,6 +268,7 @@ function User() {
 }
 
 export default User;
+
 
 
 

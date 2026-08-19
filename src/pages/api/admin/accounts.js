@@ -254,6 +254,26 @@ async function getProductCountByEmail(adminDb, email) {
   return snapshot.empty ? null : count;
 }
 
+function serializeMetricDate(value) {
+  if (!value) return null;
+  if (typeof value === "string") return value;
+  if (typeof value.toDate === "function") return value.toDate().toISOString();
+  if (typeof value._seconds === "number") {
+    return new Date(value._seconds * 1000).toISOString();
+  }
+
+  const date = new Date(value);
+  return Number.isNaN(date.getTime()) ? null : date.toISOString();
+}
+
+function normalizePublicMetrics(metricasPublicas = {}) {
+  return {
+    visitasTienda: Number(metricasPublicas.visitasTienda || 0),
+    primeraVisitaTienda: serializeMetricDate(metricasPublicas.primeraVisitaTienda),
+    ultimaVisitaTienda: serializeMetricDate(metricasPublicas.ultimaVisitaTienda),
+    actualizadoEn: serializeMetricDate(metricasPublicas.actualizadoEn),
+  };
+}
 function buildAccount(authUser, firestoreData = {}, firestoreId, productCount = null) {
   const email = authUser?.email || firestoreId;
   const premium = normalizePremium(firestoreData.premium || { nivel: 0, activo: true });
@@ -275,6 +295,7 @@ function buildAccount(authUser, firestoreData = {}, firestoreId, productCount = 
     premium,
     recontacto: normalizeRecontacto(firestoreData.recontacto || {}),
     planKey: getPlanKey(premium),
+    metricasPublicas: normalizePublicMetrics(firestoreData.metricasPublicas || {}),
     metricas: {
       productos: productCount ?? safeArrayLength(firestoreData.items),
       productosLegacy: safeArrayLength(firestoreData.items),
@@ -484,6 +505,7 @@ export default async function handler(req, res) {
     });
   }
 }
+
 
 
 
