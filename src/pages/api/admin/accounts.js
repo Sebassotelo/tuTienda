@@ -274,6 +274,34 @@ function normalizePublicMetrics(metricasPublicas = {}) {
     actualizadoEn: serializeMetricDate(metricasPublicas.actualizadoEn),
   };
 }
+
+function normalizePanelMetrics(metricasPanel = {}) {
+  const secciones = metricasPanel.secciones && typeof metricasPanel.secciones === "object"
+    ? Object.entries(metricasPanel.secciones).reduce((result, [key, value]) => {
+        result[key] = {
+          visitas: Number(value?.visitas || 0),
+          ultimaVisita: serializeMetricDate(value?.ultimaVisita),
+        };
+        return result;
+      }, {})
+    : {};
+
+  return {
+    entradas: Number(metricasPanel.entradas || 0),
+    primeraEntrada: serializeMetricDate(metricasPanel.primeraEntrada),
+    ultimaEntrada: serializeMetricDate(metricasPanel.ultimaEntrada),
+    ultimaSeccion: metricasPanel.ultimaSeccion || "",
+    secciones,
+  };
+}
+
+function normalizeActivityMetrics(metricasActividad = {}) {
+  return {
+    ultimaActividad: serializeMetricDate(metricasActividad.ultimaActividad),
+    contadores: metricasActividad.contadores || {},
+    porDia: metricasActividad.porDia || {},
+  };
+}
 function buildAccount(authUser, firestoreData = {}, firestoreId, productCount = null) {
   const email = authUser?.email || firestoreId;
   const premium = normalizePremium(firestoreData.premium || { nivel: 0, activo: true });
@@ -296,6 +324,8 @@ function buildAccount(authUser, firestoreData = {}, firestoreId, productCount = 
     recontacto: normalizeRecontacto(firestoreData.recontacto || {}),
     planKey: getPlanKey(premium),
     metricasPublicas: normalizePublicMetrics(firestoreData.metricasPublicas || {}),
+    metricasPanel: normalizePanelMetrics(firestoreData.metricasPanel || {}),
+    metricasActividad: normalizeActivityMetrics(firestoreData.metricasActividad || {}),
     metricas: {
       productos: productCount ?? safeArrayLength(firestoreData.items),
       productosLegacy: safeArrayLength(firestoreData.items),
@@ -505,6 +535,7 @@ export default async function handler(req, res) {
     });
   }
 }
+
 
 
 

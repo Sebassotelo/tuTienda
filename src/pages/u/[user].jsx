@@ -8,9 +8,12 @@ import { useRouter } from "next/router";
 import { query, collection, where, getDocs } from "firebase/firestore";
 import Perfil from "@/componentes/perfil/Perfil";
 import { canPublishStore, getProductBatchStateByUsuario } from "@/servicios/productosBatch";
+import { shouldTrack } from "@/servicios/analyticsClient";
 
 const filterBaseClass =
   "flex w-full min-w-0 cursor-pointer items-center justify-between gap-3 border-0 bg-transparent px-0 py-2.5 text-sm font-semibold transition";
+
+const STORE_VISIT_THROTTLE_MS = 6 * 60 * 60 * 1000;
 
 function User() {
   const context = useContext(ContextGeneral);
@@ -89,7 +92,10 @@ function User() {
       setContadorOfert(productosConStock.filter((item) => item.descuento).length);
       setActiveFilter("all");
 
-      if (canPublishStore(tiendaData.premium || {})) {
+      if (
+        canPublishStore(tiendaData.premium || {}) &&
+        shouldTrack(`mystore:store-visit:${user}`, STORE_VISIT_THROTTLE_MS)
+      ) {
         fetch("/api/analytics/visit", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -268,6 +274,8 @@ function User() {
 }
 
 export default User;
+
+
 
 
 

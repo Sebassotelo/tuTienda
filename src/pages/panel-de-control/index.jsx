@@ -1,4 +1,4 @@
-import ProductoNuevo from "@/componentes/ProductoNuevo";
+﻿import ProductoNuevo from "@/componentes/ProductoNuevo";
 import React, { useContext, useEffect, useState } from "react";
 import ContextGeneral from "@/servicios/contextPrincipal";
 import ProductoPanel from "@/componentes/ProductoPanel";
@@ -17,6 +17,10 @@ import {
   MdOutlineSettings,
 } from "react-icons/md";
 import Tutorial from "@/componentes/tutorial/Tutorial";
+import { trackAccountEvent } from "@/servicios/analyticsClient";
+
+const PANEL_OPEN_THROTTLE_MS = 6 * 60 * 60 * 1000;
+const PANEL_SECTION_THROTTLE_MS = 2 * 60 * 60 * 1000;
 
 const tabs = [
   {
@@ -59,6 +63,30 @@ function Index() {
       push("/");
     }
   }, []);
+
+  useEffect(() => {
+    if (!context.user || context.estadoUsuario !== 1) return;
+
+    trackAccountEvent({
+      user: context.user,
+      type: "panel_opened",
+      metadata: { section: showSeccion },
+      throttleKey: context.user.email || "panel",
+      throttleMs: PANEL_OPEN_THROTTLE_MS,
+    });
+  }, [context.estadoUsuario, context.user, showSeccion]);
+
+  useEffect(() => {
+    if (!context.user || context.estadoUsuario !== 1) return;
+
+    trackAccountEvent({
+      user: context.user,
+      type: "panel_section_viewed",
+      metadata: { section: showSeccion },
+      throttleKey: `${context.user.email || "panel"}:${showSeccion}`,
+      throttleMs: PANEL_SECTION_THROTTLE_MS,
+    });
+  }, [context.estadoUsuario, context.user, showSeccion]);
 
   const activeTab = tabs.find((tab) => tab.id === showSeccion) || tabs[0];
 
@@ -288,6 +316,8 @@ function Index() {
 }
 
 export default Index;
+
+
 
 
 

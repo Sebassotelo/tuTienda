@@ -965,12 +965,18 @@ function AdminPage() {
       const lastVisitB = getSafeTime(b.metricasPublicas?.ultimaVisitaTienda);
       const lastLoginA = getSafeTime(a.lastSignInTime);
       const lastLoginB = getSafeTime(b.lastSignInTime);
+      const panelEntriesA = Number(a.metricasPanel?.entradas || 0);
+      const panelEntriesB = Number(b.metricasPanel?.entradas || 0);
+      const lastPanelA = getSafeTime(a.metricasPanel?.ultimaEntrada);
+      const lastPanelB = getSafeTime(b.metricasPanel?.ultimaEntrada);
       const productsA = Number(a.metricas?.productos || 0);
       const productsB = Number(b.metricas?.productos || 0);
 
       if (analyticsSortBy === "visits-asc") return visitsA - visitsB;
       if (analyticsSortBy === "last-visit-desc") return lastVisitB - lastVisitA;
       if (analyticsSortBy === "last-login-desc") return lastLoginB - lastLoginA;
+      if (analyticsSortBy === "panel-desc") return panelEntriesB - panelEntriesA;
+      if (analyticsSortBy === "last-panel-desc") return lastPanelB - lastPanelA;
       if (analyticsSortBy === "products-desc") return productsB - productsA;
       if (analyticsSortBy === "store-asc") {
         return String(a.usuario || "").localeCompare(String(b.usuario || ""));
@@ -996,12 +1002,25 @@ function AdminPage() {
     const recentStoreVisits = accounts.filter(
       (account) => getSafeTime(account.metricasPublicas?.ultimaVisitaTienda) >= now - sevenDaysMs
     ).length;
+    const totalPanelEntries = accounts.reduce(
+      (total, account) => total + Number(account.metricasPanel?.entradas || 0),
+      0
+    );
+    const accountsWithPanelEntries = accounts.filter(
+      (account) => Number(account.metricasPanel?.entradas || 0) > 0
+    ).length;
+    const recentPanelEntries = accounts.filter(
+      (account) => getSafeTime(account.metricasPanel?.ultimaEntrada) >= now - sevenDaysMs
+    ).length;
 
     return {
       totalVisits,
       storesWithVisits,
       recentLogins,
       recentStoreVisits,
+      totalPanelEntries,
+      accountsWithPanelEntries,
+      recentPanelEntries,
     };
   }, [accounts]);
   const hasActiveSubscriptionFilters =
@@ -1081,6 +1100,18 @@ function AdminPage() {
         detail: "Cuentas activas por Auth",
         icon: MdLogin,
       },
+      {
+        label: "Entradas panel",
+        value: analyticsTotals.totalPanelEntries,
+        detail: "Aperturas agregadas",
+        icon: MdAdminPanelSettings,
+      },
+      {
+        label: "Panel 7 dias",
+        value: analyticsTotals.recentPanelEntries,
+        detail: "Cuentas con uso reciente",
+        icon: MdTrendingUp,
+      },
     ];
 
     return (
@@ -1108,7 +1139,7 @@ function AdminPage() {
             </button>
           </div>
 
-          <div className="mt-5 grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
+          <div className="mt-5 grid gap-3 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-6">
             {analyticsCards.map((card) => {
               const Icon = card.icon;
               return (
@@ -1155,6 +1186,8 @@ function AdminPage() {
               <option value="visits-asc">Menos visitas</option>
               <option value="last-visit-desc">Ultima visita</option>
               <option value="last-login-desc">Ultimo ingreso</option>
+              <option value="panel-desc">Mas entradas panel</option>
+              <option value="last-panel-desc">Ultima entrada panel</option>
               <option value="products-desc">Mas productos</option>
               <option value="store-asc">Tienda A-Z</option>
             </select>
@@ -1194,7 +1227,7 @@ function AdminPage() {
             </div>
           ) : (
             <div className="overflow-x-auto">
-              <table className="min-w-[1180px] w-full border-collapse text-left text-sm">
+              <table className="min-w-[1420px] w-full border-collapse text-left text-sm">
                 <thead className="bg-slate-50 text-[11px] font-extrabold uppercase tracking-[0.08em] text-zinc-500">
                   <tr>
                     <th className="px-4 py-3">Cuenta</th>
@@ -1202,6 +1235,8 @@ function AdminPage() {
                     <th className="px-4 py-3">Visitas</th>
                     <th className="px-4 py-3">Ultima visita</th>
                     <th className="px-4 py-3">Ultimo ingreso</th>
+                    <th className="px-4 py-3">Panel</th>
+                    <th className="px-4 py-3">Ultima entrada panel</th>
                     <th className="px-4 py-3">Catalogo</th>
                     <th className="px-4 py-3">Plan</th>
                   </tr>
@@ -1211,6 +1246,8 @@ function AdminPage() {
                     const visits = Number(account.metricasPublicas?.visitasTienda || 0);
                     const planNivel = Number(account.premium?.nivel || 0);
                     const firstVisit = account.metricasPublicas?.primeraVisitaTienda;
+                    const panelEntries = Number(account.metricasPanel?.entradas || 0);
+                    const lastPanelSection = account.metricasPanel?.ultimaSeccion || "Sin dato";
 
                     return (
                       <tr key={account.email} className="bg-white transition hover:bg-slate-50/80">
@@ -1255,6 +1292,15 @@ function AdminPage() {
                         </td>
                         <td className="px-4 py-3 whitespace-nowrap text-xs font-bold text-zinc-700">
                           {formatDate(account.lastSignInTime)}
+                        </td>
+                        <td className="px-4 py-3">
+                          <div className="flex flex-wrap items-center gap-1.5">
+                            <Badge tone={panelEntries > 0 ? "green" : "slate"}>{formatMetric(panelEntries)} entradas</Badge>
+                            <Badge tone="slate">{lastPanelSection}</Badge>
+                          </div>
+                        </td>
+                        <td className="px-4 py-3 whitespace-nowrap text-xs font-bold text-zinc-700">
+                          {formatDate(account.metricasPanel?.ultimaEntrada)}
                         </td>
                         <td className="px-4 py-3">
                           <div className="flex flex-wrap gap-1.5">
@@ -2604,6 +2650,7 @@ Inicia sesion con una cuenta administradora para entrar.
 }
 
 export default AdminPage;
+
 
 
 
